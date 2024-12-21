@@ -1,6 +1,7 @@
 require 'format'
 require 'status'
 require 'event'
+require 'keybinds'
 
 local wezterm = require 'wezterm';
 
@@ -11,9 +12,14 @@ if wezterm.config_builder then
 end
 
 -- keybinds
+-- デフォルトのkeybindを無効化
 config.disable_default_key_bindings = true
-config.keys = require('keybinds').keys
-config.key_tables = require('keybinds').key_tables
+-- `keybinds.lua`を読み込み
+local keybind = require 'keybinds'
+-- keybindの設定
+config.keys = keybind.keys
+config.key_tables = keybind.key_tables
+-- Leaderキーの設定
 config.leader = { key = ",", mods = "CTRL", timeout_milliseconds = 2000 }
 
 -- colors

@@ -1,3 +1,4 @@
+# promptのカラーを設定しています、$変数は後述で設定している変数が差し込まれます
 format = """
 $directory\
 [](fg:#88C0D0 bg:#394260)\
@@ -17,8 +18,10 @@ $os\
 [](fg:#88C0D0)\
 \n$character"""
 
+# コマンドラインに1行分のスペースを入れない
 add_newline = false
 
+# left_promptとright_promptの間を何で埋めるか設定
 [fill]
 symbol = ' '
 
@@ -49,7 +52,6 @@ truncation_symbol = "…/"
 disabled = true
 [gcloud]
 disabled = true
-
 
 [git_branch]
 symbol = ""
@@ -85,4 +87,3 @@ disabled = false
 time_format = "%R" # Hour:Minute Format
 style = "bg:#1d2230"
 format = '[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)'
-
