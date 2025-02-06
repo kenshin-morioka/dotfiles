@@ -27,8 +27,8 @@ config.color_scheme = "nord"
 config.window_background_opacity = 0.93
 
 -- font
-config.font = require("wezterm").font("Firge35Nerd Console")
-config.font_size = 13.0
+config.font = require("wezterm").font("Menlo for Powerline")
+config.font_size = 16.0
 config.window_frame = {
   font = wezterm.font { family ='Roboto', weight = 'Bold' },
   font_size = 11.0,
