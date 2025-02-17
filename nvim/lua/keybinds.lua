@@ -1,6 +1,3 @@
--- vim.keymap.set('n','<Up>','<C-y>')
--- vim.keymap.set('n','<Down>','<C-e>')
-
 -- Normal to Command
 vim.keymap.set('n', ':', ';')
 vim.keymap.set('n', ';', ':')
