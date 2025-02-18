@@ -22,4 +22,8 @@ $(brew --prefix)/opt/fzf/install
 rm ~/.zsh_history
 rm ~/.zsh_history
 rm .zprofile
+
+# antigenのインストール
+mkdir -p ~/.local/bin
+curl -L git.io/antigen > ~/.local/bin/antigen.zsh
 ```

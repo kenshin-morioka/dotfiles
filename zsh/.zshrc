@@ -1,8 +1,4 @@
-eval "$(rbenv init -)"
-eval "$(nodenv init -)"
-eval "$(direnv hook zsh)"
 export PATH="/opt/homebrew/opt/imagemagick@6/bin:$PATH"
-
 
 # export PATH="/usr/local/opt/curl/bin:$PATH"
 # export PATH="/usr/local/opt/curl/bin:$PATH"
@@ -22,6 +18,10 @@ bindkey -e
 
 # homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
+eval "$(rbenv init -)"
+eval "$(nodenv init -)"
+eval "$(direnv hook zsh)"
 
 # antigen
 source $HOME/.local/bin/antigen.zsh
