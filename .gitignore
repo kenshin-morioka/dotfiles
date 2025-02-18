@@ -4,3 +4,4 @@
 .zcompdump
 .zshrc.zwc
 zsh-abbr
+rm -rf .zsh_sessions

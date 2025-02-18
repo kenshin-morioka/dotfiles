@@ -18,4 +18,8 @@ brew update && brew upgrade
 brew install git fzf ghq startship neovim lazygit
 # fzfのショートカットコマンドインストール
 $(brew --prefix)/opt/fzf/install
+
+rm ~/.zsh_history
+rm ~/.zsh_history
+rm .zprofile
 ```
