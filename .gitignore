@@ -5,3 +5,4 @@
 .zshrc.zwc
 zsh-abbr
 rm -rf .zsh_sessions
+configstore

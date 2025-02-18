@@ -41,7 +41,7 @@ config.status_update_interval = 1000
 config.window_decorations = "RESIZE"
 
 -- mouse binds
-config.mouse_bindings = require('mousebinds').mouse_bindings
+-- config.mouse_bindings = require('mousebinds').mouse_bindings
 
 return config
 
