@@ -73,3 +73,4 @@ abbr -S lg='lazygit' >>/dev/null
 eval "$(starship init zsh)"
 
 export PATH="/Applications/WezTerm.app/Contents/MacOS:$PATH"
+export PATH="/opt/homebrew/opt/imagemagick@6/bin:$PATH"
