@@ -58,6 +58,7 @@ abbr -S la='ls -A' >>/dev/null
 abbr -S lla='ls -l -A' >>/dev/null
 abbr -S v='vim' >>/dev/null
 abbr -S g='git' >>/dev/null
+abbr -S gco='git checkout' >>/dev/null
 abbr -S gst='git status' >>/dev/null
 abbr -S gsw='git switch' >>/dev/null
 abbr -S gbr='git branch' >>/dev/null
@@ -66,7 +67,7 @@ abbr -S gpl='git pull' >>/dev/null
 abbr -S gad='git add' >>/dev/null
 abbr -S gcm='git commit' >>/dev/null
 abbr -S gmg='git merge' >>/dev/null
-abbr -S gpsh='git push' >>/dev/null
+abbr -S gpoh='git push origin HEAD' >>/dev/null
 abbr -S lg='lazygit' >>/dev/null
 
 # starship
@@ -74,3 +75,42 @@ eval "$(starship init zsh)"
 
 export PATH="/Applications/WezTerm.app/Contents/MacOS:$PATH"
 export PATH="/opt/homebrew/opt/imagemagick@6/bin:$PATH"
+
+# peco settings
+# 過去に実行したコマンドを選択。ctrl-rにバインド
+function peco-select-history() {
+  BUFFER=$(\history -n -r 1 | peco --query "$LBUFFER")
+  CURSOR=$#BUFFER
+  zle clear-screen
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history
+
+# search a destination from cdr list
+function peco-get-destination-from-cdr() {
+  cdr -l | \
+  sed -e 's/^[[:digit:]]*[[:blank:]]*//' | \
+  peco --query "$LBUFFER"
+}
+
+
+### 過去に移動したことのあるディレクトリを選択。ctrl-uにバインド
+function peco-cdr() {
+  local destination="$(peco-get-destination-from-cdr)"
+  if [ -n "$destination" ]; then
+    BUFFER="cd $destination"
+    zle accept-line
+  else
+    zle reset-prompt
+  fi
+}
+zle -N peco-cdr
+bindkey '^u' peco-cdr
+
+
+# ブランチを簡単切り替え。git checkout lbで実行できる
+alias -g lb='`git branch | peco --prompt "GIT BRANCH>" | head -n 1 | sed -e "s/^\*\s*//g"`'
+
+
+# dockerコンテナに入る。deで実行できる
+alias de='docker exec -it $(docker ps | peco | cut -d " " -f 1) /bin/bash'

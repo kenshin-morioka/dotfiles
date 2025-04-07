@@ -15,7 +15,7 @@ homebrew の install
 
 ```
 brew update && brew upgrade
-brew install git fzf ghq startship neovim lazygit
+brew install git fzf ghq startship neovim lazygit peco act
 # fzfのショートカットコマンドインストール
 $(brew --prefix)/opt/fzf/install
 
