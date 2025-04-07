@@ -63,10 +63,10 @@ abbr -S gst='git status' >>/dev/null
 abbr -S gsw='git switch' >>/dev/null
 abbr -S gbr='git branch' >>/dev/null
 abbr -S gfe='git fetch' >>/dev/null
-abbr -S gpl='git pull' >>/dev/null
+abbr -S gp='git pull' >>/dev/null
 abbr -S gad='git add' >>/dev/null
 abbr -S gcm='git commit' >>/dev/null
-abbr -S gmg='git merge' >>/dev/null
+abbr -S gm='git merge --no-ff' >>/dev/null
 abbr -S gpoh='git push origin HEAD' >>/dev/null
 abbr -S lg='lazygit' >>/dev/null
 
