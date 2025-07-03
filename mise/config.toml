@@ -1,4 +1,6 @@
 [tools]
-node = 'v8.16.0'
+node = "18"
 go = ['1.23.6']
 
+[settings]
+idiomatic_version_file_enable_tools = ["ruby"]

@@ -20,7 +20,11 @@ bindkey -e
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 eval "$(rbenv init -)"
-eval "$(nodenv init -)"
+
+# miseで管理しているのでnodenvは使わない
+# eval "$(nodenv init -)"
+eval "$(mise activate zsh)"
+
 eval "$(direnv hook zsh)"
 
 # antigen
@@ -120,6 +124,3 @@ if [[ $(uname) = "Darwin" ]]; then
     alias ldd="echo ldd is not on OSX. use otool -L."
     alias strace="echo strace is not on OSX. use dtruss"
 fi
-
-echo 'eval "$(mise activate zsh)"'
-
