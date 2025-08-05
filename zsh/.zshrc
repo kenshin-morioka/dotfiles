@@ -73,6 +73,9 @@ abbr -S gcm='git commit' >>/dev/null
 abbr -S gmg='git merge --no-ff' >>/dev/null
 abbr -S gpoh='git push origin HEAD' >>/dev/null
 abbr -S lg='lazygit' >>/dev/null
+abbr -S c='claude' >>/dev/null
+abbr -S cct='claude --continue' >>/dev/null
+abbr -S crs='claude --resume ' >>/dev/null
 
 # starship
 eval "$(starship init zsh)"
