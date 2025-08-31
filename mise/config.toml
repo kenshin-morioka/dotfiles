@@ -4,3 +4,5 @@ go = ['1.23.6']
 
 [settings]
 idiomatic_version_file_enable_tools = ["ruby"]
+experimental = true
+auto_install = true
