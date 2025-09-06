@@ -45,15 +45,14 @@ antigen bundles <<EOBUNDLES
     olets/zsh-abbr@main
 EOBUNDLES
 
-# Load the theme
-# antigen theme robbyrussell  # Starshipを使用しているため不要
-
 # Tell antigen that you're done
 antigen apply
 
-# alias
+# alias(履歴には変換後が記録)
 alias ls='ls -F --color=auto'
 alias vim='nvim'
+
+# abbr(履歴には変換前が記録)
 abbr -S ll='ls -l' >>/dev/null
 abbr -S la='ls -A' >>/dev/null
 abbr -S lla='ls -l -A' >>/dev/null
