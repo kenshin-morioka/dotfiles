@@ -4,6 +4,7 @@ require 'event'
 require 'keybinds'
 
 local wezterm = require 'wezterm';
+local keybind = require 'keybinds'
 
 local config = {}
 
@@ -14,11 +15,11 @@ end
 -- keybinds
 -- デフォルトのkeybindを無効化
 config.disable_default_key_bindings = true
--- `keybinds.lua`を読み込み
-local keybind = require 'keybinds'
+
 -- keybindの設定
 config.keys = keybind.keys
 config.key_tables = keybind.key_tables
+
 -- Leaderキーの設定
 config.leader = { key = ",", mods = "CTRL", timeout_milliseconds = 2000 }
 
