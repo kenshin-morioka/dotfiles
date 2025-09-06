@@ -52,6 +52,18 @@ antigen apply
 alias ls='ls -F --color=auto'
 alias vim='nvim'
 
+## ブランチを簡単切り替え。git checkout lbで実行できる
+alias -g lb='`git branch | peco --prompt "GIT BRANCH>" | head -n 1 | sed -e "s/^\*\s*//g"`'
+
+## dockerコンテナに入る。deで実行できる
+alias de='docker exec -it $(docker ps | peco | cut -d " " -f 1) /bin/bash'
+
+## OSXで使えないコマンドのときにヒントを表示する
+if [[ $(uname) = "Darwin" ]]; then
+    alias ldd="echo ldd is not on OSX. use otool -L."
+    alias strace="echo strace is not on OSX. use dtruss"
+fi
+
 # abbr(履歴には変換前が記録)
 abbr -S ll='ls -l' >>/dev/null
 abbr -S la='ls -A' >>/dev/null
@@ -96,7 +108,6 @@ function peco-get-destination-from-cdr() {
   peco --query "$LBUFFER"
 }
 
-
 ### 過去に移動したことのあるディレクトリを選択。ctrl-uにバインド
 function peco-cdr() {
   local destination="$(peco-get-destination-from-cdr)"
@@ -109,17 +120,3 @@ function peco-cdr() {
 }
 zle -N peco-cdr
 bindkey '^u' peco-cdr
-
-
-# ブランチを簡単切り替え。git checkout lbで実行できる
-alias -g lb='`git branch | peco --prompt "GIT BRANCH>" | head -n 1 | sed -e "s/^\*\s*//g"`'
-
-
-# dockerコンテナに入る。deで実行できる
-alias de='docker exec -it $(docker ps | peco | cut -d " " -f 1) /bin/bash'
-
-# OSXで使えないコマンドのときにヒントを表示する
-if [[ $(uname) = "Darwin" ]]; then
-    alias ldd="echo ldd is not on OSX. use otool -L."
-    alias strace="echo strace is not on OSX. use dtruss"
-fi
