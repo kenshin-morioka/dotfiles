@@ -1,6 +1,3 @@
-export PATH="/opt/homebrew/opt/imagemagick@6/bin:$PATH"
-
-# export PATH="/usr/local/opt/curl/bin:$PATH"
 # export PATH="/usr/local/opt/curl/bin:$PATH"
 
 # # fnm
@@ -49,7 +46,7 @@ antigen bundles <<EOBUNDLES
 EOBUNDLES
 
 # Load the theme
-antigen theme robbyrussell
+# antigen theme robbyrussell  # Starshipを使用しているため不要
 
 # Tell antigen that you're done
 antigen apply
