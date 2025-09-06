@@ -64,4 +64,5 @@ setopt no_beep
 # ファイル種別起動を補完候補の末尾に表示しない
 unsetopt list_types
 
+# zplugに移行予定
 export _ANTIGEN_INSTALL_DIR=${HOME}/.local/bin
