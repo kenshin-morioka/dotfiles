@@ -4,16 +4,14 @@ $directory\
 [](fg:#88C0D0 bg:#394260)\
 $git_branch\
 $git_status\
-[](fg:#394260)\
-$fill\
-[](fg:#212736)\
+[](fg:#394260 bg:#212736)\
 $nodejs\
 $rust\
 $golang\
 $php\
-[](fg:#1d2230 bg:#212736)\
+[](fg:#212736 bg:#1d2230)\
 $time\
-[](fg:#88C0D0 bg:#1d2230)\
+[](fg:#1d2230 bg:#88C0D0)\
 $os\
 [](fg:#88C0D0)\
 \n$character"""
