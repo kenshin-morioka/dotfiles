@@ -1,6 +1,21 @@
-SHELL := /usr/bin/env bash
+# - [Makefileを自己文書化する | POSTD](https://postd.cc/auto-documented-makefile/)
+# - [タスク・ランナーとしてのMake \#Makefile - Qiita](https://qiita.com/shakiyam/items/cdd3c11eba978202a628)
+# - [Makefile の関数一覧 | 晴耕雨読](https://tex2e.github.io/blog/makefile/functions)
+# - [Makefileでシェルスクリプトを便利にする.ONESHELL](https://zenn.dev/mirablue/articles/20241208-make-oneshell)
 
+SHELL := /usr/bin/env bash
+.SHELLFLAGS := -o errexit -o nounset -o pipefail -o posix -c
+.DEFAULT_GOAL := help
 DOTFILES_DIR := $(HOME)/src/github.com/kenshin-morioka/dotfiles
+
+# all targets are phony
+.PHONY: $(grep -E '^[a-zA-Z_-]+:' $(MAKEFILE_LIST) | sed 's/://')
+
+help:  ## print this help
+	@echo 'Usage: make [target]'
+	@echo ''
+	@echo 'Targets:'
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 # リンク定義 (link先:元ファイル)
 LINKS := \
@@ -11,13 +26,14 @@ LINKS := \
 	$(HOME)/.config/wezterm:$(DOTFILES_DIR)/wezterm \
 	$(HOME)/.config/mise:$(DOTFILES_DIR)/mise \
 	$(HOME)/.config/act:$(DOTFILES_DIR)/act \
+	$(HOME)/.claude/CLAUDE.md:$(DOTFILES_DIR)/claude/CLAUDE.md \
 	$(HOME)/.config/flipper:$(DOTFILES_DIR)/flipper \
 	$(HOME)/.config/github-copilot:$(DOTFILES_DIR)/github-copilot
 
-default: help
-
-## Create all symlinks
-link:
+# --------------------------------------
+# Symbolic Links
+#
+link:  ## make symbolic links
 	@echo "🔗 Creating symlinks..."
 	@for pair in $(LINKS); do \
 		dst="$${pair%%:*}"; \
@@ -27,8 +43,7 @@ link:
 		echo "  Linked $$dst -> $$src"; \
 	done
 
-## Remove all symlinks
-unlink:
+unlink:  ## unlink symbolic links
 	@echo "❌ Removing symlinks..."
 	@for pair in $(LINKS); do \
 		dst="$${pair%%:*}"; \
@@ -37,8 +52,3 @@ unlink:
 			echo "  Unlinked $$dst"; \
 		fi \
 	done
-
-## Show available commands
-help:
-	@echo "Available make commands:"
-	@grep -E '^##' Makefile | sed -E 's/^## (.*)/  \1/' | awk 'NR % 2 == 1 {printf "%-15s", $$0} NR % 2 == 0 {print $$0}'
