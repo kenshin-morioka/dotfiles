@@ -29,7 +29,7 @@ all_checked=true
 
 for item in "${check_items[@]}"; do
   echo ""
-  read -p "✅ ${item} [y/n]: " answer
+  read -p "✅ ${item} [y/n]: " answer < /dev/tty
   if [[ "$answer" != "y" && "$answer" != "Y" ]]; then
     all_checked=false
   fi
