@@ -28,7 +28,8 @@ LINKS := \
 	$(HOME)/.config/act:$(DOTFILES_DIR)/act \
 	$(HOME)/.claude/CLAUDE.md:$(DOTFILES_DIR)/claude/CLAUDE.md \
 	$(HOME)/.config/flipper:$(DOTFILES_DIR)/flipper \
-	$(HOME)/.config/github-copilot:$(DOTFILES_DIR)/github-copilot
+	$(HOME)/.config/github-copilot:$(DOTFILES_DIR)/github-copilot \
+	$(DOTFILES_DIR)/.git/hooks/pre-push:$(DOTFILES_DIR)/git-hooks/pre-push
 
 # --------------------------------------
 # Symbolic Links
