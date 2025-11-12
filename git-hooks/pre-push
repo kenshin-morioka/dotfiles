@@ -5,11 +5,12 @@
 
 set -e
 
-# セルフレビューチェックリストのパス
-CHECKLIST_FILE="claude/SELF_REVIEW_CHECKLIST.md"
+# セルフレビューチェックリストのパス（グローバル設定を参照）
+CHECKLIST_FILE="$HOME/.claude/SELF_REVIEW_CHECKLIST.md"
 
 if [ ! -f "$CHECKLIST_FILE" ]; then
   echo "⚠️  $CHECKLIST_FILE が見つかりません。pushを中止します。"
+  echo "    ヒント: ~/.claude/SELF_REVIEW_CHECKLIST.md を作成してください。"
   exit 1
 fi
 
