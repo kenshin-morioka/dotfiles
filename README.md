@@ -6,7 +6,7 @@ homebrew の install
 
 ```
 brew update && brew upgrade
-brew install git fzf ghq startship neovim lazygit peco act direnv bash
+brew install git fzf ghq startship neovim lazygit peco act direnv bash aws-vault
 # fzfのショートカットコマンドインストール
 $(brew --prefix)/opt/fzf/install
 
