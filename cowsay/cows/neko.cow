@@ -1,0 +1,10 @@
+##
+## A simple cat (neko)
+##
+$the_cow = <<"EOC";
+    $thoughts
+     $thoughts
+       /\\_/\\
+      ( $eyes )
+       > ^ <
+EOC

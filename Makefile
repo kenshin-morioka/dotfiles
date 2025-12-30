@@ -30,7 +30,8 @@ LINKS := \
 	$(HOME)/.claude/SELF_REVIEW_CHECKLIST.md:$(DOTFILES_DIR)/claude/SELF_REVIEW_CHECKLIST.md \
 	$(HOME)/.config/flipper:$(DOTFILES_DIR)/flipper \
 	$(HOME)/.config/github-copilot:$(DOTFILES_DIR)/github-copilot \
-	$(DOTFILES_DIR)/.git/hooks/pre-push:$(DOTFILES_DIR)/git-hooks/pre-push
+	$(DOTFILES_DIR)/.git/hooks/pre-push:$(DOTFILES_DIR)/git-hooks/pre-push \
+	$(HOME)/.cowsay:$(DOTFILES_DIR)/cowsay
 
 # --------------------------------------
 # Symbolic Links

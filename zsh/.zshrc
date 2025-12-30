@@ -7,6 +7,9 @@
 # java
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
+# cowsay
+export COWPATH="$HOME/.cowsay/cows:/opt/homebrew/opt/cowsay/share/cowsay/cows"
+
 # setting
 # 新規ファイル作成時のパーミッション
 umask 022
