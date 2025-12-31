@@ -2,11 +2,32 @@ local plugins = {
   {
     'nvim-treesitter/nvim-treesitter',
     event = { 'BufNewFile', 'BufReadPre' },
+    build = ':TSUpdate',
+    opts = {
+      ensure_installed = {
+        'bash', 'comment', 'css', 'csv', 'dockerfile', 'go', 'graphql', 'html', 'javascript', 'jsdoc', 'json', 'lua', 'markdown', 'mermaid', 'prisma',
+        'python', 'ruby', 'rust', 'sql', 'ssh_config', 'tsx', 'typescript', 'vim', 'vimdoc',
+      },
+      sync_install = true,
+      auto_install = true,
+      highlight = { enable = true },
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = 'gnn',
+          node_incremental = 'grn',
+          scope_incremental = 'grc',
+          node_decremental = 'grm',
+        },
+      },
+      indent = { enable = true },
+    },
   },
   {
     'rmehri01/onenord.nvim',
     event = { 'VimEnter' },
     priority = 1000,
+    config = function() require 'extensions.onenord' end,
   },
   {
     'nvim-lualine/lualine.nvim',
@@ -24,7 +45,37 @@ local plugins = {
   {
     'petertriho/nvim-scrollbar',
     event = { 'BufNewFile', 'BufReadPre' },
-  }
+  },
+  {
+    'nvim-telescope/telescope.nvim',
+    keys = {
+      '<leader>ff', '<leader>fg', '<leader>fb', '<leader>fh'
+    },
+    tag = '0.1.4',
+    config = function() require 'extensions.telescope' end,
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons',
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    },
+  },
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v3.x',
+    event = { 'VimEnter' },
+    keys = {
+      { '<leader>e', '<cmd>Neotree toggle<cr>', desc = 'Toggle NeoTree' },
+    },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons',
+      'MunifTanjim/nui.nvim',
+    },
+    config = function()
+      require('neo-tree').setup({})
+      vim.cmd('Neotree show')
+    end,
+  },
 }
 
 local opts = {
