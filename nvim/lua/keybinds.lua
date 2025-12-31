@@ -34,6 +34,10 @@ vim.keymap.set('i', '<M-Right>', '<C-o>w')  -- 次の単語へ
 vim.keymap.set('i', '<M-BS>', '<C-w>')      -- 前の単語を削除
 vim.keymap.set('n', '<M-Left>', 'b')        -- 前の単語へ
 vim.keymap.set('n', '<M-Right>', 'w')       -- 次の単語へ
+vim.keymap.set('n', '<M-Up>', '<C-u>')      -- 半ページ上へ
+vim.keymap.set('n', '<M-Down>', '<C-d>')    -- 半ページ下へ
+vim.keymap.set('i', '<M-Up>', '<C-o><C-u>') -- 半ページ上へ
+vim.keymap.set('i', '<M-Down>', '<C-o><C-d>') -- 半ページ下へ
 
 -- 単語単位で選択 (Shift + Option + Arrow)
 vim.keymap.set('i', '<S-M-Left>', '<C-o>vb')           -- インサート：選択開始して前の単語へ
