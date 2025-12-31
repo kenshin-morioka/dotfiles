@@ -11,6 +11,9 @@ vim.api.nvim_set_option('smartcase', true)
 vim.api.nvim_set_option('inccommand', 'split')
 -- クリップボードの有効化
 vim.api.nvim_set_option('clipboard', 'unnamedplus')
+-- Shift+矢印で選択開始（VSCode風）
+vim.opt.keymodel = 'startsel,stopsel'
+vim.opt.selectmode = 'key'
 
 -- window
 -- 行番号表示

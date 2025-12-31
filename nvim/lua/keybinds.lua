@@ -27,3 +27,19 @@ vim.keymap.set('n', '<leader>l', '<C-w><C-l>')
 -- buffer
 vim.keymap.set('n', '<Tab>', ':bnext<CR>')
 vim.keymap.set('n', '<S-Tab>', ':bprev<CR>')
+
+-- cursor movement (Option + Arrow)
+vim.keymap.set('i', '<M-Left>', '<C-o>b')   -- 前の単語へ
+vim.keymap.set('i', '<M-Right>', '<C-o>w')  -- 次の単語へ
+vim.keymap.set('i', '<M-BS>', '<C-w>')      -- 前の単語を削除
+vim.keymap.set('n', '<M-Left>', 'b')        -- 前の単語へ
+vim.keymap.set('n', '<M-Right>', 'w')       -- 次の単語へ
+
+-- 単語単位で選択 (Shift + Option + Arrow)
+vim.keymap.set('i', '<S-M-Left>', '<C-o>vb')           -- インサート：選択開始して前の単語へ
+vim.keymap.set('i', '<S-M-Right>', '<C-o>vw')          -- インサート：選択開始して次の単語へ
+vim.keymap.set('n', '<S-M-Left>', 'vb')                -- ノーマル：選択開始して前の単語へ
+vim.keymap.set('n', '<S-M-Right>', 'vw')               -- ノーマル：選択開始して次の単語へ
+vim.keymap.set({'v', 's'}, '<S-M-Left>', 'b')          -- 選択範囲を前の単語へ拡張
+vim.keymap.set({'v', 's'}, '<S-M-Right>', 'w')         -- 選択範囲を次の単語へ拡張
+

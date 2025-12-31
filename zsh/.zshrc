@@ -19,6 +19,14 @@ limit coredumpsize 0
 bindkey -d
 bindkey -e
 
+# Option + 矢印で単語単位移動
+bindkey '^[[1;3D' backward-word   # Option + Left
+bindkey '^[[1;3C' forward-word    # Option + Right
+
+# Command + 矢印で行頭/行末移動 (Home/End)
+bindkey '^[OH' beginning-of-line  # Home
+bindkey '^[OF' end-of-line        # End
+
 # homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
@@ -56,6 +64,15 @@ antigen apply
 
 # alias(履歴には変換後が記録)
 alias ls='ls -F --color=auto'
+
+function nvim() {
+  if command -v gtimeout &>/dev/null; then
+    gtimeout 1 cmatrix -u 1
+  elif command -v timeout &>/dev/null; then
+    timeout 1 cmatrix -u 1
+  fi
+  command nvim "$@"
+}
 alias vim='nvim'
 
 ## ブランチを簡単切り替え。git checkout lbで実行できる

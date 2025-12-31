@@ -88,6 +88,12 @@ local plugins = {
     },
     config = function() require 'extensions.luasnip' end,
   },
+  -- Autopairs
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    opts = {},
+  },
   -- Completion
   {
     'hrsh7th/nvim-cmp',

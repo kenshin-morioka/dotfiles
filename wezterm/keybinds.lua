@@ -123,6 +123,17 @@ return {
     { key = 'DownArrow', mods = 'SHIFT|ALT|CTRL', action = act.AdjustPaneSize{ 'Down', 1 } },
     { key = 'Copy', mods = 'NONE', action = act.CopyTo 'Clipboard' },
     { key = 'Paste', mods = 'NONE', action = act.PasteFrom 'Clipboard' },
+
+    -- Command + Arrow (send Home/End keys)
+    { key = 'LeftArrow', mods = 'SUPER', action = act.SendKey { key = 'Home' } },
+    { key = 'RightArrow', mods = 'SUPER', action = act.SendKey { key = 'End' } },
+    { key = 'UpArrow', mods = 'SUPER', action = act.SendKey { key = 'Home', mods = 'CTRL' } },
+    { key = 'DownArrow', mods = 'SUPER', action = act.SendKey { key = 'End', mods = 'CTRL' } },
+    -- Shift + Command + Arrow (select to Home/End)
+    { key = 'LeftArrow', mods = 'SHIFT|SUPER', action = act.SendKey { key = 'Home', mods = 'SHIFT' } },
+    { key = 'RightArrow', mods = 'SHIFT|SUPER', action = act.SendKey { key = 'End', mods = 'SHIFT' } },
+    { key = 'UpArrow', mods = 'SHIFT|SUPER', action = act.SendKey { key = 'Home', mods = 'SHIFT|CTRL' } },
+    { key = 'DownArrow', mods = 'SHIFT|SUPER', action = act.SendKey { key = 'End', mods = 'SHIFT|CTRL' } },
   },
 
   key_tables = {
