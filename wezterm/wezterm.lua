@@ -57,6 +57,7 @@ local keybind = require 'keybinds'
 config.disable_default_key_bindings = true
 config.keys = keybind.keys
 config.key_tables = keybind.key_tables
+config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 2000 }
 
 -- background
 local background = require 'background'
@@ -65,10 +66,6 @@ config.background = background
 require 'format'
 require 'status'
 require 'event'
-
-
--- Leaderキーの設定
-config.leader = { key = ",", mods = "CTRL", timeout_milliseconds = 2000 }
 
 -- status
 config.status_update_interval = 1000

@@ -7,7 +7,7 @@ return {
     {
         source = {
             Gradient = {
-            colors = { "#08607dff", "#001522" },
+            colors = { "#07465cff", "#001522" },
             orientation = {
                 Linear = { angle = -30.0 },
             },
