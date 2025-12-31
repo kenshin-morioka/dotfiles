@@ -27,9 +27,9 @@ return {
     require("neo-tree").setup({
       filesystem = {
         filtered_items = {
-          visible = false,      -- 隠しファイルはデフォルトで非表示
-          hide_dotfiles = true, -- .で始まるファイルを非表示
-          hide_gitignored = true, -- .gitignoreに記載されたファイルを非表示
+          visible = true,
+          hide_dotfiles = false,
+          hide_gitignored = false,
         },
       },
       -- neo-treeウィンドウ内でのキーマッピング
