@@ -1,0 +1,110 @@
+{
+  "shebang": {
+    "prefix": "shebang",
+    "body": ["#!/bin/bash", "$0"],
+    "description": "Bash shebang"
+  },
+  "if": {
+    "prefix": "if",
+    "body": ["if [[ $1 ]]; then", "\t$0", "fi"],
+    "description": "if statement"
+  },
+  "ife": {
+    "prefix": "ife",
+    "body": ["if [[ $1 ]]; then", "\t$2", "else", "\t$0", "fi"],
+    "description": "if-else statement"
+  },
+  "elif": {
+    "prefix": "elif",
+    "body": ["elif [[ $1 ]]; then", "\t$0"],
+    "description": "elif clause"
+  },
+  "for": {
+    "prefix": "for",
+    "body": ["for ${1:item} in ${2:items}; do", "\t$0", "done"],
+    "description": "for loop"
+  },
+  "fori": {
+    "prefix": "fori",
+    "body": ["for ((${1:i}=0; $1<${2:10}; $1++)); do", "\t$0", "done"],
+    "description": "for loop with index"
+  },
+  "while": {
+    "prefix": "while",
+    "body": ["while [[ $1 ]]; do", "\t$0", "done"],
+    "description": "while loop"
+  },
+  "until": {
+    "prefix": "until",
+    "body": ["until [[ $1 ]]; do", "\t$0", "done"],
+    "description": "until loop"
+  },
+  "case": {
+    "prefix": "case",
+    "body": [
+      "case ${1:variable} in",
+      "\t${2:pattern})",
+      "\t\t$0",
+      "\t\t;;",
+      "\t*)",
+      "\t\t;;",
+      "esac"
+    ],
+    "description": "case statement"
+  },
+  "function": {
+    "prefix": "func",
+    "body": ["${1:function_name}() {", "\t$0", "}"],
+    "description": "function definition"
+  },
+  "read": {
+    "prefix": "read",
+    "body": ["read -r ${1:variable}"],
+    "description": "read input"
+  },
+  "readp": {
+    "prefix": "readp",
+    "body": ["read -rp \"${1:prompt}: \" ${2:variable}"],
+    "description": "read with prompt"
+  },
+  "array": {
+    "prefix": "arr",
+    "body": ["${1:array}=(${2:elements})"],
+    "description": "array declaration"
+  },
+  "here": {
+    "prefix": "here",
+    "body": ["cat <<'${1:EOF}'", "$0", "$1"],
+    "description": "heredoc"
+  },
+  "stderr": {
+    "prefix": "err",
+    "body": ["echo \"${1:error message}\" >&2"],
+    "description": "print to stderr"
+  },
+  "exit_if_error": {
+    "prefix": "exiterr",
+    "body": ["if [[ $? -ne 0 ]]; then", "\techo \"Error: ${1:message}\" >&2", "\texit 1", "fi"],
+    "description": "exit if previous command failed"
+  },
+  "file_exists": {
+    "prefix": "iff",
+    "body": ["if [[ -f \"${1:file}\" ]]; then", "\t$0", "fi"],
+    "description": "if file exists"
+  },
+  "dir_exists": {
+    "prefix": "ifd",
+    "body": ["if [[ -d \"${1:directory}\" ]]; then", "\t$0", "fi"],
+    "description": "if directory exists"
+  },
+  "string_empty": {
+    "prefix": "ifz",
+    "body": ["if [[ -z \"${1:string}\" ]]; then", "\t$0", "fi"],
+    "description": "if string is empty"
+  },
+  "string_not_empty": {
+    "prefix": "ifn",
+    "body": ["if [[ -n \"${1:string}\" ]]; then", "\t$0", "fi"],
+    "description": "if string is not empty"
+  }
+}

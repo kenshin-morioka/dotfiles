@@ -8,6 +8,15 @@
           "all"
         ],
         "path": "all.json"
+      },
+      {
+        "language": [
+          "sh",
+          "bash",
+          "zsh",
+          "shellscript"
+        ],
+        "path": "bash.json"
       }
     ]
   }
