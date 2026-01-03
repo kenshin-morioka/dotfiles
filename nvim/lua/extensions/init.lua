@@ -137,6 +137,16 @@ local plugins = {
     event = { 'BufReadPre', 'BufNewFile' },
     config = function() require 'extensions.nvim-lint' end,
   },
+  -- Formatter
+  {
+    'stevearc/conform.nvim',
+    event = { 'BufWritePre' },
+    cmd = { 'ConformInfo' },
+    keys = {
+      { '<leader>cf', function() require('conform').format({ async = true }) end, desc = 'Format buffer' },
+    },
+    config = function() require 'extensions.conform' end,
+  },
   -- Terminal
   {
     'akinsho/toggleterm.nvim',

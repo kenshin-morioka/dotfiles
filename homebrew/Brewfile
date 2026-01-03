@@ -46,3 +46,7 @@ brew "pnpm"
 # Casks
 cask "claude-code"
 cask "session-manager-plugin"
+brew "stylua"
+brew "shfmt"
+brew "prettier"
+brew "taplo"
