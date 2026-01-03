@@ -97,6 +97,17 @@ local plugins = {
       ignore = '^$',  -- 空行を無視
     },
   },
+  -- Search and Replace
+  {
+    'nvim-pack/nvim-spectre',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    keys = {
+      { '<leader>sr', function() require('spectre').open() end, desc = 'Search and Replace (Project)' },
+      { '<leader>sf', function() require('spectre').open_file_search() end, desc = 'Search and Replace (File)' },
+      { '<leader>sw', function() require('spectre').open_visual({ select_word = true }) end, desc = 'Search current word' },
+    },
+    opts = {},
+  },
   -- Color highlighter
   {
     'uga-rosa/ccc.nvim',
