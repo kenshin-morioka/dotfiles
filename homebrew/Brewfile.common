@@ -13,5 +13,6 @@ brew "lazygit"
 brew "starship"
 brew "cowsay"
 brew "antigen"
+brew "ripgrep"
 
 cask "claude-code"
