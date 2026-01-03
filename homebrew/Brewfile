@@ -1,0 +1,48 @@
+# Shell & Core
+brew "bash"
+brew "coreutils"
+brew "git"
+brew "ghq"
+brew "peco"
+brew "fzf"
+brew "direnv"
+
+# Version Manager
+brew "mise"
+brew "rbenv"
+brew "nodenv"
+brew "tfenv"
+
+# Editor
+brew "neovim"
+brew "lazygit"
+
+# Terminal
+brew "starship"
+brew "cowsay"
+brew "antigen"
+brew "cmatrix"
+
+# Search
+brew "ripgrep"
+
+# Linters
+brew "selene"
+brew "shellcheck"
+brew "jsonlint"
+brew "markdownlint-cli"
+brew "pre-commit"
+
+# AWS
+brew "awscli"
+brew "aws-vault"
+brew "aws-sam-cli"
+
+# Build Tools
+brew "go-task"
+brew "act"
+brew "pnpm"
+
+# Casks
+cask "claude-code"
+cask "session-manager-plugin"

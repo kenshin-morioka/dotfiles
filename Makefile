@@ -1,3 +1,4 @@
+# 参考リンク
 # - [Makefileを自己文書化する | POSTD](https://postd.cc/auto-documented-makefile/)
 # - [タスク・ランナーとしてのMake \#Makefile - Qiita](https://qiita.com/shakiyam/items/cdd3c11eba978202a628)
 # - [Makefile の関数一覧 | 晴耕雨読](https://tex2e.github.io/blog/makefile/functions)
@@ -8,16 +9,16 @@ SHELL := /usr/bin/env bash
 .DEFAULT_GOAL := help
 DOTFILES_DIR := $(HOME)/src/github.com/kenshin-morioka/dotfiles
 
-# all targets are phony
+# 全ターゲットをphonyに設定
 .PHONY: $(grep -E '^[a-zA-Z_-]+:' $(MAKEFILE_LIST) | sed 's/://')
 
-help:  ## print this help
-	@echo 'Usage: make [target]'
+help:  ## ヘルプを表示
+	@echo '使い方: make [target]'
 	@echo ''
-	@echo 'Targets:'
+	@echo 'ターゲット一覧:'
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-# リンク定義 (link先:元ファイル)
+# リンク定義 (リンク先:元ファイル)
 LINKS := \
 	$(HOME)/.zshrc:$(DOTFILES_DIR)/zsh/.zshrc \
 	$(HOME)/.zprofile:$(DOTFILES_DIR)/zsh/.zprofile \
@@ -34,39 +35,68 @@ LINKS := \
 	$(HOME)/.cowsay:$(DOTFILES_DIR)/cowsay
 
 # --------------------------------------
-# Symbolic Links
+# シンボリックリンク
 #
-link:  ## make symbolic links
-	@echo "🔗 Creating symlinks..."
+link:  ## シンボリックリンクを作成
+	@echo "🔗 シンボリックリンクを作成中..."
 	@for pair in $(LINKS); do \
 		dst="$${pair%%:*}"; \
 		src="$${pair##*:}"; \
 		mkdir -p "$$(dirname "$$dst")"; \
 		ln -snf "$$src" "$$dst"; \
-		echo "  Linked $$dst -> $$src"; \
+		echo "  リンク作成: $$dst -> $$src"; \
 	done
 
-unlink:  ## unlink symbolic links
-	@echo "❌ Removing symlinks..."
+unlink:  ## シンボリックリンクを削除
+	@echo "❌ シンボリックリンクを削除中..."
 	@for pair in $(LINKS); do \
 		dst="$${pair%%:*}"; \
 		if [ -L "$$dst" ]; then \
 			rm "$$dst"; \
-			echo "  Unlinked $$dst"; \
+			echo "  リンク削除: $$dst"; \
 		fi \
 	done
 
 # --------------------------------------
 # Homebrew
 #
-brew-common:  ## install common brew packages
-	@echo "🍺 Installing common packages..."
-	brew bundle --file=$(DOTFILES_DIR)/homebrew/Brewfile.common
+BREWFILE := $(DOTFILES_DIR)/homebrew/Brewfile
 
-brew-personal: brew-common  ## install personal brew packages (includes common)
-	@echo "🍺 Installing personal packages..."
-	brew bundle --file=$(DOTFILES_DIR)/homebrew/Brewfile.personal
+brew:  ## 全パッケージをインストール
+	@echo "🍺 パッケージをインストール中..."
+	brew bundle --file=$(BREWFILE)
 
-brew-work: brew-common  ## install work brew packages (includes common)
-	@echo "🍺 Installing work packages..."
-	brew bundle --file=$(DOTFILES_DIR)/homebrew/Brewfile.work
+brew-add:  ## パッケージを追加 (PKG=パッケージ名)
+	@if [ -z "$(PKG)" ]; then \
+		echo "❌ 使い方: make brew-add PKG=<パッケージ名>"; \
+		exit 1; \
+	fi
+	@if grep -q "^brew \"$(PKG)\"" "$(BREWFILE)"; then \
+		echo "⚠️  $(PKG) は既にBrewfileに存在します"; \
+	else \
+		echo "brew \"$(PKG)\"" >> "$(BREWFILE)"; \
+		brew install $(PKG); \
+		echo "✅ $(PKG) を追加・インストールしました"; \
+	fi
+
+brew-add-cask:  ## Caskを追加 (PKG=パッケージ名)
+	@if [ -z "$(PKG)" ]; then \
+		echo "❌ 使い方: make brew-add-cask PKG=<パッケージ名>"; \
+		exit 1; \
+	fi
+	@if grep -q "^cask \"$(PKG)\"" "$(BREWFILE)"; then \
+		echo "⚠️  $(PKG) は既にBrewfileに存在します"; \
+	else \
+		echo "cask \"$(PKG)\"" >> "$(BREWFILE)"; \
+		brew install --cask $(PKG); \
+		echo "✅ $(PKG) を追加・インストールしました"; \
+	fi
+
+brew-sync:  ## 現在のパッケージをBrewfileに同期
+	@echo "🔄 インストール済みパッケージをBrewfileに同期中..."
+	@brew bundle dump --force --file=$(BREWFILE)
+	@echo "✅ Brewfileを更新しました"
+
+brew-list:  ## Brewfileの内容を表示
+	@echo "📦 Brewfileのパッケージ一覧:"
+	@cat "$(BREWFILE)"
