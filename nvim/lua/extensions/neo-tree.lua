@@ -66,3 +66,15 @@ require("neo-tree").setup({
 })
 
 vim.cmd('Neotree show')
+
+-- FocusGainedでgit状態を更新
+vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+  pattern = "*",
+  callback = function()
+    if require("neo-tree.sources.manager").get_state("filesystem") then
+      require("neo-tree.sources.filesystem.commands").refresh(
+        require("neo-tree.sources.manager").get_state("filesystem")
+      )
+    end
+  end,
+})
