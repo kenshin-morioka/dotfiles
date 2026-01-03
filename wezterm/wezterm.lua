@@ -18,7 +18,7 @@ config.window_frame = {
 }
 
 config.colors = {
-  foreground = "#d0d0d0ff",
+  foreground = "#d0d0d0",
   tab_bar = {
     inactive_tab_edge = "none",
   },

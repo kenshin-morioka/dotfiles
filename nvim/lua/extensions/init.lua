@@ -64,7 +64,7 @@ local plugins = {
     branch = 'v3.x',
     lazy = false,
     keys = {
-      { '<leader>e', '<cmd>Neotree toggle<cr>', desc = 'Toggle NeoTree' },
+      { '<leader>b', '<cmd>Neotree toggle<cr>', desc = 'Toggle NeoTree' },
     },
     dependencies = {
       'nvim-lua/plenary.nvim',
@@ -88,6 +88,14 @@ local plugins = {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
     opts = {},
+  },
+  -- Comment
+  {
+    'numToStr/Comment.nvim',
+    event = { 'BufNewFile', 'BufReadPre' },
+    opts = {
+      ignore = '^$',  -- 空行を無視
+    },
   },
   -- Color highlighter
   {

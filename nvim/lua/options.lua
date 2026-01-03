@@ -31,6 +31,14 @@ vim.api.nvim_win_set_option(0, 'list', true)
 -- 指定したカラム列を強調
 -- vim.api.nvim_win_set_option(0, 'colorcolumn', '100')
 
+-- filetype detection
+vim.filetype.add({
+  pattern = {
+    ['.*git%-hooks/.*'] = 'sh',
+    ['.*%.git/hooks/.*'] = 'sh',
+  },
+})
+
 -- buffer
 vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
   pattern = '*',

@@ -55,3 +55,7 @@ vim.keymap.set('t', '<C-w>j', '<C-\\><C-n><C-w>j')     -- 下ウィンドウへ�
 vim.keymap.set('t', '<C-w>k', '<C-\\><C-n><C-w>k')     -- 上ウィンドウへ移動
 vim.keymap.set('t', '<C-w>l', '<C-\\><C-n><C-w>l')     -- 右ウィンドウへ移動
 
+-- Comment (Select mode)
+vim.keymap.set('s', 'gc', '<C-g>gc', { remap = true }) -- セレクトモードでコメントトグル
+vim.keymap.set('s', 'gb', '<C-g>gb', { remap = true }) -- セレクトモードでブロックコメントトグル
+
