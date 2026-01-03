@@ -57,3 +57,7 @@ vim.keymap.set("t", "<C-w>l", "<C-\\><C-n><C-w>l") -- 右ウィンドウへ移�
 -- Comment (Select mode)
 vim.keymap.set("s", "gc", "<C-g>gc", { remap = true }) -- セレクトモードでコメントトグル
 vim.keymap.set("s", "gb", "<C-g>gb", { remap = true }) -- セレクトモードでブロックコメントトグル
+
+-- Diagnostics
+vim.keymap.set("n", "<leader>dd", vim.diagnostic.open_float) -- diagnosticsをフロート表示
+vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist) -- diagnosticsをリスト表示
