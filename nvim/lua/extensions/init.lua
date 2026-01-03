@@ -147,6 +147,40 @@ local plugins = {
     },
     config = function() require 'extensions.conform' end,
   },
+  -- Git Diff Viewer
+  {
+    'sindrets/diffview.nvim',
+    cmd = { 'DiffviewOpen', 'DiffviewFileHistory' },
+    keys = {
+      { '<leader>gd', '<cmd>DiffviewOpen<cr>', desc = 'Git Diff View' },
+      { '<leader>gh', '<cmd>DiffviewFileHistory %<cr>', desc = 'File History' },
+      { '<leader>gH', '<cmd>DiffviewFileHistory<cr>', desc = 'Branch History' },
+      { '<leader>gc', '<cmd>DiffviewClose<cr>', desc = 'Close Diff View' },
+    },
+    opts = {
+      enhanced_diff_hl = true,
+      view = {
+        merge_tool = {
+          layout = 'diff3_mixed',
+        },
+      },
+    },
+  },
+  -- Markdown Preview
+  {
+    'iamcco/markdown-preview.nvim',
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    ft = { 'markdown' },
+    build = 'cd app && npm install',
+    keys = {
+      { '<leader>mp', '<cmd>MarkdownPreviewToggle<cr>', desc = 'Markdown Preview' },
+    },
+    init = function()
+      vim.g.mkdp_filetypes = { 'markdown' }
+      vim.g.mkdp_auto_close = 0
+      vim.g.mkdp_theme = 'dark'
+    end,
+  },
   -- Terminal
   {
     'akinsho/toggleterm.nvim',
