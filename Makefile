@@ -55,3 +55,18 @@ unlink:  ## unlink symbolic links
 			echo "  Unlinked $$dst"; \
 		fi \
 	done
+
+# --------------------------------------
+# Homebrew
+#
+brew-common:  ## install common brew packages
+	@echo "🍺 Installing common packages..."
+	brew bundle --file=$(DOTFILES_DIR)/homebrew/Brewfile.common
+
+brew-personal: brew-common  ## install personal brew packages (includes common)
+	@echo "🍺 Installing personal packages..."
+	brew bundle --file=$(DOTFILES_DIR)/homebrew/Brewfile.personal
+
+brew-work: brew-common  ## install work brew packages (includes common)
+	@echo "🍺 Installing work packages..."
+	brew bundle --file=$(DOTFILES_DIR)/homebrew/Brewfile.work

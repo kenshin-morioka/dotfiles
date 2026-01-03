@@ -1,0 +1,17 @@
+# Common packages for all environments
+
+brew "bash"
+brew "coreutils"
+brew "git"
+brew "ghq"
+brew "peco"
+brew "fzf"
+brew "direnv"
+brew "mise"
+brew "neovim"
+brew "lazygit"
+brew "starship"
+brew "cowsay"
+brew "antigen"
+
+cask "claude-code"
