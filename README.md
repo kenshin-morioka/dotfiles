@@ -2,6 +2,47 @@
 
 macOS向けの個人用dotfiles設定ファイル集です。
 
+<details>
+<summary>English</summary>
+
+Personal dotfiles configuration for macOS.
+
+## Contents
+
+| Directory | Description |
+| --- | --- |
+| `nvim/` | Neovim config (lazy.nvim, LSP, Telescope, NeoTree, etc.) |
+| `wezterm/` | WezTerm terminal config |
+| `zsh/` | Zsh config (.zshrc, .zprofile) |
+| `homebrew/` | Brewfile (package management) |
+| `mise/` | mise version manager config |
+| `starship.toml` | Starship prompt config |
+| `claude/` | Claude Code config |
+| `git-hooks/` | Git hooks (pre-push, etc.) |
+| `act/` | GitHub Actions local runner config |
+
+## Setup
+
+1. Clone: `ghq get git@github.com:kenshin-morioka/dotfiles.git`
+2. Install Homebrew: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+3. Install packages: `make brew`
+4. Create symlinks: `make link`
+5. Install fzf keybindings: `$(brew --prefix)/opt/fzf/install`
+
+## Make Commands
+
+| Command | Description |
+| --- | --- |
+| `make link` | Create symlinks |
+| `make unlink` | Remove symlinks |
+| `make brew` | Install all packages from Brewfile |
+| `make brew-add PKG=xxx` | Add and install a package |
+| `make brew-add-cask PKG=xxx` | Add and install a cask |
+| `make brew-sync` | Sync installed packages to Brewfile |
+| `make brew-list` | Show Brewfile contents |
+
+</details>
+
 ## 含まれる設定
 
 | ディレクトリ | 説明 |
