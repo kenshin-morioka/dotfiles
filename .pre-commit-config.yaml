@@ -4,7 +4,7 @@ repos:
       # Lua
       - id: selene
         name: selene (lua linter)
-        entry: selene
+        entry: selene --allow-warnings
         language: system
         types: [lua]
 

@@ -28,6 +28,7 @@ vim.api.nvim_win_set_option(0, 'signcolumn', 'yes:1')
 vim.api.nvim_win_set_option(0, 'wrap', false)
 -- 非表示文字の可視化
 vim.api.nvim_win_set_option(0, 'list', true)
+vim.opt.listchars = { eol = '↵' }
 -- 指定したカラム列を強調
 -- vim.api.nvim_win_set_option(0, 'colorcolumn', '100')
 
