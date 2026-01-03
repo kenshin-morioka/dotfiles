@@ -14,6 +14,9 @@ telescope.setup {
       }
     },
     winblend = 20,
+    preview = {
+      treesitter = false,
+    },
   },
   extensions = {
     fzf = {

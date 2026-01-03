@@ -1,49 +1,49 @@
-#!/opt/homebrew/bin/bash
+# #!/opt/homebrew/bin/bash
 
-# pre-push フック
-# push 前にセルフレビューチェックリストの確認を実施
+# # pre-push フック
+# # push 前にセルフレビューチェックリストの確認を実施
 
-set -e
+# set -e
 
-# セルフレビューチェックリストのパス（グローバル設定を参照）
-CHECKLIST_FILE="$HOME/.claude/SELF_REVIEW_CHECKLIST.md"
+# # セルフレビューチェックリストのパス（グローバル設定を参照）
+# CHECKLIST_FILE="$HOME/.claude/SELF_REVIEW_CHECKLIST.md"
 
-if [ ! -f "$CHECKLIST_FILE" ]; then
-  echo "⚠️  $CHECKLIST_FILE が見つかりません。pushを中止します。"
-  echo "    ヒント: ~/.claude/SELF_REVIEW_CHECKLIST.md を作成してください。"
-  exit 1
-fi
+# if [ ! -f "$CHECKLIST_FILE" ]; then
+#   echo "⚠️  $CHECKLIST_FILE が見つかりません。pushを中止します。"
+#   echo "    ヒント: ~/.claude/SELF_REVIEW_CHECKLIST.md を作成してください。"
+#   exit 1
+# fi
 
-echo ""
-echo "🧩 セルフレビュー チェック開始"
-echo "----------------------------------"
+# echo ""
+# echo "🧩 セルフレビュー チェック開始"
+# echo "----------------------------------"
 
-# must項目を抽出（例: - [ ] must: の行）
-mapfile -t check_items < <(grep -E "^- \[ \] .*(must|MUST)" "$CHECKLIST_FILE" | sed -E 's/^- \[ \] (must:|MUST:)?\s*//')
+# # must項目を抽出（例: - [ ] must: の行）
+# mapfile -t check_items < <(grep -E "^- \[ \] .*(must|MUST)" "$CHECKLIST_FILE" | sed -E 's/^- \[ \] (must:|MUST:)?\s*//')
 
-if [ ${#check_items[@]} -eq 0 ]; then
-  echo "⚠️  must項目が見つかりません。pushを中止します。"
-  exit 1
-fi
+# if [ ${#check_items[@]} -eq 0 ]; then
+#   echo "⚠️  must項目が見つかりません。pushを中止します。"
+#   exit 1
+# fi
 
-all_checked=true
+# all_checked=true
 
-for item in "${check_items[@]}"; do
-  echo ""
-  read -p "✅ ${item} [y/n]: " answer < /dev/tty
-  if [[ "$answer" != "y" && "$answer" != "Y" ]]; then
-    all_checked=false
-  fi
-done
+# for item in "${check_items[@]}"; do
+#   echo ""
+#   read -p "✅ ${item} [y/n]: " answer < /dev/tty
+#   if [[ "$answer" != "y" && "$answer" != "Y" ]]; then
+#     all_checked=false
+#   fi
+# done
 
-if [ "$all_checked" = false ]; then
-  echo ""
-  echo "❌ 未チェック項目があります。pushを中止します。"
-  echo "----------------------------------"
-  exit 1
-fi
+# if [ "$all_checked" = false ]; then
+#   echo ""
+#   echo "❌ 未チェック項目があります。pushを中止します。"
+#   echo "----------------------------------"
+#   exit 1
+# fi
 
-echo ""
-echo "✅ すべての must 項目を確認しました。pushを続行します。"
-echo "----------------------------------"
-exit 0
+# echo ""
+# echo "✅ すべての must 項目を確認しました。pushを続行します。"
+# echo "----------------------------------"
+# exit 0

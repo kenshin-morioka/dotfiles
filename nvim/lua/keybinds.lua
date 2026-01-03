@@ -27,6 +27,7 @@ vim.keymap.set('n', '<leader>l', '<C-w><C-l>')
 -- buffer
 vim.keymap.set('n', '<Tab>', ':bnext<CR>')
 vim.keymap.set('n', '<S-Tab>', ':bprev<CR>')
+vim.keymap.set('n', '<leader>q', ':bp|bd #<CR>')
 
 -- cursor movement (Option + Arrow)
 vim.keymap.set('i', '<M-Left>', '<C-o>b')   -- 前の単語へ
@@ -46,4 +47,11 @@ vim.keymap.set('n', '<S-M-Left>', 'vb')                -- ノーマル：選択�
 vim.keymap.set('n', '<S-M-Right>', 'vw')               -- ノーマル：選択開始して次の単語へ
 vim.keymap.set({'v', 's'}, '<S-M-Left>', 'b')          -- 選択範囲を前の単語へ拡張
 vim.keymap.set({'v', 's'}, '<S-M-Right>', 'w')         -- 選択範囲を次の単語へ拡張
+
+-- Terminal mode
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')            -- Escでノーマルモードへ
+vim.keymap.set('t', '<C-w>h', '<C-\\><C-n><C-w>h')     -- 左ウィンドウへ移動
+vim.keymap.set('t', '<C-w>j', '<C-\\><C-n><C-w>j')     -- 下ウィンドウへ移動
+vim.keymap.set('t', '<C-w>k', '<C-\\><C-n><C-w>k')     -- 上ウィンドウへ移動
+vim.keymap.set('t', '<C-w>l', '<C-\\><C-n><C-w>l')     -- 右ウィンドウへ移動
 
