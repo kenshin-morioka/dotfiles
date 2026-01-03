@@ -1,0 +1,39 @@
+repos:
+  - repo: local
+    hooks:
+      # Lua
+      - id: selene
+        name: selene (lua linter)
+        entry: selene
+        language: system
+        types: [lua]
+
+      # Shell
+      - id: shellcheck
+        name: shellcheck (shell linter)
+        entry: shellcheck
+        language: system
+        types: [shell]
+
+      # JSON
+      - id: jsonlint
+        name: jsonlint (json linter)
+        entry: jsonlint
+        language: system
+        types: [json]
+
+      # Markdown
+      - id: markdownlint
+        name: markdownlint (markdown linter)
+        entry: markdownlint
+        language: system
+        types: [markdown]
+
+  # General hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files

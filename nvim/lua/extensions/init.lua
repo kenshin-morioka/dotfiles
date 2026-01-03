@@ -131,6 +131,12 @@ local plugins = {
     },
     config = function() require 'extensions.nvim-cmp' end,
   },
+  -- Linter
+  {
+    'mfussenegger/nvim-lint',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function() require 'extensions.nvim-lint' end,
+  },
   -- Terminal
   {
     'akinsho/toggleterm.nvim',

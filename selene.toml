@@ -1,0 +1,7 @@
+std = "lua51"
+
+[lints]
+global_usage = "allow"
+undefined_variable = "allow"
+unused_variable = "allow"
+mixed_table = "allow"
