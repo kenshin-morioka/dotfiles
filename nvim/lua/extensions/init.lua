@@ -34,7 +34,7 @@ local plugins = {
   {
     'nvim-telescope/telescope.nvim',
     keys = {
-      '<leader>ff', '<leader>fg', '<leader>fb', '<leader>fh'
+      '<leader>ff', '<leader>fg'
     },
     branch = '0.1.x',
     config = function() require 'extensions.telescope' end,

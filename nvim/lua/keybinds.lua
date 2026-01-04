@@ -61,3 +61,6 @@ vim.keymap.set("s", "gb", "<C-g>gb", { remap = true }) -- セレクトモード�
 -- Diagnostics
 vim.keymap.set("n", "<leader>dd", vim.diagnostic.open_float) -- diagnosticsをフロート表示
 vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist) -- diagnosticsをリスト表示
+
+-- Clear search highlight
+vim.keymap.set("n", "<Esc><Esc>", ":nohlsearch<CR>", { silent = true })
