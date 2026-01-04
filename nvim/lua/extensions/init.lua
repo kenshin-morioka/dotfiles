@@ -165,6 +165,13 @@ local plugins = {
     },
     config = function() require 'extensions.diffview' end,
   },
+  -- Git Conflict resolver
+  {
+    'akinsho/git-conflict.nvim',
+    version = '*',
+    event = { 'BufReadPre' },
+    config = function() require 'extensions.git-conflict' end,
+  },
   -- Markdown Preview
   {
     'iamcco/markdown-preview.nvim',
