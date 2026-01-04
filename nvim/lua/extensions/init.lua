@@ -3,25 +3,7 @@ local plugins = {
     'nvim-treesitter/nvim-treesitter',
     event = { 'BufNewFile', 'BufReadPre' },
     build = ':TSUpdate',
-    opts = {
-      ensure_installed = {
-        'bash', 'comment', 'css', 'csv', 'dockerfile', 'go', 'graphql', 'html', 'javascript', 'jsdoc', 'json', 'lua', 'markdown', 'mermaid', 'prisma',
-        'python', 'ruby', 'rust', 'sql', 'ssh_config', 'tsx', 'typescript', 'vim', 'vimdoc',
-      },
-      sync_install = true,
-      auto_install = true,
-      highlight = { enable = true },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = 'gnn',
-          node_incremental = 'grn',
-          scope_incremental = 'grc',
-          node_decremental = 'grm',
-        },
-      },
-      indent = { enable = true },
-    },
+    config = function() require 'extensions.nvim-treesitter' end,
   },
   {
     'rmehri01/onenord.nvim',
@@ -37,14 +19,17 @@ local plugins = {
   {
     'kevinhwang91/nvim-hlslens',
     event = { 'FilterWritePre' },
+    config = function() require 'extensions.nvim-hlslens' end,
   },
   {
     'lewis6991/gitsigns.nvim',
     event = { 'BufReadPre' },
+    config = function() require 'extensions.gitsigns' end,
   },
   {
     'petertriho/nvim-scrollbar',
     event = { 'BufNewFile', 'BufReadPre' },
+    config = function() require 'extensions.nvim-scrollbar' end,
   },
   {
     'nvim-telescope/telescope.nvim',
@@ -157,14 +142,7 @@ local plugins = {
       { '<leader>gH', '<cmd>DiffviewFileHistory<cr>', desc = 'Branch History' },
       { '<leader>gc', '<cmd>DiffviewClose<cr>', desc = 'Close Diff View' },
     },
-    opts = {
-      enhanced_diff_hl = true,
-      view = {
-        merge_tool = {
-          layout = 'diff3_mixed',
-        },
-      },
-    },
+    config = function() require 'extensions.diffview' end,
   },
   -- Markdown Preview
   {
@@ -175,11 +153,7 @@ local plugins = {
     keys = {
       { '<leader>mp', '<cmd>MarkdownPreviewToggle<cr>', desc = 'Markdown Preview' },
     },
-    init = function()
-      vim.g.mkdp_filetypes = { 'markdown' }
-      vim.g.mkdp_auto_close = 0
-      vim.g.mkdp_theme = 'dark'
-    end,
+    init = function() require 'extensions.markdown-preview' end,
   },
   -- Terminal
   {
@@ -188,39 +162,7 @@ local plugins = {
     keys = {
       { '<C-\\>', '<cmd>ToggleTerm<cr>', desc = 'Toggle Terminal', mode = { 'n', 't' } },
     },
-    opts = {
-      size = function(term)
-        if term.direction == 'horizontal' then
-          return 15
-        elseif term.direction == 'vertical' then
-          return vim.o.columns * 0.4
-        end
-      end,
-      open_mapping = [[<C-\>]],
-      hide_numbers = true,
-      shade_terminals = true,
-      shading_factor = -30,
-      start_in_insert = true,
-      insert_mappings = true,
-      terminal_mappings = true,
-      persist_size = true,
-      persist_mode = true,
-      direction = 'horizontal',
-      close_on_exit = true,
-      shell = vim.o.shell,
-      float_opts = {
-        border = 'curved',
-        winblend = 3,
-      },
-      highlights = {
-        Normal = {
-          guibg = '#1e2030',
-        },
-        NormalFloat = {
-          link = 'Normal',
-        },
-      },
-    },
+    config = function() require 'extensions.toggleterm' end,
   },
 }
 

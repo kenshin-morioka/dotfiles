@@ -1,24 +1,24 @@
 require('gitsigns').setup {
-  signs                        = {
-    add          = { hl = 'GitSignsAdd', text = ' ▎', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
-    change       = { hl = 'GitSignsChange', text = ' ▎', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
-    delete       = { hl = 'GitSignsDelete', text = ' ', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-    topdelete    = { hl = 'GitSignsDelete', text = ' ', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-    changedelete = { hl = 'GitSignsChange', text = '▎ ', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+  signs = {
+    add          = { text = '▎' },
+    change       = { text = '▎' },
+    delete       = { text = '' },
+    topdelete    = { text = '' },
+    changedelete = { text = '▎' },
   },
-  signcolumn                   = true, -- Toggle with `:Gitsigns toggle_signs`
-  numhl                        = false, -- Toggle with `:Gitsigns toggle_numhl`
-  linehl                       = false, -- Toggle with `:Gitsigns toggle_linehl`
-  word_diff                    = true, -- Toggle with `:Gitsigns toggle_word_diff`
+  signcolumn                   = true,
+  numhl                        = false,
+  linehl                       = false,
+  word_diff                    = true,
   watch_gitdir                 = {
     interval = 1000,
     follow_files = true
   },
   attach_to_untracked          = false,
-  current_line_blame           = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+  current_line_blame           = false,
   current_line_blame_opts      = {
     virt_text = true,
-    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+    virt_text_pos = 'eol',
     delay = 1000,
     ignore_whitespace = false,
     virt_text_priority = 100,
@@ -26,20 +26,16 @@ require('gitsigns').setup {
   current_line_blame_formatter = '<summary> (<author_time:%Y/%m>)',
   sign_priority                = 6,
   update_debounce              = 100,
-  status_formatter             = nil, -- Use default
-  max_file_length              = 40000, -- Disable if file is longer than this (in lines)
+  status_formatter             = nil,
+  max_file_length              = 40000,
   preview_config               = {
-    -- Options passed to nvim_open_win
     border = 'single',
     style = 'minimal',
     relative = 'cursor',
     row = 0,
     col = 1
   },
-  yadm                         = {
-    enable = false
-  },
-  on_attach                    = function(bufnr)
+  on_attach = function(bufnr)
     local gs = package.loaded.gitsigns
 
     local function map(mode, l, r, opts)
