@@ -103,6 +103,26 @@ local plugins = {
       },
     },
   },
+  -- Mason (LSP installer)
+  {
+    'williamboman/mason.nvim',
+    lazy = false,
+    config = function() require 'extensions.mason' end,
+    dependencies = {
+      'williamboman/mason-lspconfig.nvim',
+    },
+  },
+  -- LSP
+  {
+    'neovim/nvim-lspconfig',
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = {
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+      'hrsh7th/cmp-nvim-lsp',
+    },
+    config = function() require 'extensions.lspconfig' end,
+  },
   -- Completion
   {
     'hrsh7th/nvim-cmp',
@@ -111,6 +131,7 @@ local plugins = {
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
+      'hrsh7th/cmp-nvim-lsp',
       'saadparwaiz1/cmp_luasnip',
       'onsails/lspkind.nvim',
     },
