@@ -43,6 +43,16 @@ Personal dotfiles configuration for macOS.
 | `make brew-list` | Show Brewfile contents |
 | `make claude-init` | Create self-review checklist template |
 
+## Package Management
+
+| Tool | Purpose | Examples |
+| ---- | ------- | -------- |
+| **Homebrew** | System tools, GUI apps (cask) | git, neovim, mise, claude-code |
+| **mise** | Language runtimes, dev tools (version management) | node, ruby, go, pnpm |
+
+- Use **mise** instead of rbenv, nodenv, tfenv for unified version management
+- Use Homebrew for tools that don't need per-project versioning
+
 </details>
 
 ## 含まれる設定
@@ -118,6 +128,16 @@ make help  # 利用可能なコマンド一覧を表示
 | `make brew-sync` | インストール済みパッケージをBrewfileに同期 |
 | `make brew-list` | Brewfileの内容を表示 |
 | `make claude-init` | セルフレビューチェックリストを生成 |
+
+## パッケージ管理の使い分け
+
+| ツール | 用途 | 例 |
+| ------ | ---- | --- |
+| **Homebrew** | システム基盤ツール、GUIアプリ（cask） | git, neovim, mise, claude-code |
+| **mise** | 言語ランタイム、開発ツール（バージョン管理が必要なもの） | node, ruby, go, pnpm |
+
+- rbenv, nodenv, tfenv などの個別バージョンマネージャーは **mise** で統一
+- Homebrewは主にシステム全体で1つのバージョンで良いツールに使用
 
 ## 主要ツール
 

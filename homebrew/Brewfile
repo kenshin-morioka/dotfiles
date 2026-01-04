@@ -9,9 +9,6 @@ brew "direnv"
 
 # Version Manager
 brew "mise"
-brew "rbenv"
-brew "nodenv"
-brew "tfenv"
 
 # Editor
 brew "neovim"
@@ -41,7 +38,6 @@ brew "aws-sam-cli"
 # Build Tools
 brew "go-task"
 brew "act"
-brew "pnpm"
 
 # Casks
 cask "claude-code"
