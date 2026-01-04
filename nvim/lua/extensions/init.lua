@@ -164,6 +164,52 @@ local plugins = {
     },
     config = function() require 'extensions.toggleterm' end,
   },
+  -- Indent guide and chunk highlight
+  {
+    'shellRaining/hlchunk.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function() require 'extensions.hlchunk' end,
+  },
+  -- Treesitter context (sticky header)
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    config = function() require 'extensions.treesitter-context' end,
+  },
+  -- Breadcrumb navigation
+  {
+    'Bekaboo/dropbar.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = { 'nvim-telescope/telescope-fzf-native.nvim' },
+    config = function() require 'extensions.dropbar' end,
+  },
+  -- Accelerated j/k movement
+  {
+    'rainbowhxch/accelerated-jk.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function() require 'extensions.accelerated-jk' end,
+  },
+  -- Better folding
+  {
+    'kevinhwang91/nvim-ufo',
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = { 'kevinhwang91/promise-async' },
+    config = function() require 'extensions.nvim-ufo' end,
+  },
+  -- Symbol navigation
+  {
+    'bassamsdata/namu.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function() require 'extensions.namu' end,
+  },
+  -- Documentation generator
+  {
+    'kkoomen/vim-doge',
+    build = ':call doge#install()',
+    event = { 'BufReadPre', 'BufNewFile' },
+    init = function() require 'extensions.vim-doge' end,
+  },
 }
 
 local opts = {
