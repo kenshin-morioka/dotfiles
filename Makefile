@@ -100,3 +100,17 @@ brew-sync:  ## 現在のパッケージをBrewfileに同期
 brew-list:  ## Brewfileの内容を表示
 	@echo "📦 Brewfileのパッケージ一覧:"
 	@cat "$(BREWFILE)"
+
+# --------------------------------------
+# Claude Code
+#
+CHECKLIST_FILE := $(DOTFILES_DIR)/claude/SELF_REVIEW_CHECKLIST.md
+
+claude-init:  ## セルフレビューチェックリストを生成
+	@if [ -f "$(CHECKLIST_FILE)" ]; then \
+		echo "⚠️  $(CHECKLIST_FILE) は既に存在します"; \
+	else \
+		mkdir -p "$$(dirname "$(CHECKLIST_FILE)")"; \
+		echo "<!-- セルフレビューチェックリストを作成してください -->" > "$(CHECKLIST_FILE)"; \
+		echo "✅ $(CHECKLIST_FILE) を作成しました"; \
+	fi

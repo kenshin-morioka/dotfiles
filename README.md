@@ -17,7 +17,7 @@ Personal dotfiles configuration for macOS.
 | `homebrew/` | Brewfile (package management) |
 | `mise/` | mise version manager config |
 | `starship.toml` | Starship prompt config |
-| `claude/` | Claude Code config |
+| `claude/` | Claude Code config (create `SELF_REVIEW_CHECKLIST.md` for quality assurance) |
 | `git-hooks/` | Git hooks (pre-push, etc.) |
 | `act/` | GitHub Actions local runner config |
 
@@ -28,6 +28,7 @@ Personal dotfiles configuration for macOS.
 3. Install packages: `make brew`
 4. Create symlinks: `make link`
 5. Install fzf keybindings: `$(brew --prefix)/opt/fzf/install`
+6. Create self-review checklist: `make claude-init` (customize the content yourself)
 
 ## Make Commands
 
@@ -40,6 +41,7 @@ Personal dotfiles configuration for macOS.
 | `make brew-add-cask PKG=xxx` | Add and install a cask |
 | `make brew-sync` | Sync installed packages to Brewfile |
 | `make brew-list` | Show Brewfile contents |
+| `make claude-init` | Create self-review checklist template |
 
 </details>
 
@@ -53,7 +55,7 @@ Personal dotfiles configuration for macOS.
 | `homebrew/` | Brewfile（パッケージ管理） |
 | `mise/` | miseバージョン管理設定 |
 | `starship.toml` | Starshipプロンプト設定 |
-| `claude/` | Claude Code設定 |
+| `claude/` | Claude Code設定（品質担保のため`SELF_REVIEW_CHECKLIST.md`を作成して配置） |
 | `git-hooks/` | Gitフック（pre-push等） |
 | `act/` | GitHub Actions ローカル実行設定 |
 
@@ -92,6 +94,14 @@ make link
 $(brew --prefix)/opt/fzf/install
 ```
 
+### 6. セルフレビューチェックリストの作成
+
+```bash
+make claude-init
+```
+
+※ 中身は自分でカスタマイズしてください
+
 ## Makeコマンド
 
 ```bash
@@ -107,6 +117,7 @@ make help  # 利用可能なコマンド一覧を表示
 | `make brew-add-cask PKG=xxx` | Caskを追加・インストール |
 | `make brew-sync` | インストール済みパッケージをBrewfileに同期 |
 | `make brew-list` | Brewfileの内容を表示 |
+| `make claude-init` | セルフレビューチェックリストを生成 |
 
 ## 主要ツール
 
