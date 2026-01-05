@@ -58,3 +58,7 @@ vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist) -- diagnosticsã‚’ãƒ
 
 -- Clear search highlight
 vim.keymap.set("n", "<Esc><Esc>", ":nohlsearch<CR>", { silent = true })
+
+-- Copy file path
+vim.keymap.set("n", "<leader>cp", ':let @+ = expand("%")<CR>', { silent = true, desc = "Copy relative path" })
+vim.keymap.set("n", "<leader>cP", ':let @+ = expand("%:p")<CR>', { silent = true, desc = "Copy absolute path" })
