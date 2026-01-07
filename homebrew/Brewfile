@@ -41,7 +41,7 @@ brew "act"
 
 # Casks
 cask "claude-code"
-cask "session-manager-plugin"
+cask "session-manager-plugin" # 要sudo権限での手動インストール
 brew "stylua"
 brew "shfmt"
 brew "prettier"
