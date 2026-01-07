@@ -1,7 +1,8 @@
 local M = {}
 
--- 背景画像のパスを設定
-local background_image = "/Users/moriokakenshin/src/github.com/kenshin-morioka/dotfiles/wezterm/nerve.jpg"
+-- 背景画像のパスを環境変数HOMEを使用して設定
+local home = os.getenv("HOME")
+local background_image = home .. "/src/github.com/kenshin-morioka/dotfiles/wezterm/nerve.jpg"
 
 return {
     {
