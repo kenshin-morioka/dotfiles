@@ -7,3 +7,4 @@ rm -rf .zsh_sessions
 configstore
 .android/cache
 SELF_REVIEW_CHECKLIST.md
+git/.gitconfig.local
