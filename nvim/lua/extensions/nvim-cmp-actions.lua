@@ -46,7 +46,9 @@ M.shift_tab = function(fallback)
     return
   end
 
-  fallback()
+  -- インデントを1段浅くする（Ctrl+dと同等の動作）
+  local key = vim.api.nvim_replace_termcodes('<C-d>', true, true, true)
+  vim.api.nvim_feedkeys(key, 'n', true)
 end
 
 return M
