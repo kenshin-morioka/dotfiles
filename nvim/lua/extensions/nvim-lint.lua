@@ -1,5 +1,12 @@
 local lint = require('lint')
 
+-- markdownlintの設定ファイルを指定
+lint.linters.markdownlint.args = {
+  '--config',
+  vim.fn.stdpath('config') .. '/../.markdownlint.json',
+  '--stdin',
+}
+
 -- リンターの設定
 lint.linters_by_ft = {
   lua = { 'selene' },
