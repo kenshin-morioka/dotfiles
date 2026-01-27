@@ -1,6 +1,6 @@
 local lint = require('lint')
 
--- markdownlintの設定ファイルを指定（nvim設定の親ディレクトリ=dotfilesルート）
+-- markdownlintの設定ファイルを指定
 lint.linters.markdownlint.args = {
   '--config',
   vim.fn.stdpath('config') .. '/../.markdownlint.json',
