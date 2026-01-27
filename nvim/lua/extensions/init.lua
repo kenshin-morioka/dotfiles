@@ -244,7 +244,7 @@ local opts = {
   checker = {
     enabled = true,
   },
-  preformance = {
+  performance = {
     cache = {
       enabled = true,
     },

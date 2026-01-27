@@ -165,6 +165,7 @@ make help  # 利用可能なコマンド一覧を表示
 - **shellcheck** - Shell
 - **jsonlint** - JSON
 - **markdownlint** - Markdown
+- **typos** - スペルチェック（全ファイル）
 - **stylua** - Lua formatter
 - **shfmt** - Shell formatter
 - **prettier** - JSON/YAML/Markdown formatter

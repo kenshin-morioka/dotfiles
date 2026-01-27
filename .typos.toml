@@ -1,0 +1,15 @@
+# typos設定ファイル
+# https://github.com/crate-ci/typos/blob/master/docs/reference.md
+
+[files]
+extend-exclude = [
+    "*.lock",
+    "*.min.js",
+    "*.min.css",
+    "nvim/lua/tmp/",
+]
+
+[default.extend-words]
+# 許可する単語（typo扱いしない）
+noice = "noice"  # noice.nvim プラグイン名
+nd = "nd"  # 変数名として使用

@@ -1,6 +1,13 @@
 repos:
   - repo: local
     hooks:
+      # Typos (spell checker)
+      - id: typos
+        name: typos (spell checker)
+        entry: typos --force-exclude
+        language: system
+        types: [text]
+
       # Lua
       - id: selene
         name: selene (lua linter)
