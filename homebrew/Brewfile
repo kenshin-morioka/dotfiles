@@ -29,6 +29,7 @@ brew "selene"
 brew "shellcheck"
 brew "jsonlint"
 brew "markdownlint-cli"
+brew "typos-cli"
 brew "pre-commit"
 
 # AWS

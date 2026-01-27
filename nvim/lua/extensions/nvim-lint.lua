@@ -15,6 +15,7 @@ lint.linters_by_ft = {
   zsh = { 'shellcheck' },
   json = { 'jsonlint' },
   markdown = { 'markdownlint' },
+  ['*'] = { 'typos' },
 }
 
 -- 自動実行の設定
