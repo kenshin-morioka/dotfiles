@@ -15,7 +15,7 @@ require('toggleterm').setup {
   terminal_mappings = true,
   persist_size = true,
   persist_mode = true,
-  direction = 'horizontal',
+  direction = 'vertical',
   close_on_exit = true,
   shell = vim.o.shell,
   float_opts = {
