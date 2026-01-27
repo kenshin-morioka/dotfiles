@@ -34,8 +34,7 @@ LINKS := \
 	$(DOTFILES_DIR)/.git/hooks/pre-push:$(DOTFILES_DIR)/git-hooks/pre-push \
 	$(HOME)/.cowsay:$(DOTFILES_DIR)/cowsay \
 	$(HOME)/.gitconfig:$(DOTFILES_DIR)/git/.gitconfig \
-	$(HOME)/.gitconfig.local:$(DOTFILES_DIR)/git/.gitconfig.local \
-	$(HOME)/.markdownlint.json:$(DOTFILES_DIR)/.markdownlint.json
+	$(HOME)/.gitconfig.local:$(DOTFILES_DIR)/git/.gitconfig.local
 
 # --------------------------------------
 # シンボリックリンク
