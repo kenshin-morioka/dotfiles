@@ -8,13 +8,13 @@ return {
     {
         source = {
             Gradient = {
-            colors = { "#143e4eff", "#001522" },
+            colors = { "#143e4eff", "#010b12" },
             orientation = {
                 Linear = { angle = -30.0 },
             },
             },
         },
-        opacity = 0.75,
+        opacity = 1,
         width = "100%",
         height = "100%",
     },
