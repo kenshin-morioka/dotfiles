@@ -45,7 +45,7 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
   pattern = '*',
   group = vim.api.nvim_create_augroup('buffer_set_options', {}),
   callback = function()
-    -- swapfile作成を無効化
+    -- swapfile作成を有効化（クラッシュ時のデータ復旧用）
     vim.api.nvim_buf_set_option(0, 'swapfile', true)
     -- tab幅
     vim.api.nvim_buf_set_option(0, 'tabstop', 2)
