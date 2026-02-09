@@ -172,6 +172,15 @@ local plugins = {
     event = { 'BufReadPre' },
     config = function() require 'extensions.git-conflict' end,
   },
+  -- GitHub link generator
+  {
+    'linrongbin16/gitlinker.nvim',
+    cmd = 'GitLink',
+    keys = {
+      { '<leader>go', '<cmd>GitLink!<cr>', mode = { 'n', 'v' }, desc = 'Open GitHub link in browser' },
+    },
+    opts = {},
+  },
   -- Markdown Preview
   {
     'iamcco/markdown-preview.nvim',
