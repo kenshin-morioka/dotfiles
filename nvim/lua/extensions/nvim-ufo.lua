@@ -5,7 +5,20 @@ vim.o.foldenable = true
 
 require('ufo').setup {
   provider_selector = function(bufnr, filetype, buftype)
-    local excluded = { 'neo-tree', 'toggleterm', 'terminal', 'help', 'qf' }
+    -- 特殊バッファタイプはフォールディング不要（diffview:// 等の仮想バッファでの
+    -- "index out of bounds" エラーを防止）
+    if buftype == 'nofile' or buftype == 'nowrite' or buftype == 'acwrite' then
+      return ''
+    end
+    local excluded = {
+      'neo-tree',
+      'toggleterm',
+      'terminal',
+      'help',
+      'qf',
+      'DiffviewFiles',
+      'DiffviewFileHistory',
+    }
     for _, ft in ipairs(excluded) do
       if filetype == ft then
         return ''
