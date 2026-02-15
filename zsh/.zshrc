@@ -55,8 +55,8 @@ alias -g lb='`git branch | peco --prompt "GIT BRANCH>" | head -n 1 | sed -e "s/^
 alias de='docker exec -it $(docker ps | peco | cut -d " " -f 1) /bin/bash'
 
 if [[ $(uname) = "Darwin" ]]; then
-    alias ldd="echo ldd is not on OSX. use otool -L."
-    alias strace="echo strace is not on OSX. use dtruss"
+  alias ldd="echo ldd is not on OSX. use otool -L."
+  alias strace="echo strace is not on OSX. use dtruss"
 fi
 
 # ====================
@@ -85,14 +85,14 @@ abbr -S crs='claude --resume ' >>/dev/null
 # ====================
 # Functions
 # ====================
-function nvim() {
-  if command -v gtimeout &>/dev/null; then
-    gtimeout 1 cmatrix -u 1
-  elif command -v timeout &>/dev/null; then
-    timeout 1 cmatrix -u 1
-  fi
-  command nvim "$@"
-}
+# function nvim() {
+#   if command -v gtimeout &>/dev/null; then
+#     gtimeout 1 cmatrix -u 1
+#   elif command -v timeout &>/dev/null; then
+#     timeout 1 cmatrix -u 1
+#   fi
+#   command nvim "$@"
+# }
 
 # ====================
 # Peco
@@ -106,9 +106,9 @@ zle -N peco-select-history
 bindkey '^r' peco-select-history
 
 function peco-get-destination-from-cdr() {
-  cdr -l | \
-  sed -e 's/^[[:digit:]]*[[:blank:]]*//' | \
-  peco --query "$LBUFFER"
+  cdr -l |
+    sed -e 's/^[[:digit:]]*[[:blank:]]*//' |
+    peco --query "$LBUFFER"
 }
 
 function peco-cdr() {
