@@ -91,7 +91,13 @@ local plugins = {
       { '<leader>sf', function() require('spectre').open_file_search() end, desc = 'Search and Replace (File)' },
       { '<leader>sw', function() require('spectre').open_visual({ select_word = true }) end, desc = 'Search current word' },
     },
-    opts = {},
+    opts = {
+      find_engine = {
+        ['rg'] = {
+          args = { '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--hidden' },
+        },
+      },
+    },
   },
   -- Color highlighter
   {
