@@ -1,4 +1,10 @@
-local colors = require('onenord.colors').load()
+local colors = {
+  active     = '#353B49',
+  mypink     = '#FFB2CC',
+  light_gray = '#6C7A96',
+  fg         = '#C8D0E0',
+  orange     = '#D08F70',
+}
 
 local switch_color = {
   active = { fg = colors.active, bg = colors.mypink },
@@ -81,4 +87,3 @@ require('lualine').setup {
 }
 
 vim.api.nvim_set_option('showmode', false)
-

@@ -6,10 +6,10 @@ local plugins = {
     config = function() require 'extensions.nvim-treesitter' end,
   },
   {
-    'rmehri01/onenord.nvim',
+    'Mofiqul/vscode.nvim',
     event = { 'VimEnter' },
     priority = 1000,
-    config = function() require 'extensions.onenord' end,
+    config = function() require 'extensions.vscode-theme' end,
   },
   {
     'nvim-lualine/lualine.nvim',
