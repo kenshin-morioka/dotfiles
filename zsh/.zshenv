@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # PATH
 export PATH="${HOME}/.local/bin:/usr/local/sbin:${GOPATH}/bin:${PATH}"
 

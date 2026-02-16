@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # ====================
 # PATH
 # ====================
@@ -24,7 +25,8 @@ eval "$(starship init zsh)"
 # ====================
 # Plugins (antigen)
 # ====================
-source $HOME/.local/bin/antigen.zsh
+# shellcheck source=/dev/null
+source "$HOME"/.local/bin/antigen.zsh
 antigen use oh-my-zsh
 antigen bundles <<EOBUNDLES
     git
@@ -62,41 +64,44 @@ fi
 # ====================
 # Abbreviations
 # ====================
-abbr -S ll='ls -l' >>/dev/null
-abbr -S la='ls -A' >>/dev/null
-abbr -S lla='ls -l -A' >>/dev/null
-abbr -S v='vim' >>/dev/null
-abbr -S g='git' >>/dev/null
-abbr -S gco='git checkout' >>/dev/null
-abbr -S gst='git status' >>/dev/null
-abbr -S gsw='git switch' >>/dev/null
-abbr -S gbr='git branch' >>/dev/null
-abbr -S gfe='git fetch' >>/dev/null
-abbr -S gpl='git pull' >>/dev/null
-abbr -S gad='git add' >>/dev/null
-abbr -S gcm='git commit' >>/dev/null
-abbr -S gmg='git merge --no-ff' >>/dev/null
-abbr -S gpoh='git push origin HEAD' >>/dev/null
-abbr -S lg='lazygit' >>/dev/null
-abbr -S c='claude' >>/dev/null
-abbr -S cct='claude --continue' >>/dev/null
-abbr -S crs='claude --resume ' >>/dev/null
+{
+  abbr -S ll='ls -l'
+  abbr -S la='ls -A'
+  abbr -S lla='ls -l -A'
+  abbr -S v='vim'
+  abbr -S g='git'
+  abbr -S gco='git checkout'
+  abbr -S gst='git status'
+  abbr -S gsw='git switch'
+  abbr -S gbr='git branch'
+  abbr -S gfe='git fetch'
+  abbr -S gpl='git pull'
+  abbr -S gad='git add'
+  abbr -S gcm='git commit'
+  abbr -S gmg='git merge --no-ff'
+  abbr -S gpoh='git push origin HEAD'
+  abbr -S lg='lazygit'
+  abbr -S c='claude'
+  abbr -S cct='claude --continue'
+  abbr -S crs='claude --resume '
+} >> /dev/null
 
 # ====================
 # Functions
 # ====================
-# function nvim() {
-#   if command -v gtimeout &>/dev/null; then
-#     gtimeout 1 cmatrix -u 1
-#   elif command -v timeout &>/dev/null; then
-#     timeout 1 cmatrix -u 1
-#   fi
-#   command nvim "$@"
-# }
+function nvim() {
+  if command -v gtimeout &>/dev/null; then
+    gtimeout 1 cmatrix -u 1
+  elif command -v timeout &>/dev/null; then
+    timeout 1 cmatrix -u 1
+  fi
+  command nvim "$@"
+}
 
 # ====================
 # Peco
 # ====================
+# shellcheck disable=SC2034,SC2153
 function peco-select-history() {
   BUFFER=$(\history -n -r 1 | peco --query "$LBUFFER")
   CURSOR=$#BUFFER
@@ -111,8 +116,10 @@ function peco-get-destination-from-cdr() {
     peco --query "$LBUFFER"
 }
 
+# shellcheck disable=SC2034
 function peco-cdr() {
-  local destination="$(peco-get-destination-from-cdr)"
+  local destination
+  destination="$(peco-get-destination-from-cdr)"
   if [ -n "$destination" ]; then
     BUFFER="cd $destination"
     zle accept-line
@@ -149,4 +156,5 @@ unsetopt list_types
 # ====================
 # IDE Integration
 # ====================
+# shellcheck disable=SC1090
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
