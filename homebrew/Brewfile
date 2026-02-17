@@ -37,6 +37,10 @@ brew "awscli"
 brew "aws-vault"
 brew "aws-sam-cli"
 
+# Database Client
+brew "mysql-client"
+brew "zstd"
+
 # Build Tools
 brew "go-task"
 brew "act"

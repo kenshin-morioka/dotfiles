@@ -59,6 +59,7 @@ vim.lsp.config('lua_ls', {
 
 vim.lsp.config('ruby_lsp', {
   capabilities = capabilities,
+  root_markers = { '.git', 'Gemfile' },
   init_options = {
     formatter = 'auto',
     linters = { 'rubocop' },
