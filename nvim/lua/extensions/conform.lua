@@ -8,6 +8,7 @@ require('conform').setup({
     yaml = { 'prettier' },
     markdown = { 'prettier' },
     toml = { 'taplo' },
+    ruby = { 'rubocop' },
   },
   format_on_save = {
     timeout_ms = 500,
