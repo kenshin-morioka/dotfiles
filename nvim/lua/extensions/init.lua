@@ -167,7 +167,7 @@ local plugins = {
       { '<leader>gd', '<cmd>DiffviewOpen<cr>', desc = 'Git Diff View' },
       { '<leader>gh', '<cmd>DiffviewFileHistory %<cr>', desc = 'File History' },
       { '<leader>gH', '<cmd>DiffviewFileHistory<cr>', desc = 'Branch History' },
-      { '<leader>gc', '<cmd>DiffviewClose<cr>', desc = 'Close Diff View' },
+      { '<leader>gc', function() require('extensions.diffview').safe_close() end, desc = 'Close Diff View' },
     },
     config = function() require 'extensions.diffview' end,
   },
