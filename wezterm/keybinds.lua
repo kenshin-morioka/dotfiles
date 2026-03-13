@@ -22,7 +22,7 @@ return {
     { key = '9', mods = 'SUPER', action = act.ActivateTab(-1) },
     { key = '1', mods = 'SHIFT|CTRL', action = act.ActivateTab(0) },
     { key = '2', mods = 'SHIFT|CTRL', action = act.ActivateTab(1) },
-    { key = '3', mods = 'SHIFT|CTRL', action = act.ActivateTab(2) },   
+    { key = '3', mods = 'SHIFT|CTRL', action = act.ActivateTab(2) },
     { key = '4', mods = 'SHIFT|CTRL', action = act.ActivateTab(3) },
     { key = '5', mods = 'SHIFT|CTRL', action = act.ActivateTab(4) },
     { key = '6', mods = 'SHIFT|CTRL', action = act.ActivateTab(5) },
@@ -82,7 +82,7 @@ return {
     { key = '^', mods = 'SHIFT|CTRL', action = act.ActivateTab(5) },
     { key = '_', mods = 'CTRL', action = act.DecreaseFontSize },
     { key = '_', mods = 'SHIFT|CTRL', action = act.DecreaseFontSize },
-    
+
     { key = 'f', mods = 'SHIFT|CTRL', action = act.Search 'CurrentSelectionOrEmptyString' },
     { key = 'f', mods = 'SUPER', action = act.Search 'CurrentSelectionOrEmptyString' },
     { key = 'h', mods = 'SHIFT|CTRL', action = act.HideApplication },
@@ -123,6 +123,9 @@ return {
     { key = 'DownArrow', mods = 'SHIFT|ALT|CTRL', action = act.AdjustPaneSize{ 'Down', 1 } },
     { key = 'Copy', mods = 'NONE', action = act.CopyTo 'Clipboard' },
     { key = 'Paste', mods = 'NONE', action = act.PasteFrom 'Clipboard' },
+
+    -- LEADER keybinds
+    { key = 'b', mods = 'LEADER', action = act.EmitEvent('toggle-opacity') },
 
     -- Command + Arrow (send Home/End keys)
     { key = 'LeftArrow', mods = 'SUPER', action = act.SendKey { key = 'Home' } },

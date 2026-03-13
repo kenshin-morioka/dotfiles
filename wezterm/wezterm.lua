@@ -62,7 +62,21 @@ config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 2000 }
 
 -- background
 local background = require 'background'
-config.background = background
+config.background = background.default
+
+-- 背景透過トグル（LEADER + b で opacity 0.70 ⇄ 1.0 を切り替え）
+wezterm.GLOBAL.opacity = 0.70
+
+wezterm.on('toggle-opacity', function(window, _pane)
+  if wezterm.GLOBAL.opacity == 0.70 then
+    wezterm.GLOBAL.opacity = 1.0
+  else
+    wezterm.GLOBAL.opacity = 0.70
+  end
+  window:set_config_overrides({
+    background = background.create(wezterm.GLOBAL.opacity),
+  })
+end)
 
 require 'format'
 require 'status'
