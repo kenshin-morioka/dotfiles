@@ -1,6 +1,7 @@
-local wezterm = require 'wezterm'
+local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
+config.max_fps = 120
 config.automatically_reload_config = true
 config.font_size = 15.0
 config.use_ime = true
@@ -11,76 +12,76 @@ config.show_new_tab_button_in_tab_bar = false
 -- config.show_close_tab_button_in_tabs = true
 
 config.window_frame = {
-  font = wezterm.font { family ='Roboto', weight = 'Bold' },
-  font_size = 13.0,
-  inactive_titlebar_bg = "none",
-  active_titlebar_bg = "none",
+	font = wezterm.font({ family = "Roboto", weight = "Bold" }),
+	font_size = 13.0,
+	inactive_titlebar_bg = "none",
+	active_titlebar_bg = "none",
 }
 
 config.colors = {
-  foreground = "#d0d0d0",
-  tab_bar = {
-    inactive_tab_edge = "none",
-  },
+	foreground = "#d0d0d0",
+	tab_bar = {
+		inactive_tab_edge = "none",
+	},
 }
 
 local SOLID_LEFT_ARROW = wezterm.nerdfonts.ple_lower_right_triangle
 local SOLID_RIGHT_ARROW = wezterm.nerdfonts.ple_upper_left_triangle
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
-  local background = "#5c6d74"
-  local foreground = "#FFFFFF"
-  local edge_background = "none"
+	local background = "#5c6d74"
+	local foreground = "#FFFFFF"
+	local edge_background = "none"
 
-  if tab.is_active then
-    background = "#ae8b2d"
-    foreground = "#FFFFFF"
-  end
+	if tab.is_active then
+		background = "#ae8b2d"
+		foreground = "#FFFFFF"
+	end
 
-  local edge_foreground = background
-  local title = "   " .. wezterm.truncate_right(tab.active_pane.title, max_width - 1) .. "   "
+	local edge_foreground = background
+	local title = "   " .. wezterm.truncate_right(tab.active_pane.title, max_width - 1) .. "   "
 
-  return {
-    { Background = { Color = edge_background } },
-    { Foreground = { Color = edge_foreground } },
-    { Text = SOLID_LEFT_ARROW },
-    { Background = { Color = background } },
-    { Foreground = { Color = foreground } },
-    { Text = title },
-    { Background = { Color = edge_background } },
-    { Foreground = { Color = edge_foreground } },
-    { Text = SOLID_RIGHT_ARROW },
-  }
+	return {
+		{ Background = { Color = edge_background } },
+		{ Foreground = { Color = edge_foreground } },
+		{ Text = SOLID_LEFT_ARROW },
+		{ Background = { Color = background } },
+		{ Foreground = { Color = foreground } },
+		{ Text = title },
+		{ Background = { Color = edge_background } },
+		{ Foreground = { Color = edge_foreground } },
+		{ Text = SOLID_RIGHT_ARROW },
+	}
 end)
 
 -- keybindの設定
-local keybind = require 'keybinds'
+local keybind = require("keybinds")
 config.disable_default_key_bindings = true
 config.keys = keybind.keys
 config.key_tables = keybind.key_tables
 config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 2000 }
 
 -- background
-local background = require 'background'
+local background = require("background")
 config.background = background.default
 
 -- 背景透過トグル（LEADER + b で opacity 0.70 ⇄ 1.0 を切り替え）
 wezterm.GLOBAL.opacity = 0.70
 
-wezterm.on('toggle-opacity', function(window, _pane)
-  if wezterm.GLOBAL.opacity == 0.70 then
-    wezterm.GLOBAL.opacity = 1.0
-  else
-    wezterm.GLOBAL.opacity = 0.70
-  end
-  window:set_config_overrides({
-    background = background.create(wezterm.GLOBAL.opacity),
-  })
+wezterm.on("toggle-opacity", function(window, _pane)
+	if wezterm.GLOBAL.opacity == 0.70 then
+		wezterm.GLOBAL.opacity = 1.0
+	else
+		wezterm.GLOBAL.opacity = 0.70
+	end
+	window:set_config_overrides({
+		background = background.create(wezterm.GLOBAL.opacity),
+	})
 end)
 
-require 'format'
-require 'status'
-require 'event'
+require("format")
+require("status")
+require("event")
 
 -- status
 config.status_update_interval = 1000
