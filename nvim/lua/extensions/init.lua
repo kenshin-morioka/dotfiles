@@ -198,15 +198,6 @@ local plugins = {
     },
     init = function() require 'extensions.markdown-preview' end,
   },
-  -- Terminal
-  {
-    'akinsho/toggleterm.nvim',
-    version = '*',
-    keys = {
-      { '<C-\\>', '<cmd>ToggleTerm<cr>', desc = 'Toggle Terminal', mode = { 'n', 't' } },
-    },
-    config = function() require 'extensions.toggleterm' end,
-  },
   -- Indent guide and chunk highlight
   {
     'shellRaining/hlchunk.nvim',

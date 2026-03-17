@@ -43,13 +43,6 @@ vim.keymap.set("n", "<S-M-Right>", "vw") -- ノーマル：選択開始して次
 vim.keymap.set({ "v", "s" }, "<S-M-Left>", "b") -- 選択範囲を前の単語へ拡張
 vim.keymap.set({ "v", "s" }, "<S-M-Right>", "w") -- 選択範囲を次の単語へ拡張
 
--- Terminal mode
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>") -- Escでノーマルモードへ
-vim.keymap.set("t", "<C-w>h", "<C-\\><C-n><C-w>h") -- 左ウィンドウへ移動
-vim.keymap.set("t", "<C-w>j", "<C-\\><C-n><C-w>j") -- 下ウィンドウへ移動
-vim.keymap.set("t", "<C-w>k", "<C-\\><C-n><C-w>k") -- 上ウィンドウへ移動
-vim.keymap.set("t", "<C-w>l", "<C-\\><C-n><C-w>l") -- 右ウィンドウへ移動
-
 -- Comment (Select mode)
 vim.keymap.set("s", "gc", "<C-g>gc", { remap = true }) -- セレクトモードでコメントトグル
 vim.keymap.set("s", "gb", "<C-g>gb", { remap = true }) -- セレクトモードでブロックコメントトグル
