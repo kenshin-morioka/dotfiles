@@ -4,7 +4,6 @@ require('dropbar').setup {
       local filetype = vim.bo[buf].filetype
       local excluded = {
         'neo-tree',
-        'toggleterm',
         'terminal',
         'help',
         'qf',

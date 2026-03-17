@@ -24,7 +24,6 @@ require('ufo').setup {
 
     local excluded = {
       'neo-tree',
-      'toggleterm',
       'terminal',
       'help',
       'qf',
