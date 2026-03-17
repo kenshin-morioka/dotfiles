@@ -275,8 +275,8 @@ nvim .
 
 | キー | 説明 |
 | ---- | ---- |
-| `Cmd+Shift+t` | 縦分割（SplitVertical） |
-| `Cmd+Alt+t` | 横分割（SplitHorizontal） |
+| `Cmd+Shift+t` | 横分割（SplitHorizontal） |
+| `Cmd+Alt+t` | 縦分割（SplitVertical） |
 
 ### ペイン操作
 

@@ -31,8 +31,8 @@ return {
     { key = '9', mods = 'SHIFT|CTRL', action = act.ActivateTab(-1) },
 
     -- split tab
-    { key = 't', mods = 'SHIFT|SUPER', action = act.SplitVertical{ domain = 'CurrentPaneDomain' } },
-    { key = 't', mods = 'ALT|SUPER', action = act.SplitHorizontal{ domain = 'CurrentPaneDomain' } },
+    { key = 't', mods = 'SHIFT|SUPER', action = act.SplitHorizontal{ domain = 'CurrentPaneDomain' } },
+    { key = 't', mods = 'ALT|SUPER', action = act.SplitVertical{ domain = 'CurrentPaneDomain' } },
 
     -- FontSize
     { key = '0', mods = 'SUPER', action = act.ResetFontSize },
