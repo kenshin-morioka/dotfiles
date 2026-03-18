@@ -6,8 +6,8 @@ return {
     -- ActivateTabRelative
     { key = 'Tab', mods = 'CTRL', action = act.ActivateTabRelative(1) },
     { key = 'Tab', mods = 'SHIFT|CTRL', action = act.ActivateTabRelative(-1) },
-    { key = 'LeftArrow', mods = 'ALT|SUPER', action = act.ActivateTabRelative(-1) },
-    { key = 'RightArrow', mods = 'ALT|SUPER', action = act.ActivateTabRelative(1) },
+    { key = 'LeftArrow', mods = 'ALT|SUPER', action = act.MoveTabRelative(-1) },
+    { key = 'RightArrow', mods = 'ALT|SUPER', action = act.MoveTabRelative(1) },
     { key = 'Enter', mods = 'ALT', action = act.ToggleFullScreen },
 
     -- ActivateTab
@@ -107,12 +107,6 @@ return {
     { key = 'x', mods = 'SHIFT|CTRL', action = act.ActivateCopyMode },
     { key = 'z', mods = 'SHIFT|CTRL', action = act.TogglePaneZoomState },
     { key = 'phys:Space', mods = 'SHIFT|CTRL', action = act.QuickSelect },
-    { key = 'PageUp', mods = 'SHIFT', action = act.ScrollByPage(-1) },
-    { key = 'PageUp', mods = 'CTRL', action = act.ActivateTabRelative(-1) },
-    { key = 'PageUp', mods = 'SHIFT|CTRL', action = act.MoveTabRelative(-1) },
-    { key = 'PageDown', mods = 'SHIFT', action = act.ScrollByPage(1) },
-    { key = 'PageDown', mods = 'CTRL', action = act.ActivateTabRelative(1) },
-    { key = 'PageDown', mods = 'SHIFT|CTRL', action = act.MoveTabRelative(1) },
     { key = 'LeftArrow', mods = 'SHIFT|CTRL', action = act.ActivatePaneDirection 'Left' },
     { key = 'LeftArrow', mods = 'SHIFT|ALT|CTRL', action = wezterm.action_callback(function(window, pane)
       local tab = window:active_tab()
@@ -213,8 +207,6 @@ return {
       { key = 'v', mods = 'CTRL', action = act.CopyMode{ SetSelectionMode =  'Block' } },
       { key = 'w', mods = 'NONE', action = act.CopyMode 'MoveForwardWord' },
       { key = 'y', mods = 'NONE', action = act.Multiple{ { CopyTo =  'ClipboardAndPrimarySelection' }, { CopyMode =  'Close' } } },
-      { key = 'PageUp', mods = 'NONE', action = act.CopyMode 'PageUp' },
-      { key = 'PageDown', mods = 'NONE', action = act.CopyMode 'PageDown' },
       { key = 'End', mods = 'NONE', action = act.CopyMode 'MoveToEndOfLineContent' },
       { key = 'Home', mods = 'NONE', action = act.CopyMode 'MoveToStartOfLine' },
       { key = 'LeftArrow', mods = 'NONE', action = act.CopyMode 'MoveLeft' },
@@ -232,8 +224,6 @@ return {
       { key = 'p', mods = 'CTRL', action = act.CopyMode 'PriorMatch' },
       { key = 'r', mods = 'CTRL', action = act.CopyMode 'CycleMatchType' },
       { key = 'u', mods = 'CTRL', action = act.CopyMode 'ClearPattern' },
-      { key = 'PageUp', mods = 'NONE', action = act.CopyMode 'PriorMatchPage' },
-      { key = 'PageDown', mods = 'NONE', action = act.CopyMode 'NextMatchPage' },
       { key = 'UpArrow', mods = 'NONE', action = act.CopyMode 'PriorMatch' },
       { key = 'DownArrow', mods = 'NONE', action = act.CopyMode 'NextMatch' },
     },
