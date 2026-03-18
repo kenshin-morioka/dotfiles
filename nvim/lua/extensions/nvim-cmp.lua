@@ -16,8 +16,8 @@ cmp.setup {
     ['<C-Space>'] = map.complete(),
     ['<C-e>'] = map.abort(),
     ['<CR>'] = map.confirm { select = false },
-    ['<Tab>'] = map(act.tab, { 'i', 's' }),
-    ['<S-Tab>'] = map(act.shift_tab, { 'i', 's' }),
+    ['<Tab>'] = map(act.tab, { 'i' }),
+    ['<S-Tab>'] = map(act.shift_tab, { 'i' }),
   },
   sources = cmp.config.sources {
     { name = 'nvim_lsp' },

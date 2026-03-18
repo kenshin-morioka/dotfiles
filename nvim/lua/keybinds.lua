@@ -58,5 +58,13 @@ vim.keymap.set("n", "<Esc><Esc>", ":nohlsearch<CR>", { silent = true })
 vim.keymap.set("n", "<leader>cp", ':let @+ = expand("%:.")<CR>', { silent = true, desc = "Copy relative path" })
 vim.keymap.set("n", "<leader>cP", ':let @+ = expand("%:p")<CR>', { silent = true, desc = "Copy absolute path" })
 
+-- Visual mode: Tab/Shift-Tabでインデント（選択維持）
+vim.keymap.set("v", "<Tab>", ">gv")
+vim.keymap.set("v", "<S-Tab>", "<gv")
+
+-- Select mode: Tab/Shift-Tabでインデント（選択維持してSelectモードに戻る）
+vim.keymap.set("s", "<Tab>", "<C-g>>gv<C-g>")
+vim.keymap.set("s", "<S-Tab>", "<C-g><gv<C-g>")
+
 -- Save without formatting
 vim.cmd("cnoreabbrev nw noautocmd w")
