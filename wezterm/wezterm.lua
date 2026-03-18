@@ -20,6 +20,7 @@ config.window_frame = {
 
 config.colors = {
 	foreground = "#d0d0d0",
+	split = "#e8a000",
 	tab_bar = {
 		inactive_tab_edge = "none",
 	},
