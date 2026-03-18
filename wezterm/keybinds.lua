@@ -114,13 +114,33 @@ return {
     { key = 'PageDown', mods = 'CTRL', action = act.ActivateTabRelative(1) },
     { key = 'PageDown', mods = 'SHIFT|CTRL', action = act.MoveTabRelative(1) },
     { key = 'LeftArrow', mods = 'SHIFT|CTRL', action = act.ActivatePaneDirection 'Left' },
-    { key = 'LeftArrow', mods = 'SHIFT|ALT|CTRL', action = act.AdjustPaneSize{ 'Left', 1 } },
+    { key = 'LeftArrow', mods = 'SHIFT|ALT|CTRL', action = wezterm.action_callback(function(window, pane)
+      local tab = window:active_tab()
+      local tab_size = tab:get_size()
+      local amount = math.max(1, math.floor(tab_size.cols * 0.25))
+      window:perform_action(act.AdjustPaneSize{ 'Left', amount }, pane)
+    end) },
     { key = 'RightArrow', mods = 'SHIFT|CTRL', action = act.ActivatePaneDirection 'Right' },
-    { key = 'RightArrow', mods = 'SHIFT|ALT|CTRL', action = act.AdjustPaneSize{ 'Right', 1 } },
+    { key = 'RightArrow', mods = 'SHIFT|ALT|CTRL', action = wezterm.action_callback(function(window, pane)
+      local tab = window:active_tab()
+      local tab_size = tab:get_size()
+      local amount = math.max(1, math.floor(tab_size.cols * 0.25))
+      window:perform_action(act.AdjustPaneSize{ 'Right', amount }, pane)
+    end) },
     { key = 'UpArrow', mods = 'SHIFT|CTRL', action = act.ActivatePaneDirection 'Up' },
-    { key = 'UpArrow', mods = 'SHIFT|ALT|CTRL', action = act.AdjustPaneSize{ 'Up', 1 } },
+    { key = 'UpArrow', mods = 'SHIFT|ALT|CTRL', action = wezterm.action_callback(function(window, pane)
+      local tab = window:active_tab()
+      local tab_size = tab:get_size()
+      local amount = math.max(1, math.floor(tab_size.rows * 0.25))
+      window:perform_action(act.AdjustPaneSize{ 'Up', amount }, pane)
+    end) },
     { key = 'DownArrow', mods = 'SHIFT|CTRL', action = act.ActivatePaneDirection 'Down' },
-    { key = 'DownArrow', mods = 'SHIFT|ALT|CTRL', action = act.AdjustPaneSize{ 'Down', 1 } },
+    { key = 'DownArrow', mods = 'SHIFT|ALT|CTRL', action = wezterm.action_callback(function(window, pane)
+      local tab = window:active_tab()
+      local tab_size = tab:get_size()
+      local amount = math.max(1, math.floor(tab_size.rows * 0.25))
+      window:perform_action(act.AdjustPaneSize{ 'Down', amount }, pane)
+    end) },
     { key = 'Copy', mods = 'NONE', action = act.CopyTo 'Clipboard' },
     { key = 'Paste', mods = 'NONE', action = act.PasteFrom 'Clipboard' },
 
