@@ -9,3 +9,4 @@ configstore
 SELF_REVIEW_CHECKLIST.md
 git/.gitconfig.local
 .claude/worktrees
+claude/CLAUDE.md
