@@ -84,11 +84,19 @@ fi
   abbr -S c='claude'
   abbr -S cct='claude --continue'
   abbr -S crs='claude --resume '
+  abbr -S cwr='claude-worktree-resume'
 } >> /dev/null
 
 # ====================
 # Functions
 # ====================
+# ====================
+# Claude Code Worktree
+# ====================
+# shellcheck source=/dev/null
+[[ -f "$HOME/src/github.com/kenshin-morioka/dotfiles/zsh/claude-worktree-resume.zsh" ]] && \
+  source "$HOME/src/github.com/kenshin-morioka/dotfiles/zsh/claude-worktree-resume.zsh"
+
 function nvim() {
   if command -v gtimeout &>/dev/null; then
     gtimeout 1 cmatrix -u 1
