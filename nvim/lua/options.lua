@@ -14,6 +14,8 @@ vim.api.nvim_set_option('clipboard', 'unnamedplus')
 -- Shift+矢印で選択開始（VSCode風）
 vim.opt.keymodel = 'startsel,stopsel'
 vim.opt.selectmode = 'key'
+-- modeline無効化（外部ファイルからの任意コマンド実行を防止）
+vim.opt.modeline = false
 
 -- window
 -- 行番号表示
