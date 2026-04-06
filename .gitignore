@@ -6,7 +6,7 @@ zsh-abbr
 rm -rf .zsh_sessions
 configstore
 .android/cache
-SELF_REVIEW_CHECKLIST.md
+claude/checklists/
 git/.gitconfig.local
 .claude/worktrees
 claude/CLAUDE.md
