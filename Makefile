@@ -28,7 +28,7 @@ LINKS := \
 	$(HOME)/.config/mise:$(DOTFILES_DIR)/mise \
 	$(HOME)/.config/act:$(DOTFILES_DIR)/act \
 	$(HOME)/.claude/CLAUDE.md:$(DOTFILES_DIR)/claude/CLAUDE.md \
-	$(HOME)/.claude/SELF_REVIEW_CHECKLIST.md:$(DOTFILES_DIR)/claude/SELF_REVIEW_CHECKLIST.md \
+	$(HOME)/.claude/checklists:$(DOTFILES_DIR)/claude/checklists \
 	$(HOME)/.config/flipper:$(DOTFILES_DIR)/flipper \
 	$(HOME)/.config/github-copilot:$(DOTFILES_DIR)/github-copilot \
 	$(DOTFILES_DIR)/.git/hooks/pre-push:$(DOTFILES_DIR)/git-hooks/pre-push \
@@ -106,13 +106,13 @@ brew-list:  ## Brewfileの内容を表示
 # --------------------------------------
 # Claude Code
 #
-CHECKLIST_FILE := $(DOTFILES_DIR)/claude/SELF_REVIEW_CHECKLIST.md
+CHECKLIST_DIR := $(DOTFILES_DIR)/claude/checklists
 
-claude-init:  ## セルフレビューチェックリストを生成
-	@if [ -f "$(CHECKLIST_FILE)" ]; then \
-		echo "⚠️  $(CHECKLIST_FILE) は既に存在します"; \
+claude-init:  ## セルフレビューチェックリストディレクトリを生成
+	@if [ -d "$(CHECKLIST_DIR)" ]; then \
+		echo "⚠️  $(CHECKLIST_DIR) は既に存在します"; \
 	else \
-		mkdir -p "$$(dirname "$(CHECKLIST_FILE)")"; \
-		echo "<!-- セルフレビューチェックリストを作成してください -->" > "$(CHECKLIST_FILE)"; \
-		echo "✅ $(CHECKLIST_FILE) を作成しました"; \
+		mkdir -p "$(CHECKLIST_DIR)"; \
+		echo "<!-- セルフレビューチェックリストを作成してください -->" > "$(CHECKLIST_DIR)/SELF_REVIEW_CHECKLIST.md"; \
+		echo "✅ $(CHECKLIST_DIR) を作成しました"; \
 	fi

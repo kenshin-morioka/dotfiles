@@ -17,7 +17,7 @@ Personal dotfiles configuration for macOS.
 | `homebrew/` | Brewfile (package management) |
 | `mise/` | mise version manager config |
 | `starship.toml` | Starship prompt config |
-| `claude/` | Claude Code config (create `SELF_REVIEW_CHECKLIST.md` for quality assurance) |
+| `claude/` | Claude Code config (self-review checklists: general, Rails, test/RSpec) |
 | `git-hooks/` | Git hooks (pre-push, etc.) |
 | `act/` | GitHub Actions local runner config |
 
@@ -65,7 +65,7 @@ Personal dotfiles configuration for macOS.
 | `homebrew/` | Brewfile（パッケージ管理） |
 | `mise/` | miseバージョン管理設定 |
 | `starship.toml` | Starshipプロンプト設定 |
-| `claude/` | Claude Code設定（品質担保のため`SELF_REVIEW_CHECKLIST.md`を作成して配置） |
+| `claude/` | Claude Code設定（セルフレビューチェックリスト: 汎用、Rails、テスト/RSpec） |
 | `git-hooks/` | Gitフック（pre-push等） |
 | `act/` | GitHub Actions ローカル実行設定 |
 
