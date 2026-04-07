@@ -16,6 +16,8 @@ vim.opt.keymodel = 'startsel,stopsel'
 vim.opt.selectmode = 'key'
 -- modeline無効化（外部ファイルからの任意コマンド実行を防止）
 vim.opt.modeline = false
+-- マウス操作を完全に無効化
+vim.opt.mouse = ''
 
 -- window
 -- 行番号表示
