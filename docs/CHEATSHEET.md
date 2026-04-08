@@ -130,6 +130,7 @@
 | `:LspInfo` | LSPの状態確認 |
 | `:LspLog` | エラーログ確認 |
 | `:LspRestart` | LSP再起動 |
+| `:cclose` | quickfixリストを閉じる |
 
 ---
 
