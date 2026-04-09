@@ -84,6 +84,8 @@ fi
   abbr -S c='claude'
   abbr -S cct='claude --continue'
   abbr -S crs='claude --resume '
+  abbr -S cwr='claude-worktree-resume'
+  abbr -S cwra='claude-worktree-resume-all'
 } >> /dev/null
 
 # ====================
@@ -96,6 +98,43 @@ function nvim() {
     timeout 1 cmatrix -u 1
   fi
   command nvim "$@"
+}
+
+# ====================
+# Claude Worktree Resume
+# ====================
+function claude-worktree-resume() {
+  local worktree_dir=".claude/worktrees"
+  if [ ! -d "$worktree_dir" ]; then
+    echo "No worktrees found in $worktree_dir"
+    return 1
+  fi
+
+  local selected
+  selected=$(find "$worktree_dir" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | fzf --prompt "WORKTREE> ")
+  if [ -n "$selected" ]; then
+    (cd "$worktree_dir/$selected" && claude --resume)
+  fi
+}
+
+function claude-worktree-resume-all() {
+  local worktree_dir=".claude/worktrees"
+  if [ ! -d "$worktree_dir" ]; then
+    echo "No worktrees found in $worktree_dir"
+    return 1
+  fi
+
+  local worktrees=("$worktree_dir"/*(N/))
+  if [ ${#worktrees[@]} -eq 0 ]; then
+    echo "No worktrees found in $worktree_dir"
+    return 1
+  fi
+
+  for wt in "${worktrees[@]}"; do
+    local name="${wt:t}"
+    wezterm cli spawn --new-window --cwd "$PWD/$wt" -- claude --resume
+    echo "Spawned: $name"
+  done
 }
 
 # ====================

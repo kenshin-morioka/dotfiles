@@ -256,6 +256,29 @@ nvim .
 
 ---
 
+## シェル（zsh）
+
+### fzf 連携
+
+| キー / コマンド | 説明 |
+| --------------- | ---- |
+| `Ctrl+R` | 履歴をfzfで検索 |
+| `Ctrl+U` | 最近のディレクトリにfzfで移動 |
+| `lb` | git branchをfzfで選択（グローバルエイリアス） |
+| `de` | dockerコンテナをfzfで選択してexec |
+
+### Claude Code
+
+| コマンド | 説明 |
+| -------- | ---- |
+| `c` | `claude` |
+| `cct` | `claude --continue` |
+| `crs` | `claude --resume` |
+| `cwr` | worktreeをfzfで選択して `claude --resume` |
+| `cwra` | 全worktreeをWezTermの新しいウィンドウで一括復元 |
+
+---
+
 ## WezTerm
 
 ### ウィンドウ
