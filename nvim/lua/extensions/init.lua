@@ -194,7 +194,7 @@ local plugins = {
     ft = { 'markdown' },
     build = 'cd app && npm install',
     keys = {
-      { '<leader>mp', '<cmd>MarkdownPreviewToggle<cr>', desc = 'Markdown Preview' },
+      { '<leader>mp', '<cmd>MarkdownPreviewToggle<cr>', ft = 'markdown', desc = 'Markdown Preview' },
     },
     init = function() require 'extensions.markdown-preview' end,
   },
