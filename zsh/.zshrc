@@ -53,8 +53,8 @@ bindkey '^[OF' end-of-line
 # ====================
 alias ls='ls -F --color=auto'
 alias vim='nvim'
-alias -g lb='`git branch | peco --prompt "GIT BRANCH>" | head -n 1 | sed -e "s/^\*\s*//g"`'
-alias de='docker exec -it $(docker ps | peco | cut -d " " -f 1) /bin/bash'
+alias -g lb='`git branch | fzf --prompt "GIT BRANCH> " | head -n 1 | sed -e "s/^\*\s*//g"`'
+alias de='docker exec -it $(docker ps | fzf | cut -d " " -f 1) /bin/bash'
 
 if [[ $(uname) = "Darwin" ]]; then
   alias ldd="echo ldd is not on OSX. use otool -L."
@@ -99,27 +99,27 @@ function nvim() {
 }
 
 # ====================
-# Peco
+# fzf
 # ====================
 # shellcheck disable=SC2034,SC2153
-function peco-select-history() {
-  BUFFER=$(\history -n -r 1 | peco --query "$LBUFFER")
+function fzf-select-history() {
+  BUFFER=$(\history -n -r 1 | fzf --query "$LBUFFER")
   CURSOR=$#BUFFER
   zle clear-screen
 }
-zle -N peco-select-history
-bindkey '^r' peco-select-history
+zle -N fzf-select-history
+bindkey '^r' fzf-select-history
 
-function peco-get-destination-from-cdr() {
+function fzf-get-destination-from-cdr() {
   cdr -l |
     sed -e 's/^[[:digit:]]*[[:blank:]]*//' |
-    peco --query "$LBUFFER"
+    fzf --query "$LBUFFER"
 }
 
 # shellcheck disable=SC2034
-function peco-cdr() {
+function fzf-cdr() {
   local destination
-  destination="$(peco-get-destination-from-cdr)"
+  destination="$(fzf-get-destination-from-cdr)"
   if [ -n "$destination" ]; then
     BUFFER="cd $destination"
     zle accept-line
@@ -127,8 +127,8 @@ function peco-cdr() {
     zle reset-prompt
   fi
 }
-zle -N peco-cdr
-bindkey '^u' peco-cdr
+zle -N fzf-cdr
+bindkey '^u' fzf-cdr
 
 # ====================
 # History
