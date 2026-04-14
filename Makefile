@@ -114,7 +114,7 @@ CHECKLIST_DIR := $(DOTFILES_DIR)/claude/checklists
 #
 CARBONYL_VERSION := v0.0.3
 CARBONYL_ARCH := $(shell uname -m | sed 's/x86_64/amd64/')
-CARBONYL_OS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
+CARBONYL_OS := $(shell uname -s | tr '[:upper:]' '[:lower:]' | sed 's/darwin/macos/')
 CARBONYL_URL := https://github.com/fathyb/carbonyl/releases/download/$(CARBONYL_VERSION)/carbonyl.$(CARBONYL_OS)-$(CARBONYL_ARCH).zip
 CARBONYL_BIN := $(HOME)/.local/bin/carbonyl
 
@@ -127,7 +127,10 @@ carbonyl-install:  ## Carbonyl（ターミナルブラウザ）をインスト�
 		tmpdir=$$(mktemp -d); \
 		curl -fsSL "$(CARBONYL_URL)" -o "$$tmpdir/carbonyl.zip"; \
 		unzip -q "$$tmpdir/carbonyl.zip" -d "$$tmpdir"; \
-		cp "$$tmpdir/carbonyl" "$(CARBONYL_BIN)"; \
+		cp "$$tmpdir"/carbonyl-*/carbonyl "$(CARBONYL_BIN)"; \
+		cp "$$tmpdir"/carbonyl-*/*.dylib "$(HOME)/.local/bin/" 2>/dev/null || true; \
+		cp "$$tmpdir"/carbonyl-*/*.dat "$(HOME)/.local/bin/" 2>/dev/null || true; \
+		cp "$$tmpdir"/carbonyl-*/*.bin "$(HOME)/.local/bin/" 2>/dev/null || true; \
 		chmod +x "$(CARBONYL_BIN)"; \
 		rm -rf "$$tmpdir"; \
 		echo "✅ Carbonyl をインストールしました: $(CARBONYL_BIN)"; \

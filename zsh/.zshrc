@@ -2,6 +2,7 @@
 # ====================
 # PATH
 # ====================
+export PATH="$HOME/.local/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="/Applications/WezTerm.app/Contents/MacOS:$PATH"
 export PATH="/opt/homebrew/opt/imagemagick@6/bin:$PATH"
