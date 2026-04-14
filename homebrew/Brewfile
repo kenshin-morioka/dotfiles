@@ -19,6 +19,7 @@ brew "starship"
 brew "cowsay"
 brew "antigen"
 brew "cmatrix"
+brew "glow"
 
 # Search
 brew "ripgrep"

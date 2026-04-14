@@ -86,6 +86,8 @@ fi
   abbr -S crs='claude --resume '
   abbr -S cwr='claude-worktree-resume'
   abbr -S cwra='claude-worktree-resume-all'
+  abbr -S mdp='mdp'
+  abbr -S brw='browse'
 } >> /dev/null
 
 # ====================
@@ -135,6 +137,32 @@ function claude-worktree-resume-all() {
     wezterm cli spawn --new-window --cwd "$PWD/$wt" -- claude --resume
     echo "Spawned: $name"
   done
+}
+
+# ====================
+# Terminal Browser & Preview
+# ====================
+function mdp() {
+  if ! command -v glow &>/dev/null; then
+    echo "glow がインストールされていません: brew install glow"
+    return 1
+  fi
+  local file="$1"
+  if [ -z "$file" ]; then
+    file=$(find . -name '*.md' -not -path '*/node_modules/*' -not -path '*/.git/*' 2>/dev/null | fzf --prompt "MARKDOWN> " --preview 'glow -s dark {}')
+  fi
+  if [ -n "$file" ]; then
+    glow -p "$file"
+  fi
+}
+
+function browse() {
+  if ! command -v carbonyl &>/dev/null; then
+    echo "carbonyl がインストールされていません: make carbonyl-install"
+    return 1
+  fi
+  local url="${1:-http://localhost:3000}"
+  carbonyl "$url"
 }
 
 # ====================

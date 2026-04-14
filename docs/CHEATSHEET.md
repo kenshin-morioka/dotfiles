@@ -317,3 +317,19 @@ nvim .
 | `Shift+Alt+Ctrl+←/→` | ペインサイズ調整（横方向 5%単位） |
 | `Shift+Alt+Ctrl+↑/↓` | ペインサイズ調整（縦方向 25%単位） |
 | `Ctrl+z` | ペインズーム（トグル） |
+
+### ターミナルブラウザ・プレビュー
+
+| キー | 説明 |
+| ---- | ---- |
+| `Ctrl+a` → `m` | Markdownプレビュー（glow + fzf でファイル選択） |
+| `Ctrl+a` → `w` | Carbonylブラウザ（URL入力、デフォルト: localhost:3000） |
+
+シェルから直接使う場合:
+
+| コマンド | 説明 |
+| -------- | ---- |
+| `mdp` | Markdownファイルをfzfで選択してプレビュー |
+| `mdp <file>` | 指定ファイルをプレビュー |
+| `brw` | Carbonylでlocalhost:3000を開く |
+| `brw <url>` | Carbonylで指定URLを開く |

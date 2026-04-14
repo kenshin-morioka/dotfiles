@@ -109,6 +109,43 @@ brew-list:  ## Brewfileの内容を表示
 #
 CHECKLIST_DIR := $(DOTFILES_DIR)/claude/checklists
 
+# --------------------------------------
+# Carbonyl (ターミナルブラウザ)
+#
+CARBONYL_VERSION := v0.0.3
+CARBONYL_ARCH := $(shell uname -m | sed 's/x86_64/amd64/')
+CARBONYL_OS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
+CARBONYL_URL := https://github.com/fathyb/carbonyl/releases/download/$(CARBONYL_VERSION)/carbonyl.$(CARBONYL_OS)-$(CARBONYL_ARCH).zip
+CARBONYL_BIN := $(HOME)/.local/bin/carbonyl
+
+carbonyl-install:  ## Carbonyl（ターミナルブラウザ）をインストール
+	@if [ -f "$(CARBONYL_BIN)" ]; then \
+		echo "⚠️  Carbonyl は既にインストール済みです: $(CARBONYL_BIN)"; \
+	else \
+		echo "📥 Carbonyl $(CARBONYL_VERSION) をダウンロード中..."; \
+		mkdir -p "$(HOME)/.local/bin"; \
+		tmpdir=$$(mktemp -d); \
+		curl -fsSL "$(CARBONYL_URL)" -o "$$tmpdir/carbonyl.zip"; \
+		unzip -q "$$tmpdir/carbonyl.zip" -d "$$tmpdir"; \
+		cp "$$tmpdir/carbonyl" "$(CARBONYL_BIN)"; \
+		chmod +x "$(CARBONYL_BIN)"; \
+		rm -rf "$$tmpdir"; \
+		echo "✅ Carbonyl をインストールしました: $(CARBONYL_BIN)"; \
+	fi
+
+carbonyl-uninstall:  ## Carbonylをアンインストール
+	@if [ -f "$(CARBONYL_BIN)" ]; then \
+		rm "$(CARBONYL_BIN)"; \
+		echo "✅ Carbonyl をアンインストールしました"; \
+	else \
+		echo "⚠️  Carbonyl はインストールされていません"; \
+	fi
+
+# --------------------------------------
+# Claude Code
+#
+CHECKLIST_DIR := $(DOTFILES_DIR)/claude/checklists
+
 claude-init:  ## セルフレビューチェックリストディレクトリを生成
 	@if [ -d "$(CHECKLIST_DIR)" ]; then \
 		echo "⚠️  $(CHECKLIST_DIR) は既に存在します"; \

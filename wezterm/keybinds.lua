@@ -147,6 +147,50 @@ return {
 		-- LEADER keybinds
 		{ key = "b", mods = "LEADER", action = act.EmitEvent("toggle-opacity") },
 
+		-- Terminal Browser & Preview
+		{
+			key = "m",
+			mods = "LEADER",
+			action = act.SplitPane({
+				direction = "Right",
+				command = {
+					args = { "zsh", "-ic", "mdp" },
+				},
+				size = { Cells = 80 },
+			}),
+		},
+		{
+			key = "w",
+			mods = "LEADER",
+			action = wezterm.action_callback(function(window, pane)
+				window:perform_action(
+					act.PromptInputLine({
+						description = "URL to open in Carbonyl (default: http://localhost:3000):",
+						action = wezterm.action_callback(function(inner_window, inner_pane, line)
+							if line == nil then
+								return
+							end
+							local url = line
+							if url == "" then
+								url = "http://localhost:3000"
+							end
+							inner_window:perform_action(
+								act.SplitPane({
+									direction = "Right",
+									command = {
+										args = { "zsh", "-ic", "browse " .. url },
+									},
+									size = { Cells = 100 },
+								}),
+								inner_pane
+							)
+						end),
+					}),
+					pane
+				)
+			end),
+		},
+
 		-- Command + Arrow (send Home/End keys)
 		{ key = "LeftArrow", mods = "SUPER", action = act.SendKey({ key = "Home" }) },
 		{ key = "RightArrow", mods = "SUPER", action = act.SendKey({ key = "End" }) },
