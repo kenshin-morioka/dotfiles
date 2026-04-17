@@ -33,6 +33,6 @@ function M.create(opacity)
 	}
 end
 
-M.default = M.create(0.70)
+M.default = M.create(0.80)
 
 return M

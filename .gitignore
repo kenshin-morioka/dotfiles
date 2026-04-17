@@ -11,3 +11,6 @@ git/.gitconfig.local
 .claude/worktrees
 claude/CLAUDE.md
 claude/skills/
+claude/hooks/
+claude/settings.json
+claude.json
