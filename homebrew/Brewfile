@@ -35,6 +35,7 @@ brew "pre-commit"
 brew "awscli"
 brew "aws-vault"
 brew "aws-sam-cli"
+brew "uv"
 
 # Database Client
 brew "mysql-client"
