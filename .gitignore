@@ -3,7 +3,7 @@
 .zcompdump
 .zshrc.zwc
 zsh-abbr
-rm -rf .zsh_sessions
+.zsh_sessions
 configstore
 .android/cache
 claude/checklists/
