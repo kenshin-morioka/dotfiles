@@ -68,3 +68,8 @@ vim.keymap.set("s", "<S-Tab>", "<C-g><gv<C-g>")
 
 -- Save without formatting
 vim.cmd("cnoreabbrev nw noautocmd w")
+
+-- Lazy.nvim
+vim.keymap.set("n", "<leader>lu", ":Lazy update<CR>", { silent = true, desc = "Lazy update" })
+vim.keymap.set("n", "<leader>ls", ":Lazy sync<CR>", { silent = true, desc = "Lazy sync" })
+vim.keymap.set("n", "<leader>L", ":Lazy<CR>", { silent = true, desc = "Lazy menu" })

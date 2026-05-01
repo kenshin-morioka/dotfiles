@@ -132,6 +132,14 @@
 | `:LspRestart` | LSP再起動 |
 | `:cclose` | quickfixリストを閉じる |
 
+### プラグイン管理（lazy.nvim）
+
+| キー | 説明 |
+| ---- | ---- |
+| `,lu` | 既存プラグインを更新（`:Lazy update`） |
+| `,ls` | install + clean + update をまとめて実行（`:Lazy sync`） |
+| `,L` | Lazy メニューを開く（`:Lazy`） |
+
 ---
 
 ## Git
