@@ -1,4 +1,5 @@
 local wezterm = require("wezterm")
+local format = require("format")
 local config = wezterm.config_builder()
 
 config.max_fps = 120
@@ -10,6 +11,7 @@ config.window_decorations = "RESIZE"
 -- config.hide_tab_bar_if_only_one_tab = true
 config.show_new_tab_button_in_tab_bar = false
 -- config.show_close_tab_button_in_tabs = true
+config.tab_max_width = 32
 
 config.window_frame = {
 	font = wezterm.font({ family = "Roboto", weight = "Bold" }),
@@ -29,7 +31,7 @@ config.colors = {
 local SOLID_LEFT_ARROW = wezterm.nerdfonts.ple_lower_right_triangle
 local SOLID_RIGHT_ARROW = wezterm.nerdfonts.ple_upper_left_triangle
 
-wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
+wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, _hover, max_width)
 	local background = "#5c6d74"
 	local foreground = "#FFFFFF"
 	local edge_background = "none"
@@ -40,7 +42,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 	end
 
 	local edge_foreground = background
-	local title = "   " .. wezterm.truncate_right(tab.active_pane.title, max_width - 1) .. "   "
+	local title = "   " .. wezterm.truncate_right(format.tab_label(tab.active_pane), max_width - 1) .. "   "
 
 	return {
 		{ Background = { Color = edge_background } },
@@ -80,7 +82,6 @@ wezterm.on("toggle-opacity", function(window, _pane)
 	})
 end)
 
-require("format")
 require("status")
 require("event")
 

@@ -4,29 +4,76 @@ local function BaseName(s)
   return string.gsub(s, '(.*[/\\])(.*)', '%2')
 end
 
+local function expand_tilde(p)
+  if p:sub(1, 1) == '~' then
+    return wezterm.home_dir .. p:sub(2)
+  end
+  return p
+end
+
+local function read_file(path)
+  local f = io.open(path, 'r')
+  if not f then return nil end
+  local content = f:read('*a')
+  f:close()
+  return content
+end
+
+-- gitconfig を再帰的に走査して [ghq] root を探す。include の循環は visited で防ぐ。
+local function find_ghq_root_in_gitconfig(path, depth, visited)
+  if depth > 5 then return nil end
+  visited = visited or {}
+  if visited[path] then return nil end
+  visited[path] = true
+
+  local content = read_file(path)
+  if not content then return nil end
+
+  local section
+  local includes = {}
+  for line in content:gmatch('[^\n]+') do
+    local s = line:match('^%s*%[([^%]]+)%]')
+    if s then
+      section = s:gsub('%s.*', '')
+    elseif section == 'ghq' then
+      local root = line:match('^%s*root%s*=%s*(.-)%s*$')
+      if root and #root > 0 then
+        root = root:gsub('^"(.*)"$', '%1'):gsub("^'(.*)'$", '%1')
+        return expand_tilde(root)
+      end
+    elseif section == 'include' then
+      local inc = line:match('^%s*path%s*=%s*(.-)%s*$')
+      if inc and #inc > 0 then
+        table.insert(includes, expand_tilde(inc))
+      end
+    end
+  end
+
+  for _, inc in ipairs(includes) do
+    local r = find_ghq_root_in_gitconfig(inc, depth + 1, visited)
+    if r then return r end
+  end
+
+  return nil
+end
+
 -- ghq root を解決する。優先順位:
 --   1. 環境変数 GHQ_ROOT
---   2. git config --global --get ghq.root
+--   2. ~/.gitconfig / ~/.config/git/config の [ghq] root（include も追跡）
 --   3. $HOME/ghq
+-- run_child_process は config 読み込み中は coroutine 外で yield 不能なため使わない。
 local function resolve_ghq_root()
   local env_root = os.getenv('GHQ_ROOT')
   if env_root and #env_root > 0 then
-    if env_root:sub(1, 1) == '~' then
-      env_root = wezterm.home_dir .. env_root:sub(2)
-    end
-    return env_root
+    return expand_tilde(env_root)
   end
 
-  -- macOS の GUI 起動時は PATH に git が無い場合があるので候補を順に試す
-  for _, git in ipairs({ 'git', '/opt/homebrew/bin/git', '/usr/local/bin/git', '/usr/bin/git' }) do
-    local ok, stdout = wezterm.run_child_process({ git, 'config', '--global', '--get', 'ghq.root' })
-    if ok and stdout then
-      local root = stdout:gsub('%s+$', '')
-      if root:sub(1, 1) == '~' then
-        root = wezterm.home_dir .. root:sub(2)
-      end
-      if #root > 0 then return root end
-    end
+  for _, path in ipairs({
+    wezterm.home_dir .. '/.gitconfig',
+    wezterm.home_dir .. '/.config/git/config',
+  }) do
+    local r = find_ghq_root_in_gitconfig(path, 0, nil)
+    if r then return r end
   end
 
   return wezterm.home_dir .. '/ghq'
@@ -44,7 +91,9 @@ local function pane_cwd_path(pane)
   return cwd.file_path
 end
 
-local function tab_label(pane)
+local M = {}
+
+function M.tab_label(pane)
   local fallback = (BaseName(pane.title))
   local path = pane_cwd_path(pane)
   if not path then return fallback end
@@ -77,29 +126,4 @@ wezterm.on(
   end
 )
 
-local HEADER = ''
-
-local SYMBOL_COLOR = { '#ffb2cc', '#a4a4a4' }
-local FONT_COLOR = { '#ecececff', '#c3c3c3ff' }
-local BACK_COLOR = '#2d2d2d'
-local HOVER_COLOR = '#434343'
-
-wezterm.on(
-  'format-tab-title',
-  function(tab, tabs, panes, config, hover, max_width)
-    local index = tab.is_active and 1 or 2
-
-    local bg = hover and HOVER_COLOR or BACK_COLOR
-    local zoomed = tab.active_pane.is_zoomed and '🔎 ' or ' '
-
-    return {
-      { Foreground = { Color = SYMBOL_COLOR[index] } },
-      { Background = { Color = bg } },
-      { Text = HEADER .. zoomed },
-
-      { Foreground = { Color = FONT_COLOR[index] } },
-      { Background = { Color = bg } },
-      { Text = tab_label(tab.active_pane) },
-    }
-  end
-)
+return M
