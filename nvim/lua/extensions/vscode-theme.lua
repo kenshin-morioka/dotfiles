@@ -27,8 +27,8 @@ require('vscode').setup({
     ['@method.call'] = { bold = true },
     Function = { bold = true },
 
-    -- エディタのカーソル行背景を控えめに
-    CursorLine = { bg = '#1e1e2e' },
+    -- エディター本体だけダークグレー（neo-tree などサイドバーは透過のまま）
+    Normal = { bg = '#1e1e1e' },
 
     -- visual/select モードの選択範囲を薄い黄色に
     Visual = { bg = '#3a3520' },
