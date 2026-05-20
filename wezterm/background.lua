@@ -24,7 +24,6 @@ function M.create(opacity)
 			opacity = 0.15,
 			vertical_align = "Middle",
 			horizontal_align = "Right",
-			horizontal_offset = "200px",
 			repeat_x = "NoRepeat",
 			repeat_y = "NoRepeat",
 			-- width = "1431px",
