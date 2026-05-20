@@ -21,7 +21,7 @@ function M.create(opacity)
 		},
 		{
 			source = { File = background_image },
-			opacity = 0.15,
+			opacity = 0.1,
 			vertical_align = "Middle",
 			horizontal_align = "Right",
 			repeat_x = "NoRepeat",
