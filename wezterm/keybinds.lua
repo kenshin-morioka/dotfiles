@@ -126,7 +126,7 @@ return {
 			action = wezterm.action_callback(function(window, pane)
 				local tab = window:active_tab()
 				local tab_size = tab:get_size()
-				local amount = math.max(1, math.floor(tab_size.rows * 0.25))
+				local amount = math.max(1, math.floor(tab_size.rows * 0.05))
 				window:perform_action(act.AdjustPaneSize({ "Up", amount }), pane)
 			end),
 		},
@@ -137,7 +137,7 @@ return {
 			action = wezterm.action_callback(function(window, pane)
 				local tab = window:active_tab()
 				local tab_size = tab:get_size()
-				local amount = math.max(1, math.floor(tab_size.rows * 0.25))
+				local amount = math.max(1, math.floor(tab_size.rows * 0.05))
 				window:perform_action(act.AdjustPaneSize({ "Down", amount }), pane)
 			end),
 		},
