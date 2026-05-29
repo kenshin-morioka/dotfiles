@@ -65,8 +65,6 @@ require("neo-tree").setup({
   },
 })
 
-vim.cmd('Neotree show')
-
 -- :q で neo-tree だけが残る問題を解決
 vim.api.nvim_create_autocmd("QuitPre", {
   callback = function()
