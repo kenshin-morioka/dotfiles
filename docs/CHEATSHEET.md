@@ -140,13 +140,6 @@
 | `,ls` | install + clean + update をまとめて実行（`:Lazy sync`） |
 | `,L` | Lazy メニューを開く（`:Lazy`） |
 
-dotfiles リポジトリでの定期更新は以下の Make ターゲットを使う:
-
-| コマンド | 説明 |
-| -------- | ---- |
-| `make nvim-update` | ヘッドレスで `Lazy sync` を実行 → `lazy-lock.json` をコミット & push |
-| `make lazy-commit` | nvim で更新後、`lazy-lock.json` のみをコミット & push |
-
 ---
 
 ## Git
