@@ -30,6 +30,7 @@
 
 - `claude/CLAUDE.md` — グローバルClaude Code設定（全プロジェクト共通ルール）
 - `claude/checklists/` — セルフレビューチェックリスト
+- `claude/settings.json` — Claude Code のグローバル設定（hooks, statusLine 等。ローカル絶対パスを含むため git 追跡外）
 - `git/.gitconfig.local` — Git認証情報等のローカル設定
 
 ## 変更時に連動して更新が必要なもの

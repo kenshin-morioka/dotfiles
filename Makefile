@@ -28,8 +28,10 @@ LINKS := \
 	$(HOME)/.config/mise:$(DOTFILES_DIR)/mise \
 	$(HOME)/.config/act:$(DOTFILES_DIR)/act \
 	$(HOME)/.claude/CLAUDE.md:$(DOTFILES_DIR)/claude/CLAUDE.md \
+	$(HOME)/.claude/settings.json:$(DOTFILES_DIR)/claude/settings.json \
 	$(HOME)/.claude/checklists:$(DOTFILES_DIR)/claude/checklists \
 	$(HOME)/.claude/skills:$(DOTFILES_DIR)/claude/skills \
+	$(HOME)/.claude/statusline-command.sh:$(DOTFILES_DIR)/claude/statusline-command.sh \
 	$(HOME)/.config/flipper:$(DOTFILES_DIR)/flipper \
 	$(HOME)/.config/github-copilot:$(DOTFILES_DIR)/github-copilot \
 	$(DOTFILES_DIR)/.git/hooks/pre-push:$(DOTFILES_DIR)/git-hooks/pre-push \
