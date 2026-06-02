@@ -35,6 +35,9 @@ model=$(echo "$input" | jq -r '.model.display_name // empty')
 # --- context usage ---
 used_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 
+# --- rate limits (Pro/Max only, populated after first API response) ---
+five_hour_pct=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
+
 # --- build output ---
 # Colors: use dim ANSI since statusLine renders with dimmed colors
 CYAN='\033[0;36m'
@@ -65,6 +68,12 @@ fi
 if [ -n "$used_pct" ]; then
   printf_pct=$(printf "%.0f" "$used_pct")
   line="${line} ctx:${printf_pct}%"
+fi
+
+# 5-hour rate limit segment
+if [ -n "$five_hour_pct" ]; then
+  printf_5h=$(printf "%.0f" "$five_hour_pct")
+  line="${line} 5h:${printf_5h}%"
 fi
 
 printf "%b\n" "$line"
