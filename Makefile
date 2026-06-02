@@ -107,6 +107,32 @@ brew-list:  ## Brewfileの内容を表示
 	@cat "$(BREWFILE)"
 
 # --------------------------------------
+# Neovim
+#
+nvim-update:  ## Neovim プラグインを更新してコミット & push まで実行
+	@echo "🔄 Neovim プラグインを更新中..."
+	@nvim --headless "+Lazy! sync" +qa
+	@$(MAKE) lazy-commit
+
+lazy-commit:  ## nvim/lazy-lock.json の変更だけをコミット & push
+	@cd $(DOTFILES_DIR) && { \
+		other_changes=$$(git status --porcelain | grep -v 'nvim/lazy-lock.json' || true); \
+		if [ -n "$$other_changes" ]; then \
+			echo "❌ lazy-lock.json 以外の変更があります:"; \
+			echo "$$other_changes"; \
+			exit 1; \
+		fi; \
+		if git diff --quiet -- nvim/lazy-lock.json && git diff --cached --quiet -- nvim/lazy-lock.json; then \
+			echo "✅ lazy-lock.json に変更なし"; \
+			exit 0; \
+		fi; \
+		git add nvim/lazy-lock.json; \
+		git commit -m "lazy update"; \
+		git push origin HEAD; \
+		echo "✅ lazy update を push しました"; \
+	}
+
+# --------------------------------------
 # Claude Code
 #
 CHECKLIST_DIR := $(DOTFILES_DIR)/claude/checklists
