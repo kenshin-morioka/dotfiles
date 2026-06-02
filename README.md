@@ -42,6 +42,8 @@ Personal dotfiles configuration for macOS.
 | `make brew-sync` | Sync installed packages to Brewfile |
 | `make brew-list` | Show Brewfile contents |
 | `make claude-init` | Create self-review checklist template |
+| `make nvim-update` | Run `:Lazy sync` headlessly and commit & push `lazy-lock.json` |
+| `make lazy-commit` | Commit & push `lazy-lock.json` only (after updating in nvim) |
 
 ## Package Management
 
@@ -128,6 +130,8 @@ make help  # 利用可能なコマンド一覧を表示
 | `make brew-sync` | インストール済みパッケージをBrewfileに同期 |
 | `make brew-list` | Brewfileの内容を表示 |
 | `make claude-init` | セルフレビューチェックリストを生成 |
+| `make nvim-update` | ヘッドレスで `:Lazy sync` を実行し `lazy-lock.json` をコミット & push |
+| `make lazy-commit` | nvim で更新後、`lazy-lock.json` のみをコミット & push |
 
 ## パッケージ管理の使い分け
 
