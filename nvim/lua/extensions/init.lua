@@ -244,6 +244,24 @@ local plugins = {
     event = { 'BufReadPre', 'BufNewFile' },
     init = function() require 'extensions.vim-doge' end,
   },
+  -- tmux navigator (C-h/j/k/l で Neovim split と tmux ペインをシームレス移動)
+  {
+    'christoomey/vim-tmux-navigator',
+    lazy = false,
+    cmd = {
+      'TmuxNavigateLeft',
+      'TmuxNavigateDown',
+      'TmuxNavigateUp',
+      'TmuxNavigateRight',
+      'TmuxNavigatePrevious',
+    },
+    keys = {
+      { '<C-h>', '<cmd>TmuxNavigateLeft<cr>', desc = 'Navigate Left (tmux/vim)' },
+      { '<C-j>', '<cmd>TmuxNavigateDown<cr>', desc = 'Navigate Down (tmux/vim)' },
+      { '<C-k>', '<cmd>TmuxNavigateUp<cr>', desc = 'Navigate Up (tmux/vim)' },
+      { '<C-l>', '<cmd>TmuxNavigateRight<cr>', desc = 'Navigate Right (tmux/vim)' },
+    },
+  },
 }
 
 local opts = {

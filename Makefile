@@ -25,6 +25,7 @@ LINKS := \
 	$(HOME)/.config/nvim:$(DOTFILES_DIR)/nvim \
 	$(HOME)/.config/starship.toml:$(DOTFILES_DIR)/starship.toml \
 	$(HOME)/.config/wezterm:$(DOTFILES_DIR)/wezterm \
+	$(HOME)/.config/tmux/tmux.conf:$(DOTFILES_DIR)/tmux/tmux.conf \
 	$(HOME)/.config/mise:$(DOTFILES_DIR)/mise \
 	$(HOME)/.config/act:$(DOTFILES_DIR)/act \
 	$(HOME)/.claude/CLAUDE.md:$(DOTFILES_DIR)/claude/CLAUDE.md \
@@ -131,6 +132,20 @@ lazy-commit:  ## nvim/lazy-lock.json の変更だけをコミット & push
 		git push origin HEAD; \
 		echo "✅ lazy update を push しました"; \
 	}
+
+# --------------------------------------
+# tmux
+#
+TPM_DIR := $(HOME)/.config/tmux/plugins/tpm
+
+tmux-init:  ## TPM (Tmux Plugin Manager) をインストール
+	@if [ -d "$(TPM_DIR)" ]; then \
+		echo "⚠️  TPM は既にインストール済みです: $(TPM_DIR)"; \
+	else \
+		echo "📦 TPM をクローン中..."; \
+		git clone https://github.com/tmux-plugins/tpm "$(TPM_DIR)"; \
+		echo "✅ TPM をインストールしました。tmux 起動後に prefix + I でプラグインを取得してください"; \
+	fi
 
 # --------------------------------------
 # Claude Code
