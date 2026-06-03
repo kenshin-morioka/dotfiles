@@ -188,7 +188,10 @@ function tma() {
 
   while IFS= read -r session; do
     local cwd
-    cwd=$(tmux display-message -p -t "$session" '#{pane_current_path}' 2>/dev/null)
+    # display-message はクライアント状態を参照することがあり、対象セッションと
+    # 異なる cwd を返す場合があるため、list-panes で確実にセッションのアクティブ
+    # ペインを特定して cwd を取る
+    cwd=$(tmux list-panes -t "${session}:" -F '#{?pane_active,#{pane_current_path},}' 2>/dev/null | grep -v '^$' | head -1)
     if [ -n "$cwd" ] && [ -d "$cwd" ]; then
       wezterm cli spawn --cwd "$cwd" -- tmux attach -t "$session"
     else
