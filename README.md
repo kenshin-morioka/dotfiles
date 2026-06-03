@@ -195,6 +195,7 @@ prefix 不要のキー (vim-tmux-navigator):
 
 | コマンド | 展開先 / 動作 |
 | -------- | ------------- |
+| `cl` | `clear` |
 | `t` | `tmux` (素の起動) |
 | `tm` | 既存セッションがあれば fzf で選択して attach、なければ新規作成 |
 | `tma` | 全 tmux セッションを WezTerm の新しいタブで一気に attach |
