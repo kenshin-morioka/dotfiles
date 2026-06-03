@@ -163,6 +163,31 @@ function tm() {
   [ -n "$session" ] && tmux a -t "$session"
 }
 
+# 全 tmux セッションを WezTerm の新しいタブで一気に開く
+function tma() {
+  if ! command -v tmux &>/dev/null; then
+    echo "tmux is not installed"
+    return 1
+  fi
+  if ! command -v wezterm &>/dev/null; then
+    echo "wezterm cli not available"
+    return 1
+  fi
+
+  local sessions
+  sessions=$(tmux list-sessions -F '#S' 2>/dev/null)
+
+  if [ -z "$sessions" ]; then
+    echo "No tmux sessions found"
+    return 1
+  fi
+
+  while IFS= read -r session; do
+    wezterm cli spawn -- tmux attach -t "$session"
+    echo "Spawned tab: $session"
+  done <<< "$sessions"
+}
+
 # ====================
 # fzf
 # ====================
