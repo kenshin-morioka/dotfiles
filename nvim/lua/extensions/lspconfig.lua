@@ -29,7 +29,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Info
     vim.keymap.set('n', '<leader>K', vim.lsp.buf.hover, opts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', '<leader>k', vim.lsp.buf.signature_help, opts)
 
     -- Actions
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)

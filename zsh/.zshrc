@@ -86,6 +86,9 @@ fi
   abbr -S crs='claude --resume '
   abbr -S cwr='claude-worktree-resume'
   abbr -S cwra='claude-worktree-resume-all'
+  abbr -S t='tmux'
+  abbr -S tk='tmux kill-session'
+  abbr -S tka='tmux kill-server'
 } >> /dev/null
 
 # ====================
@@ -135,6 +138,29 @@ function claude-worktree-resume-all() {
     wezterm cli spawn --new-window --cwd "$PWD/$wt" -- claude --resume
     echo "Spawned: $name"
   done
+}
+
+# ====================
+# tmux
+# ====================
+# 既存セッションがあれば fzf で選択して attach、なければ新規作成
+function tm() {
+  if ! command -v tmux &>/dev/null; then
+    echo "tmux is not installed"
+    return 1
+  fi
+
+  local sessions
+  sessions=$(tmux list-sessions -F '#S' 2>/dev/null)
+
+  if [ -z "$sessions" ]; then
+    tmux new
+    return
+  fi
+
+  local session
+  session=$(echo "$sessions" | fzf --height 40% --reverse --prompt='tmux> ')
+  [ -n "$session" ] && tmux a -t "$session"
 }
 
 # ====================
