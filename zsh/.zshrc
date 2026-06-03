@@ -164,6 +164,8 @@ function tm() {
 }
 
 # 全 tmux セッションを WezTerm の新しいタブで一気に開く
+# 各タブはそのセッションのアクティブペイン cwd で起動するため、
+# WezTerm のタブ名 (format.tab_label) がリポジトリ名等を解決できる
 function tma() {
   if ! command -v tmux &>/dev/null; then
     echo "tmux is not installed"
@@ -183,8 +185,14 @@ function tma() {
   fi
 
   while IFS= read -r session; do
-    wezterm cli spawn -- tmux attach -t "$session"
-    echo "Spawned tab: $session"
+    local cwd
+    cwd=$(tmux display-message -p -t "$session" '#{pane_current_path}' 2>/dev/null)
+    if [ -n "$cwd" ] && [ -d "$cwd" ]; then
+      wezterm cli spawn --cwd "$cwd" -- tmux attach -t "$session"
+    else
+      wezterm cli spawn -- tmux attach -t "$session"
+    fi
+    echo "Spawned tab: $session ($cwd)"
   done <<< "$sessions"
 }
 
