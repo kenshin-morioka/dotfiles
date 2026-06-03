@@ -289,7 +289,8 @@ nvim .
 | -------- | ---- |
 | `c` | `claude` |
 | `cct` | `claude --continue` |
-| `crs` | `claude --resume` |
+| `cr` | `claude --resume` |
+| `crs` | `claude --resume`（末尾スペース付き、引数指定向け） |
 | `cwr` | worktreeをfzfで選択して `claude --resume` |
 | `cwra` | 全worktreeをWezTermの新しいウィンドウで一括復元 |
 
