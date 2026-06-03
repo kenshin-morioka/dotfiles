@@ -14,9 +14,6 @@ return {
 		{ key = "t", mods = "SHIFT|SUPER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 		{ key = "t", mods = "ALT|SUPER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
 
-		-- Clear screen (Cmd+K) — tmux 内の C-l ペイン移動と干渉しない代替手段
-		{ key = "k", mods = "SUPER", action = act.ClearScrollback("ScrollbackAndViewport") },
-
 		-- FontSize
 		{ key = "0", mods = "SUPER", action = act.ResetFontSize },
 		{ key = "=", mods = "SUPER", action = act.IncreaseFontSize },
