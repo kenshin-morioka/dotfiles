@@ -41,7 +41,7 @@
 | `Ctrl+w k` | 上のウィンドウへ |
 | `Ctrl+w l` | 右のウィンドウへ |
 | `Ctrl+w w` | 次のウィンドウへ循環 |
-| `Ctrl+h/j/k/l` | Neovim split と tmux ペインをシームレス移動（vim-tmux-navigator） |
+| `Ctrl+h/j/k` | Neovim split と tmux ペイン (左/下/上) をシームレス移動（vim-tmux-navigator） |
 
 ### ウィンドウサイズ調整（neo-tree 等の幅調整）
 

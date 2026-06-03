@@ -189,7 +189,8 @@ prefix 不要のキー (vim-tmux-navigator):
 
 | キー | 動作 |
 | ---- | ---- |
-| `Ctrl-h/j/k/l` | Neovim split と tmux ペインをシームレス移動 |
+| `Ctrl-h/j/k` | Neovim split と tmux ペイン (左/下/上) をシームレス移動 |
+| `Ctrl-l` | シェル画面クリア (`clear`) として温存。右ペインへは `prefix + l` |
 
 #### シェル関数 / abbreviation
 
