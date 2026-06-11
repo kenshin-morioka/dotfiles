@@ -58,26 +58,3 @@ wezterm.on('window-focus-changed', function(window, pane)
 
   DisableTitleBar(window)
 end)
-
-local function is_claude(pane)
-  local process = pane:get_foreground_process_info()
-  if not process or not process.argv then
-    return false
-  end
-  for _, arg in ipairs(process.argv) do
-    if arg:find('claude') then
-      return true
-    end
-  end
-  return false
-end
-
-wezterm.on('bell', function(window, pane)
-  if not is_claude(pane) then
-    return
-  end
-  window:toast_notification('Claude Code', 'Task completed', nil, 4000)
-  if wezterm.target_triple:find('darwin') then
-    wezterm.background_child_process({ 'afplay', '/System/Library/Sounds/Submarine.aiff' })
-  end
-end)
