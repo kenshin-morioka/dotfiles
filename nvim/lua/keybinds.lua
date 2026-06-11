@@ -72,12 +72,15 @@ vim.cmd("cnoreabbrev nw noautocmd w")
 -- Lazy.nvim
 vim.keymap.set("n", "<leader>lu", ":Lazy update<CR>", { silent = true, desc = "Lazy update" })
 vim.keymap.set("n", "<leader>ls", ":Lazy sync<CR>", { silent = true, desc = "Lazy sync" })
-vim.keymap.set("n", "<leader>L", ":Lazy<CR>", { silent = true, desc = "Lazy menu" })
 
--- Window width resize (5% of total width per keystroke)
+-- Window resize (tmux-like, 5% of total per keystroke)
 local function resize_width(direction)
 	local step = math.max(1, math.floor(vim.o.columns * 0.05))
 	vim.cmd("vertical resize " .. direction .. step)
+end
+local function resize_height(direction)
+	local step = math.max(1, math.floor(vim.o.lines * 0.05))
+	vim.cmd("resize " .. direction .. step)
 end
 vim.keymap.set("n", "<leader><lt>", function()
 	resize_width("-")
@@ -85,3 +88,46 @@ end, { silent = true, desc = "Width -5%" })
 vim.keymap.set("n", "<leader>>", function()
 	resize_width("+")
 end, { silent = true, desc = "Width +5%" })
+-- tmux-like resize mode: first <leader>HJKL triggers a resize, then HJKL keep
+-- resizing without leader until any other key exits.
+local function resize_mode()
+	while true do
+		vim.api.nvim_echo({ { "-- RESIZE -- (HJKL: resize, any other key: exit)", "MoreMsg" } }, false, {})
+		vim.cmd("redraw")
+		local ok, ch = pcall(vim.fn.getcharstr)
+		if not ok or ch == "" then
+			break
+		end
+		if ch == "H" then
+			resize_width("-")
+		elseif ch == "L" then
+			resize_width("+")
+		elseif ch == "J" then
+			resize_height("+")
+		elseif ch == "K" then
+			resize_height("-")
+		elseif ch == "\27" or ch == "q" then -- Esc / q to quit silently
+			break
+		else
+			vim.api.nvim_feedkeys(ch, "n", false)
+			break
+		end
+	end
+	vim.api.nvim_echo({ { "" } }, false, {})
+end
+vim.keymap.set("n", "<leader>H", function()
+	resize_width("-")
+	resize_mode()
+end, { silent = true, desc = "Width -5% (tmux-like, repeats)" })
+vim.keymap.set("n", "<leader>L", function()
+	resize_width("+")
+	resize_mode()
+end, { silent = true, desc = "Width +5% (tmux-like, repeats)" })
+vim.keymap.set("n", "<leader>J", function()
+	resize_height("+")
+	resize_mode()
+end, { silent = true, desc = "Height +5% (tmux-like, repeats)" })
+vim.keymap.set("n", "<leader>K", function()
+	resize_height("-")
+	resize_mode()
+end, { silent = true, desc = "Height -5% (tmux-like, repeats)" })
