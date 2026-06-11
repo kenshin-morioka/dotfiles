@@ -32,6 +32,9 @@ LINKS := \
 	$(HOME)/.claude/settings.json:$(DOTFILES_DIR)/claude/settings.json \
 	$(HOME)/.claude/checklists:$(DOTFILES_DIR)/claude/checklists \
 	$(HOME)/.claude/skills:$(DOTFILES_DIR)/claude/skills \
+	$(HOME)/.claude/agents:$(DOTFILES_DIR)/claude/agents \
+	$(HOME)/.claude/commands:$(DOTFILES_DIR)/claude/commands \
+	$(HOME)/.claude/hooks:$(DOTFILES_DIR)/claude/hooks \
 	$(HOME)/.claude/statusline-command.sh:$(DOTFILES_DIR)/claude/statusline-command.sh \
 	$(HOME)/.config/flipper:$(DOTFILES_DIR)/flipper \
 	$(HOME)/.config/github-copilot:$(DOTFILES_DIR)/github-copilot \
