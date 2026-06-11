@@ -88,15 +88,46 @@ end, { silent = true, desc = "Width -5%" })
 vim.keymap.set("n", "<leader>>", function()
 	resize_width("+")
 end, { silent = true, desc = "Width +5%" })
+-- tmux-like resize mode: first <leader>HJKL triggers a resize, then HJKL keep
+-- resizing without leader until any other key exits.
+local function resize_mode()
+	while true do
+		vim.api.nvim_echo({ { "-- RESIZE -- (HJKL: resize, any other key: exit)", "MoreMsg" } }, false, {})
+		vim.cmd("redraw")
+		local ok, ch = pcall(vim.fn.getcharstr)
+		if not ok or ch == "" then
+			break
+		end
+		if ch == "H" then
+			resize_width("-")
+		elseif ch == "L" then
+			resize_width("+")
+		elseif ch == "J" then
+			resize_height("+")
+		elseif ch == "K" then
+			resize_height("-")
+		elseif ch == "\27" or ch == "q" then -- Esc / q to quit silently
+			break
+		else
+			vim.api.nvim_feedkeys(ch, "n", false)
+			break
+		end
+	end
+	vim.api.nvim_echo({ { "" } }, false, {})
+end
 vim.keymap.set("n", "<leader>H", function()
 	resize_width("-")
-end, { silent = true, desc = "Width -5% (tmux-like)" })
+	resize_mode()
+end, { silent = true, desc = "Width -5% (tmux-like, repeats)" })
 vim.keymap.set("n", "<leader>L", function()
 	resize_width("+")
-end, { silent = true, desc = "Width +5% (tmux-like)" })
+	resize_mode()
+end, { silent = true, desc = "Width +5% (tmux-like, repeats)" })
 vim.keymap.set("n", "<leader>J", function()
 	resize_height("+")
-end, { silent = true, desc = "Height +5% (tmux-like)" })
+	resize_mode()
+end, { silent = true, desc = "Height +5% (tmux-like, repeats)" })
 vim.keymap.set("n", "<leader>K", function()
 	resize_height("-")
-end, { silent = true, desc = "Height -5% (tmux-like)" })
+	resize_mode()
+end, { silent = true, desc = "Height -5% (tmux-like, repeats)" })
