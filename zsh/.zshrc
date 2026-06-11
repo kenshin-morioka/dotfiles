@@ -91,6 +91,7 @@ fi
   abbr -S t='tmux'
   abbr -S tk='tmux kill-session'
   abbr -S tka='tmux kill-server'
+  abbr -S tkr='rm -f ~/.local/share/tmux/resurrect/last'
 } >> /dev/null
 
 # ====================

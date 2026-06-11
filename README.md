@@ -201,6 +201,7 @@ prefix 不要のキー (vim-tmux-navigator):
 | `tma` | 全 tmux セッションを WezTerm の新しいタブで一気に attach |
 | `tk` | `tmux kill-session` |
 | `tka` | `tmux kill-server` |
+| `tkr` | tmux-resurrect の `last` リンクを削除（次回起動時の自動復元を断つ） |
 
 ### 開発ツール
 
