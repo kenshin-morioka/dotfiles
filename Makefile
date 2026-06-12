@@ -151,6 +151,40 @@ tmux-init:  ## TPM (Tmux Plugin Manager) をインストール
 	fi
 
 # --------------------------------------
+# macOS Launcher App (Finder ダブルクリック → Neovim)
+#
+MACOS_APP_NAME := OpenInNeovim
+MACOS_APP_DST := $(HOME)/Applications/$(MACOS_APP_NAME).app
+MACOS_APP_SRC := $(DOTFILES_DIR)/macos/$(MACOS_APP_NAME).applescript
+MACOS_APP_ICON_SRC := $(DOTFILES_DIR)/macos/icons/$(MACOS_APP_NAME).png
+MACOS_APP_ID := com.kenshin-morioka.openinneovim
+LSREGISTER := /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister
+
+macos-app:  ## Finder ダブルクリックで Neovim を開く .app を ~/Applications に生成
+	@echo "🛠  $(MACOS_APP_NAME).app をビルド中..."
+	@mkdir -p "$(HOME)/Applications"
+	@rm -rf "$(MACOS_APP_DST)"
+	@osacompile -o "$(MACOS_APP_DST)" "$(MACOS_APP_SRC)"
+	@# osacompile 既定では CFBundleIdentifier が空で Launch Services がデフォルトハンドラ登録を拒否するため埋める
+	@plist="$(MACOS_APP_DST)/Contents/Info.plist"; \
+		/usr/libexec/PlistBuddy -c "Delete :CFBundleIdentifier" "$$plist" 2>/dev/null || true; \
+		/usr/libexec/PlistBuddy -c "Add :CFBundleIdentifier string $(MACOS_APP_ID)" "$$plist"
+	@# Neovim ロゴ PNG をマルチ解像度 .icns にして差し替え。
+	@# osacompile の `on open` ハンドラ付き .app は droplet 扱いで CFBundleIconFile=droplet なので droplet.icns を上書きする。
+	@# また Assets.car (compiled icon catalog) が .icns より優先されるため削除する。
+	@iconset="$$(mktemp -d)/$(MACOS_APP_NAME).iconset"; mkdir -p "$$iconset"; \
+		for size in 16 32 64 128 256 512; do \
+			sips -z $$size $$size "$(MACOS_APP_ICON_SRC)" --out "$$iconset/icon_$${size}x$${size}.png" >/dev/null; \
+		done; \
+		iconutil -c icns "$$iconset" -o "$(MACOS_APP_DST)/Contents/Resources/droplet.icns"; \
+		cp "$(MACOS_APP_DST)/Contents/Resources/droplet.icns" "$(MACOS_APP_DST)/Contents/Resources/applet.icns"
+	@rm -f "$(MACOS_APP_DST)/Contents/Resources/Assets.car"
+	@codesign --force --deep --sign - "$(MACOS_APP_DST)"
+	@$(LSREGISTER) -f "$(MACOS_APP_DST)"
+	@echo "✅ $(MACOS_APP_DST) を生成しました (bundle id: $(MACOS_APP_ID))"
+	@echo "   Finder で対象ファイルを右クリック → 情報を見る → このアプリケーションで開く → $(MACOS_APP_NAME) → すべてを変更"
+
+# --------------------------------------
 # Claude Code
 #
 CHECKLIST_DIR := $(DOTFILES_DIR)/claude/checklists

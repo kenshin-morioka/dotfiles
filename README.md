@@ -21,6 +21,7 @@ Personal dotfiles configuration for macOS.
 | `claude/` | Claude Code config (self-review checklists: general, Rails, test/RSpec) |
 | `git-hooks/` | Git hooks (pre-push, etc.) |
 | `act/` | GitHub Actions local runner config |
+| `macos/` | AppleScript source for macOS launcher .app |
 
 ## Setup
 
@@ -47,6 +48,7 @@ Personal dotfiles configuration for macOS.
 | `make tmux-init` | Install TPM (Tmux Plugin Manager) |
 | `make nvim-update` | Run `:Lazy sync` headlessly and commit & push `lazy-lock.json` |
 | `make lazy-commit` | Commit & push `lazy-lock.json` only (after updating in nvim) |
+| `make macos-app` | Build the Finder-double-click → Neovim launcher .app into `~/Applications` |
 
 ## Package Management
 
@@ -74,6 +76,7 @@ Personal dotfiles configuration for macOS.
 | `claude/` | Claude Code設定（セルフレビューチェックリスト: 汎用、Rails、テスト/RSpec） |
 | `git-hooks/` | Gitフック（pre-push等） |
 | `act/` | GitHub Actions ローカル実行設定 |
+| `macos/` | macOS 用ランチャー .app の AppleScript ソース |
 
 ## セットアップ
 
@@ -126,6 +129,16 @@ make claude-init
 
 ※ 中身は自分でカスタマイズしてください
 
+### 8. (任意) Finder ダブルクリックで Neovim を起動するランチャー .app を生成
+
+```bash
+make macos-app
+```
+
+`~/Applications/OpenInNeovim.app` が生成されます。Finder で対象ファイルを選択 → `Cmd+I` → 「このアプリケーションで開く」を `OpenInNeovim` に変更 → 「すべてを変更...」で拡張子ごとに固定できます。
+
+複数フォルダ (デスクトップ / 書類 等) で毎回 TCC プロンプトが出るのが煩わしい場合は、システム設定 → プライバシーとセキュリティ → フルディスクアクセスに `OpenInNeovim.app` を追加してください。
+
 ## Makeコマンド
 
 ```bash
@@ -145,6 +158,7 @@ make help  # 利用可能なコマンド一覧を表示
 | `make tmux-init` | TPM (Tmux Plugin Manager) をインストール |
 | `make nvim-update` | ヘッドレスで `:Lazy sync` を実行し `lazy-lock.json` をコミット & push |
 | `make lazy-commit` | nvim で更新後、`lazy-lock.json` のみをコミット & push |
+| `make macos-app` | Finder ダブルクリックで Neovim を開くランチャー .app を `~/Applications` に生成 |
 
 ## パッケージ管理の使い分け
 
