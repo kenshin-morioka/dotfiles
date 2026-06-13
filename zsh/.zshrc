@@ -5,6 +5,7 @@
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="/Applications/WezTerm.app/Contents/MacOS:$PATH"
 export PATH="/opt/homebrew/opt/imagemagick@6/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 export COWPATH="$HOME/.cowsay/cows:/opt/homebrew/opt/cowsay/share/cowsay/cows"
 
 # ====================
