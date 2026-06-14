@@ -45,7 +45,7 @@ brew "zstd"
 # Build Tools
 brew "go-task"
 brew "act"
-brew "rustup-init"
+brew "rustup"
 
 # Casks
 cask "claude-code"
