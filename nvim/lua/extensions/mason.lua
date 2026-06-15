@@ -18,6 +18,7 @@ require('mason-lspconfig').setup {
     'jsonls',           -- JSON
     'yamlls',           -- YAML
     'bashls',           -- Bash
+    'rust_analyzer',    -- Rust
   },
   automatic_installation = true,
 }
