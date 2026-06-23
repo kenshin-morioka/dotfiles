@@ -34,6 +34,8 @@ require("neo-tree").setup({
       ["<C-g>"] = "open_lazygit",
       ["<C-t>"] = "open_in_wezterm",
       ["<C-h>"] = "toggle_hidden",
+      -- <bs>(Mac の delete キー)で上の階層へルートが移動するのを無効化
+      ["<bs>"] = "none",
     },
   },
   commands = {
