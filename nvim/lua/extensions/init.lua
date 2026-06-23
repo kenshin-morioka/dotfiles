@@ -1,6 +1,9 @@
 local plugins = {
   {
     'nvim-treesitter/nvim-treesitter',
+    -- classic(モジュール式 highlight/indent/incremental_selection)を使うため master に固定。
+    -- 既定ブランチは main(rewrite/新API)に切り替わっており、未指定だと設定が no-op 化する。
+    branch = 'master',
     event = { 'BufNewFile', 'BufReadPre' },
     build = ':TSUpdate',
     config = function() require 'extensions.nvim-treesitter' end,
