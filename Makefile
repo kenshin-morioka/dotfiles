@@ -22,6 +22,7 @@ help:  ## ヘルプを表示
 LINKS := \
 	$(HOME)/.zshrc:$(DOTFILES_DIR)/zsh/.zshrc \
 	$(HOME)/.zprofile:$(DOTFILES_DIR)/zsh/.zprofile \
+	$(HOME)/.zshenv:$(DOTFILES_DIR)/zsh/.zshenv \
 	$(HOME)/.config/nvim:$(DOTFILES_DIR)/nvim \
 	$(HOME)/.config/starship.toml:$(DOTFILES_DIR)/starship.toml \
 	$(HOME)/.config/wezterm:$(DOTFILES_DIR)/wezterm \
