@@ -5,6 +5,8 @@ local config = wezterm.config_builder()
 config.max_fps = 120
 config.automatically_reload_config = true
 config.font_size = 15.0
+-- use_ime = true は macOS の PressAndHold と競合しキー長押し後に文字入力不能になる
+-- (macOS 26.5 以降)。`make macos-defaults` で PressAndHold の無効化が必要
 config.use_ime = true
 config.macos_window_background_blur = 20
 config.window_decorations = "RESIZE"

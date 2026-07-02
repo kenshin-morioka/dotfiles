@@ -29,10 +29,11 @@ Personal dotfiles configuration for macOS.
 2. Install Homebrew: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 3. Install packages: `make brew`
 4. Create symlinks: `make link`
-5. Install fzf keybindings: `$(brew --prefix)/opt/fzf/install`
-6. Install tmux plugin manager: `make tmux-init` (then launch tmux and press `Ctrl-b I` to fetch plugins)
-7. Create self-review checklist: `make claude-init` (customize the content yourself)
-8. (Optional) Build the Finder-double-click → Neovim launcher .app: `make macos-app` — creates `~/Applications/OpenInNeovim.app`. Assign it as the default opener via Finder → `Cmd+I` → "Open with" → "Change All...". If TCC prompts get annoying across folders (Desktop / Documents / etc.), add `OpenInNeovim.app` to System Settings → Privacy & Security → Full Disk Access.
+5. Apply macOS defaults: `make macos-defaults`
+6. Install fzf keybindings: `$(brew --prefix)/opt/fzf/install`
+7. Install tmux plugin manager: `make tmux-init` (then launch tmux and press `Ctrl-b I` to fetch plugins)
+8. Create self-review checklist: `make claude-init` (customize the content yourself)
+9. (Optional) Build the Finder-double-click → Neovim launcher .app: `make macos-app` — creates `~/Applications/OpenInNeovim.app`. Assign it as the default opener via Finder → `Cmd+I` → "Open with" → "Change All...". If TCC prompts get annoying across folders (Desktop / Documents / etc.), add `OpenInNeovim.app` to System Settings → Privacy & Security → Full Disk Access.
 
 ## Make Commands
 
@@ -50,6 +51,7 @@ Personal dotfiles configuration for macOS.
 | `make nvim-update` | Run `:Lazy sync` headlessly and commit & push `lazy-lock.json` |
 | `make lazy-commit` | Commit & push `lazy-lock.json` only (after updating in nvim) |
 | `make macos-app` | Build the Finder-double-click → Neovim launcher .app into `~/Applications` |
+| `make macos-defaults` | Apply macOS defaults (disable press-and-hold for WezTerm to avoid IME freeze) |
 
 ## Package Management
 
