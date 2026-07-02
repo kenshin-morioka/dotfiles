@@ -59,18 +59,29 @@ local function GetHostAndCwd(elems, pane)
     return
   end
 
-  local cwd_uri = uri:sub(8)
-  local slash = cwd_uri:find '/'
+  local host, cwd
 
-  if not slash then
-    return
+  if type(uri) == 'userdata' then
+    -- 新しい wezterm では Url オブジェクトが返る
+    host = uri.host or ''
+    cwd = uri.file_path
+  else
+    -- 旧バージョンでは "file://host/path" 形式の文字列が返る
+    local rest = uri:sub(8)
+    local slash = rest:find '/'
+
+    if not slash then
+      return
+    end
+
+    host = rest:sub(1, slash - 1)
+    cwd = rest:sub(slash)
   end
 
-  local host = cwd_uri:sub(1, slash - 1)
   local dot = host:find '[.]'
 
   AddElement(elems, HEADER_HOST, dot and host:sub(1, dot - 1) or host)
-  AddElement(elems, HEADER_CWD, cwd_uri:sub(slash))
+  AddElement(elems, HEADER_CWD, cwd)
 end
 
 local function GetDate(elems)
@@ -107,4 +118,3 @@ wezterm.on("update-status", function(window, pane)
   LeftUpdate(window, pane)
   RightUpdate(window, pane)
 end)
-

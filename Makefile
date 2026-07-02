@@ -185,6 +185,9 @@ macos-app:  ## Finder ダブルクリックで Neovim を開く .app を ~/Appli
 	@echo "✅ $(MACOS_APP_DST) を生成しました (bundle id: $(MACOS_APP_ID))"
 	@echo "   Finder で対象ファイルを右クリック → 情報を見る → このアプリケーションで開く → $(MACOS_APP_NAME) → すべてを変更"
 
+macos-defaults:  ## macOS の defaults を適用 (WezTerm の PressAndHold 無効化等)
+	@bash "$(DOTFILES_DIR)/macos/defaults.sh"
+
 # --------------------------------------
 # Claude Code
 #
