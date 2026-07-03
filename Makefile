@@ -21,7 +21,6 @@ help:  ## ヘルプを表示
 # リンク定義 (リンク先:元ファイル)
 LINKS := \
 	$(HOME)/.zshrc:$(DOTFILES_DIR)/zsh/.zshrc \
-	$(HOME)/.zprofile:$(DOTFILES_DIR)/zsh/.zprofile \
 	$(HOME)/.zshenv:$(DOTFILES_DIR)/zsh/.zshenv \
 	$(HOME)/.config/nvim:$(DOTFILES_DIR)/nvim \
 	$(HOME)/.config/starship.toml:$(DOTFILES_DIR)/starship.toml \

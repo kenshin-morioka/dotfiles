@@ -1,9 +1,8 @@
 # shellcheck shell=bash
 # ====================
-# PATH
+# 環境変数
 # ====================
-export PATH="/Applications/WezTerm.app/Contents/MacOS:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
+# PATH は非対話シェルでも通るよう zsh/.zshenv に集約している
 export COWPATH="$HOME/.cowsay/cows:/opt/homebrew/opt/cowsay/share/cowsay/cows"
 
 # ====================

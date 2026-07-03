@@ -2,8 +2,10 @@
 # Go (PATH で ${GOPATH}/bin を参照するため PATH より前に定義する)
 export GOPATH="${HOME}/go"
 
-# PATH
+# PATH (非対話シェルでも通す必要があるものはここに集約する)
 export PATH="${HOME}/.local/bin:/usr/local/sbin:${GOPATH}/bin:${PATH}"
+export PATH="/Applications/WezTerm.app/Contents/MacOS:${PATH}"
+export PATH="${HOME}/.cargo/bin:${PATH}"
 
 # Locale
 export LANGUAGE="en_US.UTF-8"
@@ -20,6 +22,3 @@ export HISTFILE="${XDG_STATE_HOME:-${HOME}/.local/state}/zsh/history"
 export HISTSIZE=1000
 export SAVEHIST=100000
 export HISTFILESIZE=100000
-
-# zplugに移行予定
-export _ANTIGEN_INSTALL_DIR=${HOME}/.local/bin
