@@ -63,6 +63,7 @@ require('gitsigns').setup {
     map('v', '<leader>hs', function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end)
     map('v', '<leader>hr', function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end)
     map('n', '<leader>hS', gs.stage_buffer)
+    -- undo_stage_hunk は deprecated (ステージ済みサインへの stage_hunk() トグルが後継)
     map('n', '<leader>hu', gs.undo_stage_hunk)
     map('n', '<leader>hR', gs.reset_buffer)
     map('n', '<leader>hp', gs.preview_hunk)
@@ -70,6 +71,7 @@ require('gitsigns').setup {
     map('n', '<leader>tb', gs.toggle_current_line_blame)
     map('n', '<leader>hd', gs.diffthis)
     map('n', '<leader>hD', function() gs.diffthis('~') end)
+    -- toggle_deleted は deprecated (preview_hunk_inline() が後継)
     map('n', '<leader>td', gs.toggle_deleted)
 
     -- Text object

@@ -1,5 +1,4 @@
 local telescope = require 'telescope'
-local themes = require 'telescope.themes'
 
 telescope.setup {
   defaults = {
@@ -36,6 +35,3 @@ vim.keymap.set('n', '<leader>ff', function()
   builtin.find_files({ no_ignore = true, hidden = true })
 end)
 vim.keymap.set('n', '<leader>fg', builtin.live_grep)
--- vim.keymap.set('n', '<leader>h', function()
---   builtin.help_tags(themes.get_ivy())
--- end)

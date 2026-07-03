@@ -48,7 +48,6 @@ require('lualine').setup {
         sections = { 'error', 'warn', 'info', 'hint' },
         symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
       },
-      { 'navic' },
     },
     lualine_x = {
       {
@@ -75,7 +74,7 @@ require('lualine').setup {
     lualine_b = {},
     lualine_c = {},
     lualine_x = {
-      { 'diff', symbols = { added = ' ', modeiffied = ' ', removed = ' ' }, source = diff_source },
+      { 'diff', symbols = { added = ' ', modified = ' ', removed = ' ' }, source = diff_source },
     },
     lualine_y = {
       { 'b:gitsigns_head', icon = { '', color = { fg = colors.orange } }, color = { fg = colors.fg } },
