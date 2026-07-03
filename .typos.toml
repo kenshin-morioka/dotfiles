@@ -6,7 +6,6 @@ extend-exclude = [
     "*.lock",
     "*.min.js",
     "*.min.css",
-    "nvim/lua/tmp/",
 ]
 
 [default.extend-words]
