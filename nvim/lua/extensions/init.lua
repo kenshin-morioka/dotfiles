@@ -282,8 +282,8 @@ local opts = {
       disabled_plugins = {
         "gzip",
         "matchit",
-        -- "matchparen",
-        -- "netrwPlugin",
+        -- matchparen / netrwPlugin は無効化しない
+        -- (括弧ハイライトは常用、netrw は neo-tree v3.x で無効化不要)
         "tarPlugin",
         "tohtml",
         "tutor",

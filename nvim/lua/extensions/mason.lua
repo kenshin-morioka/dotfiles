@@ -20,5 +20,4 @@ require('mason-lspconfig').setup {
     'bashls',           -- Bash
     'rust_analyzer',    -- Rust
   },
-  automatic_installation = true,
 }
