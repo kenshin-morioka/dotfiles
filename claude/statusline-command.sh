@@ -2,6 +2,9 @@
 # Claude Code statusLine command
 # Inspired by starship.toml: directory + git_branch + git_status + time + model + context
 
+# 未定義変数の参照 (変数名タイポ) を検知する。set -e は空入力で落ちるため付けない
+set -u
+
 input=$(cat)
 
 # --- directory ---
