@@ -52,15 +52,15 @@ RESET='\033[0m'
 line=""
 
 # directory segment
-line="${line}$(printf "${CYAN}%s${RESET}" "$short_dir")"
+line="${line}$(printf '%b%s%b' "$CYAN" "$short_dir" "$RESET")"
 
 # git segment
 if [ -n "$git_branch" ]; then
-  line="${line} $(printf "${BLUE} %s${RESET}" "$git_branch")$(printf "${YELLOW}%s${RESET}" "$git_status_str")"
+  line="${line} $(printf '%b %s%b' "$BLUE" "$git_branch" "$RESET")$(printf '%b%s%b' "$YELLOW" "$git_status_str" "$RESET")"
 fi
 
 # time segment
-line="${line} $(printf "${GREEN} %s${RESET}" "$time_str")"
+line="${line} $(printf '%b %s%b' "$GREEN" "$time_str" "$RESET")"
 
 # model segment
 if [ -n "$model" ]; then

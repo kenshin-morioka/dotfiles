@@ -38,7 +38,6 @@ antigen apply
 # ====================
 # Key Bindings
 # ====================
-bindkey -d
 bindkey -e
 bindkey '^[[1;3D' backward-word
 bindkey '^[[1;3C' forward-word
@@ -210,6 +209,10 @@ function fzf-select-history() {
 }
 zle -N fzf-select-history
 bindkey '^r' fzf-select-history
+
+# cdr の初期化 (fzf-cdr が `cdr -l` を使うために必要)
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
 
 function fzf-get-destination-from-cdr() {
   cdr -l |
