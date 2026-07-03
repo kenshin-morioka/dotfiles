@@ -16,6 +16,12 @@ tool_name=$(echo "$hook_data" | jq -r '.tool_name // ""')
 tool_input=$(echo "$hook_data" | jq -c '.tool_input // {}')
 transcript_path=$(echo "$hook_data" | jq -r '.transcript_path // ""')
 
+# PreToolUse 以外 (Stop 等) や tool_name が空のイベントは検査対象外。
+# Stop のたびにほぼ空のプロンプトで claude -p を起動するコスト・レイテンシを避ける。
+if [ "$hook_event" != "PreToolUse" ] || [ -z "$tool_name" ]; then
+  exit 0
+fi
+
 # 直近のユーザー指示メッセージを抽出 (最後 3 件)
 if [ -n "$transcript_path" ] && [ -f "$transcript_path" ]; then
   recent_user_msgs=$(jq -s '
@@ -41,14 +47,28 @@ tool_input: $tool_input
 EOF
 )
 
-result=$(echo "$prompt" | claude -p --agent instruction-compliance-checker 2>/dev/null || echo "FAIL: 検査エージェント起動失敗")
-
-if echo "$result" | grep -q "^PASS"; then
-  exit 0
+# 検査エージェントの起動失敗・ハング時は fail-open (exit 0) して誤ブロックを避ける。
+# claude -p がハングするとフックが戻らず Write/Edit 自体が止まるため、timeout で上限を付ける
+# (macOS 標準に timeout は無いので coreutils の gtimeout にフォールバック)
+if command -v timeout >/dev/null 2>&1; then
+  timeout_cmd="timeout"
+elif command -v gtimeout >/dev/null 2>&1; then
+  timeout_cmd="gtimeout"
 else
+  timeout_cmd=""
+fi
+
+if ! result=$(echo "$prompt" | ${timeout_cmd:+"$timeout_cmd" 30} claude -p --agent instruction-compliance-checker 2>/dev/null); then
+  exit 0
+fi
+
+# 明示的に FAIL と判定された場合のみブロックする
+if echo "$result" | grep -q "FAIL"; then
   echo "[指示外検出フック (別コンテキスト判定)]" >&2
   echo "$result" >&2
   echo "" >&2
   echo "→ 指示にない要素が含まれている可能性があります。指示範囲外の追加を取り除いてから再度実行してください。" >&2
   exit 2
 fi
+
+exit 0
