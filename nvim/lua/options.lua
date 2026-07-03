@@ -1,16 +1,16 @@
 -- global
 -- 24ビットRGBカラー有効化
-vim.api.nvim_set_option('termguicolors', true)
+vim.opt.termguicolors = true
 -- ファイル末尾に移動した際に4行分の余白設定
-vim.api.nvim_set_option('scrolloff', 4)
+vim.opt.scrolloff = 4
 -- 検索時に大文字小文字無視
-vim.api.nvim_set_option('ignorecase', true)
+vim.opt.ignorecase = true
 -- 検索時に大文字が含まれていたらignorecaseを無効化
-vim.api.nvim_set_option('smartcase', true)
+vim.opt.smartcase = true
 -- 置換時に画面下部に検索結果を表示
-vim.api.nvim_set_option('inccommand', 'split')
+vim.opt.inccommand = 'split'
 -- クリップボードの有効化
-vim.api.nvim_set_option('clipboard', 'unnamedplus')
+vim.opt.clipboard = 'unnamedplus'
 -- Shift+矢印で選択開始（VSCode風）
 vim.opt.keymodel = 'startsel,stopsel'
 vim.opt.selectmode = 'key'
@@ -21,20 +21,20 @@ vim.opt.mouse = ''
 
 -- window
 -- 行番号表示
-vim.api.nvim_win_set_option(0, 'number', true)
+vim.opt.number = true
 -- 相対行番号表示
--- vim.api.nvim_win_set_option(0, 'relativenumber', true)
+-- vim.opt.relativenumber = true
 -- カーソル行を強調
-vim.api.nvim_win_set_option(0, 'cursorline', true)
+vim.opt.cursorline = true
 -- 標識のためのスペースを最左列に設ける
-vim.api.nvim_win_set_option(0, 'signcolumn', 'yes:1')
+vim.opt.signcolumn = 'yes:1'
 -- テキストの折り返しを無効化
-vim.api.nvim_win_set_option(0, 'wrap', false)
+vim.opt.wrap = false
 -- 非表示文字の可視化
-vim.api.nvim_win_set_option(0, 'list', true)
+vim.opt.list = true
 vim.opt.listchars = { eol = '↵', tab = '▸ ' }
 -- 指定したカラム列を強調
--- vim.api.nvim_win_set_option(0, 'colorcolumn', '100')
+-- vim.opt.colorcolumn = '100'
 
 -- filetype detection
 vim.filetype.add({
@@ -50,12 +50,12 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
   group = vim.api.nvim_create_augroup('buffer_set_options', {}),
   callback = function()
     -- swapfile作成を有効化（クラッシュ時のデータ復旧用）
-    vim.api.nvim_buf_set_option(0, 'swapfile', true)
+    vim.bo.swapfile = true
     -- tab幅
-    vim.api.nvim_buf_set_option(0, 'tabstop', 2)
+    vim.bo.tabstop = 2
     -- tabをスペースに変換
-    vim.api.nvim_buf_set_option(0, 'expandtab', true)
+    vim.bo.expandtab = true
     -- オートインデントをtabstopの値に
-    vim.api.nvim_buf_set_option(0, 'shiftwidth', 0)
+    vim.bo.shiftwidth = 0
   end
 })
