@@ -32,6 +32,12 @@ brew "markdownlint-cli"
 brew "typos-cli"
 brew "pre-commit"
 
+# Formatters
+brew "stylua"
+brew "shfmt"
+brew "prettier"
+brew "taplo"
+
 # AWS
 brew "awscli"
 brew "aws-vault"
@@ -47,13 +53,11 @@ brew "go-task"
 brew "act"
 brew "rustup"
 
+# Utilities
+brew "imagemagick"
+brew "terminal-notifier"
+
 # Casks
 cask "claude-code"
 cask "session-manager-plugin" # 要sudo権限での手動インストール
-brew "stylua"
-brew "shfmt"
-brew "prettier"
-brew "taplo"
-brew "imagemagick"
-brew "terminal-notifier"
 cask "wezterm@nightly"
