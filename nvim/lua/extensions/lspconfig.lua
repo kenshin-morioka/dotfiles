@@ -66,6 +66,7 @@ vim.lsp.config('ruby_lsp', {
 })
 
 vim.lsp.config('ts_ls', { capabilities = capabilities })
+vim.lsp.config('rust_analyzer', { capabilities = capabilities })
 vim.lsp.config('html', { capabilities = capabilities })
 vim.lsp.config('cssls', { capabilities = capabilities })
 vim.lsp.config('jsonls', { capabilities = capabilities })
@@ -77,6 +78,7 @@ vim.lsp.enable({
   'lua_ls',
   'ruby_lsp',
   'ts_ls',
+  'rust_analyzer',
   'html',
   'cssls',
   'jsonls',
