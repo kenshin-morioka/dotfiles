@@ -85,12 +85,8 @@ wezterm.on("toggle-opacity", function(window, _pane)
 end)
 
 require("status")
-require("event")
 
 -- status
 config.status_update_interval = 1000
-
--- mouse binds
--- config.mouse_bindings = require('mousebinds').mouse_bindings
 
 return config
