@@ -39,7 +39,6 @@ LINKS := \
 	$(HOME)/.claude/statusline-command.sh:$(DOTFILES_DIR)/claude/statusline-command.sh \
 	$(HOME)/.config/flipper:$(DOTFILES_DIR)/flipper \
 	$(HOME)/.config/github-copilot:$(DOTFILES_DIR)/github-copilot \
-	$(DOTFILES_DIR)/.git/hooks/pre-push:$(DOTFILES_DIR)/git-hooks/pre-push \
 	$(HOME)/.cowsay:$(DOTFILES_DIR)/cowsay \
 	$(HOME)/.gitconfig:$(DOTFILES_DIR)/git/.gitconfig \
 	$(HOME)/.gitconfig.local:$(DOTFILES_DIR)/git/.gitconfig.local

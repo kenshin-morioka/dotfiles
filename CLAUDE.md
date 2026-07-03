@@ -51,7 +51,7 @@
 - selene リンターを通過すること
 - nvim の設定は lazy.nvim のプラグイン管理構造（`lua/extensions/` 配下）に従うこと
 
-### シェルスクリプト（zsh/, git-hooks/）
+### シェルスクリプト（zsh/）
 
 - shellcheck を通過すること
 
