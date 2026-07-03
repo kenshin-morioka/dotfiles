@@ -2,9 +2,7 @@
 # ====================
 # PATH
 # ====================
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="/Applications/WezTerm.app/Contents/MacOS:$PATH"
-export PATH="/opt/homebrew/opt/imagemagick@6/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export COWPATH="$HOME/.cowsay/cows:/opt/homebrew/opt/cowsay/share/cowsay/cows"
 
@@ -18,7 +16,6 @@ limit coredumpsize 0
 # Tools & Environment
 # ====================
 eval "$(/opt/homebrew/bin/brew shellenv)"
-eval "$(rbenv init -)"
 eval "$(mise activate zsh)"
 eval "$(direnv hook zsh)"
 eval "$(starship init zsh)"
@@ -27,7 +24,7 @@ eval "$(starship init zsh)"
 # Plugins (antigen)
 # ====================
 # shellcheck source=/dev/null
-source "$HOME"/.local/bin/antigen.zsh
+source /opt/homebrew/share/antigen/antigen.zsh
 antigen use oh-my-zsh
 antigen bundles <<EOBUNDLES
     git
