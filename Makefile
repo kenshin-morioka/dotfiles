@@ -10,7 +10,7 @@ SHELL := /usr/bin/env bash
 DOTFILES_DIR := $(HOME)/src/github.com/kenshin-morioka/dotfiles
 
 # 全ターゲットをphonyに設定
-.PHONY: $(grep -E '^[a-zA-Z_-]+:' $(MAKEFILE_LIST) | sed 's/://')
+.PHONY: $(shell grep -E '^[a-zA-Z_-]+:' $(MAKEFILE_LIST) | sed 's/:.*//')
 
 help:  ## ヘルプを表示
 	@echo '使い方: make [target]'
@@ -84,8 +84,8 @@ brew-add:  ## パッケージを追加 (PKG=パッケージ名)
 	@if grep -q "^brew \"$(PKG)\"" "$(BREWFILE)"; then \
 		echo "⚠️  $(PKG) は既にBrewfileに存在します"; \
 	else \
-		echo "brew \"$(PKG)\"" >> "$(BREWFILE)"; \
 		brew install $(PKG); \
+		echo "brew \"$(PKG)\"" >> "$(BREWFILE)"; \
 		echo "✅ $(PKG) を追加・インストールしました"; \
 	fi
 
@@ -97,8 +97,8 @@ brew-add-cask:  ## Caskを追加 (PKG=パッケージ名)
 	@if grep -q "^cask \"$(PKG)\"" "$(BREWFILE)"; then \
 		echo "⚠️  $(PKG) は既にBrewfileに存在します"; \
 	else \
-		echo "cask \"$(PKG)\"" >> "$(BREWFILE)"; \
 		brew install --cask $(PKG); \
+		echo "cask \"$(PKG)\"" >> "$(BREWFILE)"; \
 		echo "✅ $(PKG) を追加・インストールしました"; \
 	fi
 
