@@ -47,8 +47,18 @@ tool_input: $tool_input
 EOF
 )
 
-# 検査エージェントの起動失敗・タイムアウト時は fail-open (exit 0) して誤ブロックを避ける
-if ! result=$(echo "$prompt" | claude -p --agent instruction-compliance-checker 2>/dev/null); then
+# 検査エージェントの起動失敗・ハング時は fail-open (exit 0) して誤ブロックを避ける。
+# claude -p がハングするとフックが戻らず Write/Edit 自体が止まるため、timeout で上限を付ける
+# (macOS 標準に timeout は無いので coreutils の gtimeout にフォールバック)
+if command -v timeout >/dev/null 2>&1; then
+  timeout_cmd="timeout"
+elif command -v gtimeout >/dev/null 2>&1; then
+  timeout_cmd="gtimeout"
+else
+  timeout_cmd=""
+fi
+
+if ! result=$(echo "$prompt" | ${timeout_cmd:+"$timeout_cmd" 30} claude -p --agent instruction-compliance-checker 2>/dev/null); then
   exit 0
 fi
 
