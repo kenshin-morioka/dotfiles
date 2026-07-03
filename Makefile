@@ -45,11 +45,19 @@ LINKS := \
 # --------------------------------------
 # シンボリックリンク
 #
+# LINKS の各要素から リンク先(dst) と 元ファイル(src) を取り出す共通処理
+define split_pair
+dst="$${pair%%:*}"; src="$${pair##*:}"
+endef
+
 link:  ## シンボリックリンクを作成
 	@echo "🔗 シンボリックリンクを作成中..."
 	@for pair in $(LINKS); do \
-		dst="$${pair%%:*}"; \
-		src="$${pair##*:}"; \
+		$(split_pair); \
+		if [ ! -e "$$src" ]; then \
+			echo "  skip: $$src (not found)"; \
+			continue; \
+		fi; \
 		mkdir -p "$$(dirname "$$dst")"; \
 		ln -snf "$$src" "$$dst"; \
 		echo "  リンク作成: $$dst -> $$src"; \
@@ -58,7 +66,7 @@ link:  ## シンボリックリンクを作成
 unlink:  ## シンボリックリンクを削除
 	@echo "❌ シンボリックリンクを削除中..."
 	@for pair in $(LINKS); do \
-		dst="$${pair%%:*}"; \
+		$(split_pair); \
 		if [ -L "$$dst" ]; then \
 			rm "$$dst"; \
 			echo "  リンク削除: $$dst"; \
@@ -74,29 +82,25 @@ brew:  ## 全パッケージをインストール
 	@echo "🍺 パッケージをインストール中..."
 	brew bundle --file=$(BREWFILE)
 
+# brew-add / brew-add-cask は共通レシピ。違いは Brewfile の行種別と install フラグのみ
 brew-add:  ## パッケージを追加 (PKG=パッケージ名)
-	@if [ -z "$(PKG)" ]; then \
-		echo "❌ 使い方: make brew-add PKG=<パッケージ名>"; \
-		exit 1; \
-	fi
-	@if grep -q "^brew \"$(PKG)\"" "$(BREWFILE)"; then \
-		echo "⚠️  $(PKG) は既にBrewfileに存在します"; \
-	else \
-		brew install $(PKG); \
-		echo "brew \"$(PKG)\"" >> "$(BREWFILE)"; \
-		echo "✅ $(PKG) を追加・インストールしました"; \
-	fi
+brew-add: BREW_ENTRY := brew
+brew-add: BREW_INSTALL_FLAGS :=
 
 brew-add-cask:  ## Caskを追加 (PKG=パッケージ名)
+brew-add-cask: BREW_ENTRY := cask
+brew-add-cask: BREW_INSTALL_FLAGS := --cask
+
+brew-add brew-add-cask:
 	@if [ -z "$(PKG)" ]; then \
-		echo "❌ 使い方: make brew-add-cask PKG=<パッケージ名>"; \
+		echo "❌ 使い方: make $@ PKG=<パッケージ名>"; \
 		exit 1; \
 	fi
-	@if grep -q "^cask \"$(PKG)\"" "$(BREWFILE)"; then \
+	@if grep -q "^$(BREW_ENTRY) \"$(PKG)\"" "$(BREWFILE)"; then \
 		echo "⚠️  $(PKG) は既にBrewfileに存在します"; \
 	else \
-		brew install --cask $(PKG); \
-		echo "cask \"$(PKG)\"" >> "$(BREWFILE)"; \
+		brew install $(BREW_INSTALL_FLAGS) $(PKG); \
+		echo "$(BREW_ENTRY) \"$(PKG)\"" >> "$(BREWFILE)"; \
 		echo "✅ $(PKG) を追加・インストールしました"; \
 	fi
 
