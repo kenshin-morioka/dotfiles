@@ -1,3 +1,7 @@
+-- leader（全マッピング定義より前に設定する）
+vim.g.mapleader = ','
+vim.g.maplocalleader = '\\'
+
 -- Normal to Command
 vim.keymap.set("n", ":", ";")
 vim.keymap.set("n", ";", ":")
@@ -14,10 +18,6 @@ vim.keymap.set("n", "ZQ", "<NOP>")
 -- do not overwrite default register
 vim.keymap.set("n", "x", '"_x')
 vim.keymap.set("n", "X", '"_X')
-
--- leader
-vim.api.nvim_set_var("mapleader", ",")
-vim.api.nvim_set_var("maplocalleader", "\\")
 
 -- buffer
 vim.keymap.set("n", "<Tab>", ":bnext<CR>")

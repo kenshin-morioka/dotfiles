@@ -22,8 +22,6 @@ vim.opt.mouse = ''
 -- window
 -- 行番号表示
 vim.opt.number = true
--- 相対行番号表示
--- vim.opt.relativenumber = true
 -- カーソル行を強調
 vim.opt.cursorline = true
 -- 標識のためのスペースを最左列に設ける
@@ -33,8 +31,6 @@ vim.opt.wrap = false
 -- 非表示文字の可視化
 vim.opt.list = true
 vim.opt.listchars = { eol = '↵', tab = '▸ ' }
--- 指定したカラム列を強調
--- vim.opt.colorcolumn = '100'
 
 -- filetype detection
 vim.filetype.add({
