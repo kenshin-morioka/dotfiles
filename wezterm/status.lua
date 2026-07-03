@@ -39,7 +39,7 @@ end
 local HEADER_HOST = { Foreground = { Color = '#75b1a9' }, Text = '' }
 local HEADER_CWD = { Foreground = { Color = '#92aac7' }, Text = '' }
 local HEADER_DATE = { Foreground = { Color = '#ffccac' }, Text = '󱪺' }
-local HEADER_TIME = { Foreground = { Color = '#bzbabe' }, Text = '' }
+local HEADER_TIME = { Foreground = { Color = '#b2babe' }, Text = '' }
 local HEADER_BATTERY = { Foreground = { Color = '#dfe166' }, Text = '' }
 
 local function AddElement(elems, header, str)
