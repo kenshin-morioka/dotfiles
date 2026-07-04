@@ -19,6 +19,8 @@ eval "$(mise activate zsh)"
 eval "$(direnv hook zsh)"
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
+# --disable-up-arrow: 上矢印は従来の zsh 履歴のまま、Ctrl-R のみ atuin にする
+eval "$(atuin init zsh --disable-up-arrow)"
 
 # ====================
 # Plugins (antigen)
@@ -206,19 +208,12 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
 
-# shellcheck disable=SC2034,SC2153
-function fzf-select-history() {
-  BUFFER=$(\history -n -r 1 | fzf --query "$LBUFFER")
-  CURSOR=$#BUFFER
-  zle clear-screen
-}
-zle -N fzf-select-history
-bindkey '^r' fzf-select-history
 
 # cdr の初期化 (fzf-cdr が `cdr -l` を使うために必要)
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
 
+# shellcheck disable=SC2153
 function fzf-get-destination-from-cdr() {
   cdr -l |
     sed -e 's/^[[:digit:]]*[[:blank:]]*//' |

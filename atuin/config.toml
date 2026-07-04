@@ -1,0 +1,10 @@
+# atuin 設定
+# https://docs.atuin.sh/configuration/config/
+#
+# 基本はデフォルトのまま運用する。
+# - filter_mode 等の検索挙動はデフォルト (global) を使用
+# - 同期 (sync) はオプトインのため設定しない。使う場合は `atuin register` /
+#   `atuin login` を実行してから sync 関連の設定を追加する
+
+# Enter で即実行せず、いったんシェルのプロンプトに貼り付けて編集できるようにする
+enter_accept = false

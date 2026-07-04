@@ -57,6 +57,7 @@ LINKS := \
 	$(HOME)/.config/wezterm:$(DOTFILES_DIR)/wezterm \
 	$(HOME)/.config/tmux/tmux.conf:$(DOTFILES_DIR)/tmux/tmux.conf \
 	$(HOME)/.config/mise:$(DOTFILES_DIR)/mise \
+	$(HOME)/.config/atuin:$(DOTFILES_DIR)/atuin \
 	$(HOME)/.config/act:$(DOTFILES_DIR)/act \
 	$(HOME)/.claude/CLAUDE.md:$(DOTFILES_DIR)/claude/CLAUDE.md \
 	$(HOME)/.claude/settings.json:$(DOTFILES_DIR)/claude/settings.json \

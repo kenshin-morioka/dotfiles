@@ -17,6 +17,7 @@ Personal dotfiles configuration for macOS.
 | `zsh/` | Zsh config (.zshrc, .zprofile) |
 | `homebrew/` | Brewfile (package management) |
 | `mise/` | mise version manager config |
+| `atuin/` | atuin shell history config |
 | `starship.toml` | Starship prompt config |
 | `claude/` | Claude Code config (self-review checklists: general, Rails, test/RSpec) |
 | `act/` | GitHub Actions local runner config |
@@ -75,6 +76,7 @@ Each step can also be run individually (see Make Commands below).
 | `zsh/` | Zsh設定（.zshrc、.zprofile） |
 | `homebrew/` | Brewfile（パッケージ管理） |
 | `mise/` | miseバージョン管理設定 |
+| `atuin/` | atuinシェル履歴設定 |
 | `starship.toml` | Starshipプロンプト設定 |
 | `claude/` | Claude Code設定（セルフレビューチェックリスト: 汎用、Rails、テスト/RSpec） |
 | `act/` | GitHub Actions ローカル実行設定 |

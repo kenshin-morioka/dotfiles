@@ -1,4 +1,5 @@
 # Shell & Core
+brew "atuin"
 brew "bash"
 brew "coreutils"
 brew "git"
