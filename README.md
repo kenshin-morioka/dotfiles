@@ -219,6 +219,7 @@ prefix 不要のキー (vim-tmux-navigator):
 
 - **mise** - 複数言語のバージョン管理
 - **lazygit** - TUI Git クライアント
+- **delta** - git diff の見やすいページャー
 - **fzf** - ファジーファインダー
 - **ripgrep** - 高速テキスト検索
 - **ghq** - リポジトリ管理
