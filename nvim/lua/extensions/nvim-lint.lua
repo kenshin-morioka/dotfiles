@@ -20,7 +20,12 @@ lint.linters_by_ft = {
 
 -- 自動実行の設定
 vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufReadPost', 'InsertLeave' }, {
-  callback = function()
+  callback = function(ev)
+    -- 巨大ファイルでは InsertLeave のたびに全文を linter に流すと重いためスキップ
+    -- （手動実行の <leader>ll は使用可能）
+    if require('bigfile').is_big(ev.buf) then
+      return
+    end
     lint.try_lint()
   end,
 })
