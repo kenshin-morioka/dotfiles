@@ -19,7 +19,6 @@ Personal dotfiles configuration for macOS.
 | `mise/` | mise version manager config |
 | `starship.toml` | Starship prompt config |
 | `claude/` | Claude Code config (self-review checklists: general, Rails, test/RSpec) |
-| `git-hooks/` | Git hooks (pre-push, etc.) |
 | `act/` | GitHub Actions local runner config |
 | `macos/` | AppleScript source for macOS launcher .app |
 
@@ -77,7 +76,6 @@ Personal dotfiles configuration for macOS.
 | `mise/` | miseバージョン管理設定 |
 | `starship.toml` | Starshipプロンプト設定 |
 | `claude/` | Claude Code設定（セルフレビューチェックリスト: 汎用、Rails、テスト/RSpec） |
-| `git-hooks/` | Gitフック（pre-push等） |
 | `act/` | GitHub Actions ローカル実行設定 |
 | `macos/` | macOS 用ランチャー .app の AppleScript ソース |
 
@@ -110,13 +108,19 @@ make brew
 make link
 ```
 
-### 5. fzfキーバインドのインストール
+### 5. macOS defaults の適用
+
+```bash
+make macos-defaults
+```
+
+### 6. fzfキーバインドのインストール
 
 ```bash
 $(brew --prefix)/opt/fzf/install
 ```
 
-### 6. tmux プラグインマネージャ (TPM) のインストール
+### 7. tmux プラグインマネージャ (TPM) のインストール
 
 ```bash
 make tmux-init
@@ -124,7 +128,7 @@ make tmux-init
 
 その後 tmux を起動し、`Ctrl-b I` (Shift+i) を押すとプラグイン (resurrect / continuum / vim-tmux-navigator 等) が取得されます。
 
-### 7. セルフレビューチェックリストの作成
+### 8. セルフレビューチェックリストの作成
 
 ```bash
 make claude-init
@@ -132,7 +136,7 @@ make claude-init
 
 ※ 中身は自分でカスタマイズしてください
 
-### 8. (任意) Finder ダブルクリックで Neovim を起動するランチャー .app を生成
+### 9. (任意) Finder ダブルクリックで Neovim を起動するランチャー .app を生成
 
 ```bash
 make macos-app
@@ -162,6 +166,7 @@ make help  # 利用可能なコマンド一覧を表示
 | `make nvim-update` | ヘッドレスで `:Lazy sync` を実行し `lazy-lock.json` をコミット & push |
 | `make lazy-commit` | nvim で更新後、`lazy-lock.json` のみをコミット & push |
 | `make macos-app` | Finder ダブルクリックで Neovim を開くランチャー .app を `~/Applications` に生成 |
+| `make macos-defaults` | macOS defaults を適用（WezTerm の IME フリーズ回避のため press-and-hold を無効化） |
 
 ## パッケージ管理の使い分け
 
@@ -224,7 +229,7 @@ prefix 不要のキー (vim-tmux-navigator):
 
 - **mise** - 複数言語のバージョン管理
 - **lazygit** - TUI Git クライアント
-- **fzf / peco** - ファジーファインダー
+- **fzf** - ファジーファインダー
 - **ripgrep** - 高速テキスト検索
 - **ghq** - リポジトリ管理
 
