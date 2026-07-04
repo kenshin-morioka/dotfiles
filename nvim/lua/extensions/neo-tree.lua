@@ -70,6 +70,12 @@ require("neo-tree").setup({
 -- :q で neo-tree だけが残る問題を解決
 vim.api.nvim_create_autocmd("QuitPre", {
   callback = function()
+    -- neo-tree 上で :q した場合はエディタ全体を終了する
+    -- (autocmd 内の :qall は QuitPre を再帰的に発火しない)
+    if vim.bo.filetype == "neo-tree" then
+      vim.cmd("qall")
+      return
+    end
     local tree_wins = {}
     local floating_wins = {}
     local wins = vim.api.nvim_list_wins()
