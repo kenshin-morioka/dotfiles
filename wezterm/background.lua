@@ -5,7 +5,6 @@ function M.create(opacity)
 		{
 			source = {
 				Gradient = {
-					-- colors = { "#143e4eff", "#010b12" },
 					colors = { "#2D353B", "#050505" },
 					orientation = {
 						Linear = { angle = -30.0 },
