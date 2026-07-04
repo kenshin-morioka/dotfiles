@@ -5,7 +5,7 @@
 - wezterm と NeoVim をインストール(homebrew)
 - 以下を`~/.zshrc`に追記して wezterm バイナリを使用できるようにする
 
-```
+```shell
 PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
 export PATH
 ```
@@ -16,6 +16,6 @@ export PATH
 
 ## 参考サイト
 
-- https://wezfurlong.org/wezterm/config/lua/general.html
-- https://coralpink.github.io/commentary/wezterm/configuration.html
-- https://zenn.dev/botamotch/articles/e7960f0dc84d8b
+- <https://wezfurlong.org/wezterm/config/lua/general.html>
+- <https://coralpink.github.io/commentary/wezterm/configuration.html>
+- <https://zenn.dev/botamotch/articles/e7960f0dc84d8b>
