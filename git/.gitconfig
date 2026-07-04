@@ -4,5 +4,44 @@
 	root = ~/src
 [core]
 	quotepath = false
+	# diff / log / show を delta で表示（シンタックスハイライト付き）
+	pager = delta
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
+[push]
+	# 初回 push で upstream を自動設定（-u 不要になる）
+	autoSetupRemote = true
+[fetch]
+	# fetch 時にリモートで消えたブランチの追跡参照を自動削除
+	prune = true
+[rebase]
+	# fixup! / squash! コミットを rebase -i で自動的に並べ替え
+	autosquash = true
+	# rebase 前に未コミット変更を自動 stash し、終了後に復元
+	autostash = true
+[merge]
+	# コンフリクト表示に共通祖先も出す（差分の意図が分かりやすい）※Git 2.35+ が必要
+	conflictstyle = zdiff3
+[diff]
+	# 移動や並べ替えに強く、読みやすい diff を生成
+	algorithm = histogram
+[commit]
+	# コミットメッセージ編集画面に diff を表示（書き忘れ防止）
+	verbose = true
+[rerere]
+	# 一度解決したコンフリクトを記憶して自動再適用
+	enabled = true
+[branch]
+	# branch 一覧を最終コミット日時の新しい順に表示
+	sort = -committerdate
+[init]
+	# 新規リポジトリのデフォルトブランチを main に
+	defaultBranch = main
+[interactive]
+	# add -p などの対話的 diff も delta で色付け
+	diffFilter = delta --color-only
+[delta]
+	# n / N でファイル間をジャンプ
+	navigate = true
+	# 行番号を表示
+	line-numbers = true

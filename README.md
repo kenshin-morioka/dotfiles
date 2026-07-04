@@ -125,6 +125,8 @@ make install
 
 各ステップは `make brew` / `make link` のように個別にも実行できます（詳細は後述の「Makeコマンド」参照）。
 
+なお、`git/.gitconfig` は `merge.conflictstyle = zdiff3` を使用するため Git 2.35.0 以降を前提としています（Homebrew の git を使っていれば問題ありません）。
+
 ### 4. (任意) Finder ダブルクリックで Neovim を起動するランチャー .app を生成
 
 ```bash
@@ -219,6 +221,7 @@ prefix 不要のキー (vim-tmux-navigator):
 
 - **mise** - 複数言語のバージョン管理
 - **lazygit** - TUI Git クライアント
+- **delta** - git diff の見やすいページャー
 - **fzf** - ファジーファインダー（fd 連携で高速なファイル検索）
 - **ripgrep** - 高速テキスト検索
 - **ghq** - リポジトリ管理

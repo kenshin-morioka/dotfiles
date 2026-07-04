@@ -2,6 +2,7 @@
 brew "bash"
 brew "coreutils"
 brew "git"
+brew "git-delta"
 brew "gh"
 brew "ghq"
 brew "fzf"
