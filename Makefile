@@ -18,6 +18,35 @@ help:  ## ヘルプを表示
 	@echo 'ターゲット一覧:'
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
+# --------------------------------------
+# 一括セットアップ
+#
+install:  ## 新マシンのセットアップを一括実行（冪等・再実行可）
+	@echo "🚀 セットアップを開始します..."
+	@# Homebrew は前提条件。未インストールなら明確に案内して中断する（自動インストールはしない）
+	@if ! command -v brew >/dev/null 2>&1; then \
+		echo "❌ Homebrew がインストールされていません"; \
+		echo "   以下を実行してから再度 make install を実行してください:"; \
+		echo '   /bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'; \
+		exit 1; \
+	fi
+	@$(MAKE) brew
+	@$(MAKE) link
+	@$(MAKE) macos-defaults
+	@# fzf キーバインド: install スクリプトは ~/.fzf.zsh を同内容で再生成するだけなので再実行しても安全（冪等）。
+	@# --no-update-rc により rc ファイルへの追記を抑止する（.zshrc はリポジトリへのシンボリックリンクのため、書き換えられると差分が発生する）。
+	@echo "🔑 fzf キーバインドをセットアップ中..."
+	@"$$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc --no-bash --no-fish
+	@$(MAKE) tmux-init
+	@$(MAKE) claude-init
+	@# pre-commit フックを設定（既に設定済みでも同じフックを上書きするだけで冪等）
+	@echo "🪝 pre-commit フックを設定中..."
+	@cd $(DOTFILES_DIR) && pre-commit install
+	@# mise の設定ファイルを信頼（trust 済みでも成功する。mise 未セットアップ等での失敗は || true で無視）
+	@echo "🤝 mise 設定を信頼中..."
+	@mise trust $(DOTFILES_DIR)/mise/config.toml || true
+	@echo "✅ セットアップが完了しました！"
+
 # リンク定義 (リンク先:元ファイル)
 LINKS := \
 	$(HOME)/.zshrc:$(DOTFILES_DIR)/zsh/.zshrc \
