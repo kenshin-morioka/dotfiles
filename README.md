@@ -53,7 +53,7 @@ Each step can also be run individually (see Make Commands below).
 | `make nvim-update` | Run `:Lazy sync` headlessly and commit & push `lazy-lock.json` |
 | `make lazy-commit` | Commit & push `lazy-lock.json` only (after updating in nvim) |
 | `make macos-app` | Build the Finder-double-click → Neovim launcher .app into `~/Applications` |
-| `make macos-defaults` | Apply macOS defaults (disable press-and-hold for WezTerm to avoid IME freeze) |
+| `make macos-defaults` | Apply macOS defaults (keyboard repeat, Finder, screenshots, .DS_Store, Dock, WezTerm press-and-hold) |
 
 ## Package Management
 
@@ -166,7 +166,7 @@ make help  # 利用可能なコマンド一覧を表示
 | `make nvim-update` | ヘッドレスで `:Lazy sync` を実行し `lazy-lock.json` をコミット & push |
 | `make lazy-commit` | nvim で更新後、`lazy-lock.json` のみをコミット & push |
 | `make macos-app` | Finder ダブルクリックで Neovim を開くランチャー .app を `~/Applications` に生成 |
-| `make macos-defaults` | macOS defaults を適用（WezTerm の IME フリーズ回避のため press-and-hold を無効化） |
+| `make macos-defaults` | macOS defaults を適用（キーリピート高速化 / Finder / スクリーンショット / .DS_Store 抑止 / Dock / WezTerm の press-and-hold 無効化） |
 
 ## パッケージ管理の使い分け
 
