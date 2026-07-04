@@ -20,6 +20,7 @@
 - **shellcheck**: シェルスクリプトリンター
 - **jsonlint**: JSON バリデーション
 - **markdownlint**: Markdown リンター（`.markdownlint.json` でルール設定あり）
+- **gitleaks**: シークレット検出
 - **trailing-whitespace / end-of-file-fixer**: 空白・改行修正
 - **check-yaml**: YAML バリデーション
 - **check-added-large-files**: 大きなファイルの混入防止
