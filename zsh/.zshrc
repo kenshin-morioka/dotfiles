@@ -23,6 +23,18 @@ eval "$(zoxide init zsh)"
 eval "$(atuin init zsh --disable-up-arrow)"
 
 # ====================
+# Key Bindings
+# ====================
+# EDITOR=nvim だと zsh は viins をデフォルトキーマップにするため、
+# プラグイン (zsh-abbr 等) のバインドが emacs キーマップに乗るよう
+# sheldon のロードより前に emacs モードへ切り替えておく
+bindkey -e
+bindkey '^[[1;3D' backward-word
+bindkey '^[[1;3C' forward-word
+bindkey '^[OH' beginning-of-line
+bindkey '^[OF' end-of-line
+
+# ====================
 # Plugins (sheldon)
 # ====================
 # プラグイン定義は ~/.config/sheldon/plugins.toml (sheldon/plugins.toml)
@@ -31,15 +43,6 @@ eval "$(sheldon source)"
 # 補完初期化
 # oh-my-zsh 廃止に伴い自前で実行する。zsh-completions の fpath 追加より後に置くこと
 autoload -Uz compinit && compinit
-
-# ====================
-# Key Bindings
-# ====================
-bindkey -e
-bindkey '^[[1;3D' backward-word
-bindkey '^[[1;3C' forward-word
-bindkey '^[OH' beginning-of-line
-bindkey '^[OF' end-of-line
 
 # ====================
 # Aliases
