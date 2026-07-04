@@ -24,20 +24,21 @@ Personal dotfiles configuration for macOS.
 
 ## Setup
 
+Basically a single `make install` does everything (idempotent — safe to re-run).
+
 1. Clone: `ghq get git@github.com:kenshin-morioka/dotfiles.git`
 2. Install Homebrew: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-3. Install packages: `make brew`
-4. Create symlinks: `make link`
-5. Apply macOS defaults: `make macos-defaults`
-6. Install fzf keybindings: `$(brew --prefix)/opt/fzf/install`
-7. Install tmux plugin manager: `make tmux-init` (then launch tmux and press `Ctrl-b I` to fetch plugins)
-8. Create self-review checklist: `make claude-init` (customize the content yourself)
-9. (Optional) Build the Finder-double-click → Neovim launcher .app: `make macos-app` — creates `~/Applications/OpenInNeovim.app`. Assign it as the default opener via Finder → `Cmd+I` → "Open with" → "Change All...". If TCC prompts get annoying across folders (Desktop / Documents / etc.), add `OpenInNeovim.app` to System Settings → Privacy & Security → Full Disk Access.
+3. Run `make install` — this runs `make brew` (packages), `make link` (symlinks), `make macos-defaults`, fzf keybindings install, `make tmux-init` (TPM), `make claude-init` (checklist template), `pre-commit install`, and `mise trust` all at once
+4. Post-install manual steps: launch tmux and press `Ctrl-b I` to fetch plugins; customize the generated self-review checklist yourself
+5. (Optional) Build the Finder-double-click → Neovim launcher .app: `make macos-app` — creates `~/Applications/OpenInNeovim.app`. Assign it as the default opener via Finder → `Cmd+I` → "Open with" → "Change All...". If TCC prompts get annoying across folders (Desktop / Documents / etc.), add `OpenInNeovim.app` to System Settings → Privacy & Security → Full Disk Access.
+
+Each step can also be run individually (see Make Commands below).
 
 ## Make Commands
 
 | Command | Description |
 | --- | --- |
+| `make install` | One-shot machine setup (idempotent, safe to re-run) |
 | `make link` | Create symlinks |
 | `make unlink` | Remove symlinks |
 | `make brew` | Install all packages from Brewfile |
@@ -81,6 +82,8 @@ Personal dotfiles configuration for macOS.
 
 ## セットアップ
 
+基本は `make install` 一発で完了します（冪等なので何度実行しても安全です）。
+
 ### 1. リポジトリのクローン
 
 ```bash
@@ -95,48 +98,34 @@ git clone git@github.com:kenshin-morioka/dotfiles.git ~/src/github.com/kenshin-m
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-### 3. パッケージのインストール
+### 3. 一括セットアップ
 
 ```bash
 cd ~/src/github.com/kenshin-morioka/dotfiles
-make brew
+make install
 ```
 
-### 4. シンボリックリンクの作成
+以下がまとめて実行されます。各ステップは冪等なので、途中で失敗しても再実行するだけで続きから揃います。
 
-```bash
-make link
-```
+| ステップ | 内容 |
+| -------- | ---- |
+| `make brew` | Brewfile の全パッケージをインストール |
+| `make link` | シンボリックリンクを作成 |
+| `make macos-defaults` | macOS defaults を適用 |
+| fzf キーバインド | `$(brew --prefix)/opt/fzf/install` を rc 非改変オプション付きで実行 |
+| `make tmux-init` | TPM (Tmux Plugin Manager) をインストール |
+| `make claude-init` | セルフレビューチェックリストの雛形を生成 |
+| `pre-commit install` | pre-commit フックをリポジトリに設定 |
+| `mise trust` | `mise/config.toml` を信頼 |
 
-### 5. macOS defaults の適用
+セットアップ後の手動作業:
 
-```bash
-make macos-defaults
-```
+- tmux を起動し `Ctrl-b I` (Shift+i) でプラグイン (resurrect / continuum / vim-tmux-navigator 等) を取得
+- `make claude-init` で生成されたチェックリストの中身を自分でカスタマイズ
 
-### 6. fzfキーバインドのインストール
+各ステップは `make brew` / `make link` のように個別にも実行できます（詳細は後述の「Makeコマンド」参照）。
 
-```bash
-$(brew --prefix)/opt/fzf/install
-```
-
-### 7. tmux プラグインマネージャ (TPM) のインストール
-
-```bash
-make tmux-init
-```
-
-その後 tmux を起動し、`Ctrl-b I` (Shift+i) を押すとプラグイン (resurrect / continuum / vim-tmux-navigator 等) が取得されます。
-
-### 8. セルフレビューチェックリストの作成
-
-```bash
-make claude-init
-```
-
-※ 中身は自分でカスタマイズしてください
-
-### 9. (任意) Finder ダブルクリックで Neovim を起動するランチャー .app を生成
+### 4. (任意) Finder ダブルクリックで Neovim を起動するランチャー .app を生成
 
 ```bash
 make macos-app
@@ -154,6 +143,7 @@ make help  # 利用可能なコマンド一覧を表示
 
 | コマンド | 説明 |
 | --------- | ------ |
+| `make install` | 新マシンのセットアップを一括実行（冪等・再実行可） |
 | `make link` | シンボリックリンクを作成 |
 | `make unlink` | シンボリックリンクを削除 |
 | `make brew` | Brewfileの全パッケージをインストール |
@@ -254,12 +244,15 @@ Config files ... are not trusted. Trust them with `mise trust`.
 ```
 
 miseはセキュリティのため、Git管理下の設定ファイルを明示的に信頼する必要があります。
+`make install` 実行時に自動で trust されますが、個別に実行する場合は以下の通りです。
 
 ```bash
 mise trust ~/src/github.com/kenshin-morioka/dotfiles/mise/config.toml
 ```
 
 ### pre-commitフックの設定
+
+`make install` 実行時に自動で設定されますが、個別に実行する場合は以下の通りです。
 
 ```bash
 pre-commit install
