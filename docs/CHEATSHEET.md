@@ -310,13 +310,21 @@ nvim .
 | `fd <パターン>` | find の高速な代替（デフォルトで .gitignore を尊重） |
 | `jq` | JSON プロセッサ |
 
+### atuin（履歴検索）
+
+| キー / コマンド | 説明 |
+| --------------- | ---- |
+| `Ctrl+R` | 履歴をatuinで検索（Enterで確定、もう一度Enterで実行） |
+| `Ctrl+R` 連打 | 検索中にフィルタモード切替（global / host / session / directory） |
+| `atuin import auto` | 既存のzsh履歴をatuinに取り込む（初回のみ） |
+| `atuin stats` | よく使うコマンドの統計を表示 |
+
 ### fzf 連携
 
 `FZF_DEFAULT_COMMAND` / `FZF_CTRL_T_COMMAND` / `FZF_ALT_C_COMMAND` を fd ベースに設定済み（隠しファイル含む、`.git` 除外）。
 
 | キー / コマンド | 説明 |
 | --------------- | ---- |
-| `Ctrl+R` | 履歴をfzfで検索 |
 | `Ctrl+U` | 最近のディレクトリにfzfで移動 |
 | `lb` | git branchをfzfで選択（グローバルエイリアス） |
 | `de` | dockerコンテナをfzfで選択してexec |
