@@ -36,6 +36,12 @@ repos:
         language: system
         types: [markdown]
 
+  # Secret detection
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
+
   # General hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0

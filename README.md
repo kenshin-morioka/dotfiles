@@ -238,6 +238,7 @@ prefix 不要のキー (vim-tmux-navigator):
 - **jsonlint** - JSON
 - **markdownlint** - Markdown
 - **typos** - スペルチェック（全ファイル）
+- **gitleaks** - シークレット検出（全ファイル）
 - **stylua** - Lua formatter
 - **shfmt** - Shell formatter
 - **prettier** - JSON/YAML/Markdown formatter
