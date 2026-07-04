@@ -1,0 +1,25 @@
+# sheldon プラグイン設定
+# https://sheldon.cli.rs/
+#
+# ロード順は定義順。zsh-syntax-highlighting は他プラグインの後 (最後) に
+# ロードする必要がある点に注意。
+
+shell = "zsh"
+
+[plugins]
+
+# 補完定義集 (fpath への追加のみ。compinit は .zshrc 側で実行する)
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+
+# 略語展開 (zsh-job-queue を git submodule として同梱。sheldon は submodule も取得する)
+[plugins.zsh-abbr]
+github = "olets/zsh-abbr"
+branch = "main"
+
+# 必ず最後にロードする
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"

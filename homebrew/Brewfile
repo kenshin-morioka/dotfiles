@@ -23,7 +23,7 @@ brew "lazygit"
 # Terminal
 brew "starship"
 brew "cowsay"
-brew "antigen"
+brew "sheldon"
 brew "cmatrix"
 brew "tmux"
 
