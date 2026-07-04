@@ -23,6 +23,7 @@ Personal dotfiles configuration for macOS.
 | `claude/` | Claude Code config (self-review checklists: general, Rails, test/RSpec) |
 | `act/` | GitHub Actions local runner config |
 | `macos/` | AppleScript source for macOS launcher .app |
+| `ssh/` | SSH client config (generic settings only; hosts live in `~/.ssh/config.local`) |
 
 ## Setup
 
@@ -67,7 +68,7 @@ Each step can also be run individually (see Make Commands below).
 
 ## Machine-local Settings
 
-Machine-specific settings live outside git: `~/.zshrc.local` (sourced at the end of `.zshrc`), `~/.gitconfig.local` (git identity/credentials), and `~/.gitconfig.work` (per-directory work identity via `includeIf`). See the Japanese section for details.
+Machine-specific settings live outside git: `~/.zshrc.local` (sourced at the end of `.zshrc`), `~/.gitconfig.local` (git identity/credentials), `~/.gitconfig.work` (per-directory work identity via `includeIf`), and `~/.ssh/config.local` (SSH host definitions, auto-included from `ssh/config`). See the Japanese section for details.
 
 </details>
 
@@ -87,6 +88,7 @@ Machine-specific settings live outside git: `~/.zshrc.local` (sourced at the end
 | `claude/` | Claude Code設定（セルフレビューチェックリスト: 汎用、Rails、テスト/RSpec） |
 | `act/` | GitHub Actions ローカル実行設定 |
 | `macos/` | macOS 用ランチャー .app の AppleScript ソース |
+| `ssh/` | SSH クライアント設定（汎用設定のみ。ホスト定義は `~/.ssh/config.local`） |
 
 ## セットアップ
 
@@ -187,6 +189,7 @@ make help  # 利用可能なコマンド一覧を表示
 | `~/.zshrc.local` | zsh のマシン固有設定。存在すれば `.zshrc` の末尾で自動的に source される |
 | `~/.gitconfig.local` | Git のユーザー名・メールアドレス・認証情報等。`.gitconfig` の `[include]` から読み込まれる |
 | `~/.gitconfig.work` | 仕事用リポジトリ向けの user 設定。`.gitconfig` の `[includeIf "gitdir:..."]` から読み込まれる |
+| `~/.ssh/config.local` | SSH のホスト定義（サーバー名・IP・ユーザー名等）。`ssh/config` の先頭で `Include` される |
 
 ### ~/.zshrc.local の例
 

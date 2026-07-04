@@ -72,7 +72,8 @@ LINKS := \
 	$(HOME)/.config/github-copilot:$(DOTFILES_DIR)/github-copilot \
 	$(HOME)/.cowsay:$(DOTFILES_DIR)/cowsay \
 	$(HOME)/.gitconfig:$(DOTFILES_DIR)/git/.gitconfig \
-	$(HOME)/.gitconfig.local:$(DOTFILES_DIR)/git/.gitconfig.local
+	$(HOME)/.gitconfig.local:$(DOTFILES_DIR)/git/.gitconfig.local \
+	$(HOME)/.ssh/config:$(DOTFILES_DIR)/ssh/config
 
 # --------------------------------------
 # シンボリックリンク
@@ -82,6 +83,24 @@ define split_pair
 dst="$${pair%%:*}"; src="$${pair##*:}"
 endef
 
+# 既存の ~/.ssh/config (実ファイル) をシンボリックリンクで上書きしてしまう前に
+# ~/.ssh/config.local へ退避する。ssh/config は config.local を Include するため挙動は変わらない。
+ssh-migrate:  ## 既存の ~/.ssh/config を config.local へ退避 (link の前に自動実行)
+	@if [ -f "$(HOME)/.ssh/config" ] && [ ! -L "$(HOME)/.ssh/config" ]; then \
+		if [ -e "$(HOME)/.ssh/config.local" ]; then \
+			echo "❌ ~/.ssh/config (実ファイル) と ~/.ssh/config.local が両方存在します"; \
+			echo "   上書き事故を防ぐため中断しました。~/.ssh/config の内容を config.local に手動で統合してください"; \
+			exit 1; \
+		fi; \
+		cp "$(HOME)/.ssh/config" "$(HOME)/.ssh/config.local"; \
+		chmod 600 "$(HOME)/.ssh/config.local"; \
+		echo "📦 既存の ~/.ssh/config を ~/.ssh/config.local に退避しました"; \
+	fi
+	@# ControlPath (接続多重化ソケット) 用ディレクトリ
+	@mkdir -p "$(HOME)/.ssh/sockets"
+	@chmod 700 "$(HOME)/.ssh/sockets"
+
+link: ssh-migrate
 link:  ## シンボリックリンクを作成
 	@echo "🔗 シンボリックリンクを作成中..."
 	@for pair in $(LINKS); do \
