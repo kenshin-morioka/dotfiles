@@ -1,10 +1,11 @@
 local plugins = {
   {
     'nvim-treesitter/nvim-treesitter',
-    -- classic(モジュール式 highlight/indent/incremental_selection)を使うため master に固定。
-    -- 既定ブランチは main(rewrite/新API)に切り替わっており、未指定だと設定が no-op 化する。
-    branch = 'master',
-    event = { 'BufNewFile', 'BufReadPre' },
+    -- main(rewrite)ブランチを使用。master は凍結済みで Neovim 0.12 の
+    -- treesitter API 変更(match[id] がノードリストを返す)に非対応。
+    branch = 'main',
+    -- main は lazy-load 非対応(README 参照)
+    lazy = false,
     build = ':TSUpdate',
     config = function() require 'extensions.nvim-treesitter' end,
   },
