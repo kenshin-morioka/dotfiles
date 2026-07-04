@@ -305,7 +305,23 @@ nvim .
 
 ## シェル（zsh）
 
+### モダン CLI ツール
+
+| コマンド | 説明 |
+| -------- | ---- |
+| `z <キーワード>` | zoxide による頻度ベースのディレクトリジャンプ（旧 `rupa/z` 互換） |
+| `zi <キーワード>` | zoxide の候補を対話的に選択して移動 |
+| `ls` | `eza --group-directories-first`（ディレクトリ優先表示） |
+| `ll` | `eza -l --git --group-directories-first`（git 状態付き詳細表示） |
+| `la` | `eza -a --group-directories-first`（隠しファイル含む） |
+| `lla` | `eza -la --git --group-directories-first` |
+| `cat` | `bat --paging=never`（シンタックスハイライト付き。素の cat は `command cat`） |
+| `fd <パターン>` | find の高速な代替（デフォルトで .gitignore を尊重） |
+| `jq` | JSON プロセッサ |
+
 ### fzf 連携
+
+`FZF_DEFAULT_COMMAND` / `FZF_CTRL_T_COMMAND` / `FZF_ALT_C_COMMAND` を fd ベースに設定済み（隠しファイル含む、`.git` 除外）。
 
 | キー / コマンド | 説明 |
 | --------------- | ---- |
