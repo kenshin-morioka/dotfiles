@@ -1,0 +1,24 @@
+# SSH クライアント設定 (汎用設定のみ。dotfiles で管理)
+#
+# ホスト定義や秘匿情報 (社内サーバー、IP、ユーザー名等) は
+# ~/.ssh/config.local に書くこと (git 追跡外)。
+# ssh は各オプションについて「最初に見つかった値」を採用するため、
+# Include を先頭に置くことで config.local の設定がここの汎用設定より優先される。
+Include ~/.ssh/config.local
+
+# --------------------------------------
+# 全ホスト共通のデフォルト
+#
+Host *
+  # 鍵のパスフレーズを macOS Keychain に保存し、ssh-agent に自動追加する
+  AddKeysToAgent yes
+  UseKeychain yes
+  # 60 秒ごとに keepalive を送り、無操作時のタイムアウト切断を防ぐ
+  ServerAliveInterval 60
+  ServerAliveCountMax 3
+  # 接続を多重化し、同一ホストへの 2 回目以降の ssh / scp / git を高速化する
+  ControlMaster auto
+  ControlPath ~/.ssh/sockets/%r@%h-%p
+  ControlPersist 10m
+  # known_hosts のホスト名をハッシュ化する (流出時にアクセス先を秘匿)
+  HashKnownHosts yes
