@@ -18,6 +18,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(mise activate zsh)"
 eval "$(direnv hook zsh)"
 eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
 
 # ====================
 # Plugins (antigen)
@@ -30,7 +31,6 @@ antigen bundles <<EOBUNDLES
     zsh-users/zsh-syntax-highlighting
     zsh-users/zsh-autosuggestions
     zsh-users/zsh-completions
-    rupa/z z.sh
     olets/zsh-abbr@main
 EOBUNDLES
 antigen apply
@@ -47,7 +47,8 @@ bindkey '^[OF' end-of-line
 # ====================
 # Aliases
 # ====================
-alias ls='ls -F --color=auto'
+alias ls='eza --group-directories-first'
+alias cat='bat --paging=never'
 alias vim='nvim'
 alias -g lb='`git branch | fzf --prompt "GIT BRANCH> " | head -n 1 | sed -e "s/^\*\s*//g"`'
 alias de='docker exec -it $(docker ps | fzf | cut -d " " -f 1) /bin/bash'
@@ -61,9 +62,9 @@ fi
 # Abbreviations
 # ====================
 {
-  abbr -S ll='ls -l'
-  abbr -S la='ls -A'
-  abbr -S lla='ls -l -A'
+  abbr -S ll='eza -l --git --group-directories-first'
+  abbr -S la='eza -a --group-directories-first'
+  abbr -S lla='eza -la --git --group-directories-first'
   abbr -S v='vim'
   abbr -S g='git'
   abbr -S gco='git checkout'
@@ -201,6 +202,10 @@ function tma() {
 # ====================
 # fzf
 # ====================
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+
 # shellcheck disable=SC2034,SC2153
 function fzf-select-history() {
   BUFFER=$(\history -n -r 1 | fzf --query "$LBUFFER")

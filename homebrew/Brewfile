@@ -6,6 +6,10 @@ brew "gh"
 brew "ghq"
 brew "fzf"
 brew "direnv"
+brew "zoxide"
+brew "eza"
+brew "bat"
+brew "jq"
 
 # Version Manager
 brew "mise"
@@ -23,6 +27,7 @@ brew "tmux"
 
 # Search
 brew "ripgrep"
+brew "fd"
 
 # Linters
 brew "selene"
