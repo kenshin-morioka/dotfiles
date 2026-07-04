@@ -182,7 +182,7 @@
 | `,hd` | カレントファイルの diff を表示 |
 | `,hD` | HEAD~ との diff を表示 |
 | `,hb` | その行のblame表示 |
-| `,tb` | current line blameトグル |
+| `,tb` | current line blameトグル（デフォルトON） |
 | `,td` | 変更（削除行含む）をインラインプレビュー |
 | `ih` | ハンクを選択（テキストオブジェクト） |
 
