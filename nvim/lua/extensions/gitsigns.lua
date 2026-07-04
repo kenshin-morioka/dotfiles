@@ -63,16 +63,15 @@ require('gitsigns').setup {
     map('v', '<leader>hs', function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end)
     map('v', '<leader>hr', function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end)
     map('n', '<leader>hS', gs.stage_buffer)
-    -- undo_stage_hunk は deprecated (ステージ済みサインへの stage_hunk() トグルが後継)
-    map('n', '<leader>hu', gs.undo_stage_hunk)
+    -- stage_hunk はステージ済みハンクに対してはステージ取り消しとして機能（トグル）
+    map('n', '<leader>hu', gs.stage_hunk)
     map('n', '<leader>hR', gs.reset_buffer)
     map('n', '<leader>hp', gs.preview_hunk)
     map('n', '<leader>hb', function() gs.blame_line { full = true } end)
     map('n', '<leader>tb', gs.toggle_current_line_blame)
     map('n', '<leader>hd', gs.diffthis)
     map('n', '<leader>hD', function() gs.diffthis('~') end)
-    -- toggle_deleted は deprecated (preview_hunk_inline() が後継)
-    map('n', '<leader>td', gs.toggle_deleted)
+    map('n', '<leader>td', gs.preview_hunk_inline)
 
     -- Text object
     map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')

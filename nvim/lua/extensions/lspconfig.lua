@@ -1,13 +1,28 @@
 -- Diagnostic settings
+-- NOTE: vim.diagnostic.config はここ 1 箇所に統合する。
+-- 他所（appearance.lua 等）で呼ぶと signs キーごと上書きされアイコンが消える。
 vim.diagnostic.config({
   virtual_text = true,
-  signs = true,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = '',
+      [vim.diagnostic.severity.WARN] = '',
+      [vim.diagnostic.severity.INFO] = '',
+      [vim.diagnostic.severity.HINT] = '󰌶',
+    },
+  },
   underline = true,
   update_in_insert = false,
   severity_sort = true,
   float = {
     border = 'rounded',
     source = true,
+  },
+  jump = {
+    -- vim.diagnostic.jump の float オプションは Nvim 0.14 で削除予定のため on_jump を使う
+    on_jump = function(_, bufnr)
+      vim.diagnostic.open_float({ bufnr = bufnr, scope = 'cursor', focus = false })
+    end,
   },
 })
 
@@ -35,53 +50,46 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
 
     -- Diagnostics
-    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+    vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1 }) end, opts)
+    vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1 }) end, opts)
   end,
 })
 
 -- LSP server configurations
-vim.lsp.config('lua_ls', {
-  capabilities = capabilities,
-  settings = {
-    Lua = {
-      runtime = { version = 'LuaJIT' },
-      diagnostics = { globals = { 'vim' } },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file('', true),
-        checkThirdParty = false,
+-- capabilities は全サーバー共通で付与するため、ここには個別設定のみ書く
+local servers = {
+  lua_ls = {
+    settings = {
+      Lua = {
+        runtime = { version = 'LuaJIT' },
+        diagnostics = { globals = { 'vim' } },
+        workspace = {
+          library = vim.api.nvim_get_runtime_file('', true),
+          checkThirdParty = false,
+        },
+        telemetry = { enable = false },
       },
-      telemetry = { enable = false },
     },
   },
-})
-
-vim.lsp.config('ruby_lsp', {
-  capabilities = capabilities,
-  root_markers = { '.git', 'Gemfile' },
-  init_options = {
-    formatter = 'auto',
-    linters = { 'rubocop' },
+  ruby_lsp = {
+    root_markers = { '.git', 'Gemfile' },
+    init_options = {
+      formatter = 'auto',
+      linters = { 'rubocop' },
+    },
   },
-})
+  ts_ls = {},
+  rust_analyzer = {},
+  html = {},
+  cssls = {},
+  jsonls = {},
+  yamlls = {},
+  bashls = {},
+}
 
-vim.lsp.config('ts_ls', { capabilities = capabilities })
-vim.lsp.config('rust_analyzer', { capabilities = capabilities })
-vim.lsp.config('html', { capabilities = capabilities })
-vim.lsp.config('cssls', { capabilities = capabilities })
-vim.lsp.config('jsonls', { capabilities = capabilities })
-vim.lsp.config('yamlls', { capabilities = capabilities })
-vim.lsp.config('bashls', { capabilities = capabilities })
+for name, config in pairs(servers) do
+  vim.lsp.config(name, vim.tbl_extend('force', { capabilities = capabilities }, config))
+end
 
 -- Enable LSP servers
-vim.lsp.enable({
-  'lua_ls',
-  'ruby_lsp',
-  'ts_ls',
-  'rust_analyzer',
-  'html',
-  'cssls',
-  'jsonls',
-  'yamlls',
-  'bashls',
-})
+vim.lsp.enable(vim.tbl_keys(servers))

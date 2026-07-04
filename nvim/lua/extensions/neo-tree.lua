@@ -4,9 +4,9 @@ vim.api.nvim_create_user_command("LazyGitCurrent", function()
   vim.cmd('startinsert')
 end, {})
 
-vim.api.nvim_set_keymap('n', '<C-t>',
-  ':lua require("neo-tree.command").execute({ action = "open_directory_in_new_tab" })<CR>',
-  { noremap = true, silent = true })
+vim.keymap.set('n', '<C-t>', function()
+  require("neo-tree.command").execute({ action = "open_directory_in_new_tab" })
+end, { silent = true })
 
 require("neo-tree").setup({
   close_if_last_window = true,
