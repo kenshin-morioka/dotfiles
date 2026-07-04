@@ -4,6 +4,15 @@ local luasnip = require 'luasnip'
 
 local map = cmp.mapping
 
+-- 巨大ファイルでは buffer ソースの単語インデックス化が重いため対象から外す
+local function indexable_bufs()
+  local bufnr = vim.api.nvim_get_current_buf()
+  if require('bigfile').is_big(bufnr) then
+    return {}
+  end
+  return { bufnr }
+end
+
 cmp.setup {
   mapping = map.preset.insert {
     ['<C-d>'] = map.scroll_docs(-4),
@@ -17,7 +26,7 @@ cmp.setup {
   sources = cmp.config.sources {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
-    { name = 'buffer' },
+    { name = 'buffer', option = { get_bufnrs = indexable_bufs } },
     { name = 'path' },
   },
   snippet = {
@@ -48,6 +57,7 @@ cmp.setup.cmdline({ '/', '?' }, {
       name = 'buffer',
       option = {
         keyword_pattern = [[\k\+]],
+        get_bufnrs = indexable_bufs,
       },
     },
   },

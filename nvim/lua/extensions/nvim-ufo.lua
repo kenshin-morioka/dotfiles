@@ -35,6 +35,12 @@ require('ufo').setup {
         return ''
       end
     end
+
+    -- 巨大ファイルは treesitter フォールドの再計算が重いため indent のみ使う
+    if require('bigfile').is_big(bufnr) then
+      return 'indent'
+    end
+
     return { 'treesitter', 'indent' }
   end
 }

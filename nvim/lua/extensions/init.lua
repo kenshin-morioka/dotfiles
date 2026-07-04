@@ -86,18 +86,20 @@ local plugins = {
     },
   },
   -- Search and Replace
+  -- nvim-spectre は結果を同期描画するため大量マッチ時に固まる。
+  -- grug-far は結果をストリーミング描画するので大量マッチでもブロックしない。
   {
-    'nvim-pack/nvim-spectre',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    'MagicDuck/grug-far.nvim',
+    cmd = 'GrugFar',
     keys = {
-      { '<leader>sr', function() require('spectre').open() end, desc = 'Search and Replace (Project)' },
-      { '<leader>sf', function() require('spectre').open_file_search() end, desc = 'Search and Replace (File)' },
-      { '<leader>sw', function() require('spectre').open_visual({ select_word = true }) end, desc = 'Search current word' },
+      { '<leader>sr', function() require('grug-far').open() end, desc = 'Search and Replace (Project)' },
+      { '<leader>sf', function() require('grug-far').open({ prefills = { paths = vim.fn.expand('%') } }) end, desc = 'Search and Replace (File)' },
+      { '<leader>sw', function() require('grug-far').open({ prefills = { search = vim.fn.expand('<cword>') } }) end, desc = 'Search current word' },
     },
     opts = {
-      find_engine = {
-        ['rg'] = {
-          args = { '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--hidden' },
+      engines = {
+        ripgrep = {
+          extraArgs = '--hidden',
         },
       },
     },
