@@ -1,0 +1,49 @@
+# pre-commit の全フックを CI で実行する
+# ローカルフック (language: system) は実バイナリに依存するため、事前にインストールする
+# - typos: pipx (PyPI に公式 wheel あり)
+# - selene: Linuxbrew (ubuntu-latest ランナーにプリインストール済みの brew を利用)
+# - jsonlint / markdownlint: npm
+# - shellcheck: ubuntu-latest ランナーにプリインストール済み
+name: pre-commit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install lint tools
+        # Linuxbrew は ubuntu ランナーにプリインストールされているが、デフォルトでは PATH に
+        # 入っていないため brew shellenv で読み込む。後続ステップでも selene を使えるように
+        # GITHUB_PATH にも追加する
+        run: |
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          echo "/home/linuxbrew/.linuxbrew/bin" >> "$GITHUB_PATH"
+          echo "/home/linuxbrew/.linuxbrew/sbin" >> "$GITHUB_PATH"
+          pipx install pre-commit
+          pipx install typos
+          npm install --global jsonlint markdownlint-cli
+          brew install selene
+
+      - name: Show tool versions
+        run: |
+          pre-commit --version
+          typos --version
+          selene --version
+          shellcheck --version
+          markdownlint --version
+
+      - name: Run pre-commit on all files
+        run: pre-commit run --all-files --show-diff-on-failure
