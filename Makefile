@@ -7,7 +7,8 @@
 SHELL := /usr/bin/env bash
 .SHELLFLAGS := -o errexit -o nounset -o pipefail -o posix -c
 .DEFAULT_GOAL := help
-DOTFILES_DIR := $(HOME)/src/github.com/kenshin-morioka/dotfiles
+# Makefile 自身の位置からリポジトリのルートを解決する (CI 等、checkout 先が異なる環境でも動くように)
+DOTFILES_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 
 # 全ターゲットをphonyに設定
 .PHONY: $(shell grep -E '^[a-zA-Z_-]+:' $(MAKEFILE_LIST) | sed 's/:.*//')

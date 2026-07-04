@@ -1,0 +1,69 @@
+# macOS ランナーで make link の smoke test を行う
+# Brewfile は brew bundle install だと時間がかかりすぎるため、構文検証として brew bundle list に留める
+name: macos-smoke
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - Makefile
+      - homebrew/Brewfile
+      - .github/workflows/macos-smoke.yml
+  pull_request:
+    paths:
+      - Makefile
+      - homebrew/Brewfile
+      - .github/workflows/macos-smoke.yml
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  make-link:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Dry run (make -n link)
+        run: make -n link
+
+      - name: Run make link
+        run: make link
+
+      - name: Verify symlinks
+        # git 追跡対象のリンク元のみ検証する
+        # (claude/CLAUDE.md や git/.gitconfig.local 等の gitignore 対象は CI 上に存在せず skip される)
+        run: |
+          set -euo pipefail
+          targets=(
+            "$HOME/.zshrc"
+            "$HOME/.zshenv"
+            "$HOME/.config/nvim"
+            "$HOME/.config/starship.toml"
+            "$HOME/.config/wezterm"
+            "$HOME/.config/tmux/tmux.conf"
+            "$HOME/.config/mise"
+            "$HOME/.config/act"
+            "$HOME/.claude/agents"
+            "$HOME/.claude/statusline-command.sh"
+            "$HOME/.cowsay"
+            "$HOME/.gitconfig"
+          )
+          for dst in "${targets[@]}"; do
+            if [ ! -L "$dst" ]; then
+              echo "NG: $dst はシンボリックリンクではありません"
+              exit 1
+            fi
+            if [ ! -e "$dst" ]; then
+              echo "NG: $dst のリンク先が存在しません ($(readlink "$dst"))"
+              exit 1
+            fi
+            echo "OK: $dst -> $(readlink "$dst")"
+          done
+
+      - name: Brewfile syntax check
+        run: brew bundle list --file=homebrew/Brewfile > /dev/null
