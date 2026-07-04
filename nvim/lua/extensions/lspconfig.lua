@@ -18,6 +18,12 @@ vim.diagnostic.config({
     border = 'rounded',
     source = true,
   },
+  jump = {
+    -- vim.diagnostic.jump の float オプションは Nvim 0.14 で削除予定のため on_jump を使う
+    on_jump = function(_, bufnr)
+      vim.diagnostic.open_float({ bufnr = bufnr, scope = 'cursor', focus = false })
+    end,
+  },
 })
 
 -- LSP capabilities for nvim-cmp
@@ -44,8 +50,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
 
     -- Diagnostics
-    vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1, float = true }) end, opts)
-    vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1, float = true }) end, opts)
+    vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1 }) end, opts)
+    vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1 }) end, opts)
   end,
 })
 
