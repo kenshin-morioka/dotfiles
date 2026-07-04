@@ -23,19 +23,14 @@ eval "$(zoxide init zsh)"
 eval "$(atuin init zsh --disable-up-arrow)"
 
 # ====================
-# Plugins (antigen)
+# Plugins (sheldon)
 # ====================
-# shellcheck source=/dev/null
-source /opt/homebrew/share/antigen/antigen.zsh
-antigen use oh-my-zsh
-antigen bundles <<EOBUNDLES
-    git
-    zsh-users/zsh-syntax-highlighting
-    zsh-users/zsh-autosuggestions
-    zsh-users/zsh-completions
-    olets/zsh-abbr@main
-EOBUNDLES
-antigen apply
+# プラグイン定義は ~/.config/sheldon/plugins.toml (sheldon/plugins.toml)
+eval "$(sheldon source)"
+
+# 補完初期化
+# oh-my-zsh 廃止に伴い自前で実行する。zsh-completions の fpath 追加より後に置くこと
+autoload -Uz compinit && compinit
 
 # ====================
 # Key Bindings

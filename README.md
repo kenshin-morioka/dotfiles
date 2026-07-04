@@ -15,6 +15,7 @@ Personal dotfiles configuration for macOS.
 | `wezterm/` | WezTerm terminal config |
 | `tmux/` | tmux config (TPM, resurrect, continuum, vim-tmux-navigator) |
 | `zsh/` | Zsh config (.zshrc, .zprofile) |
+| `sheldon/` | sheldon (zsh plugin manager) config |
 | `homebrew/` | Brewfile (package management) |
 | `mise/` | mise version manager config |
 | `atuin/` | atuin shell history config |
@@ -78,6 +79,7 @@ Machine-specific settings live outside git: `~/.zshrc.local` (sourced at the end
 | `wezterm/` | WezTermターミナル設定 |
 | `tmux/` | tmux設定（TPM、resurrect、continuum、vim-tmux-navigator） |
 | `zsh/` | Zsh設定（.zshrc、.zprofile） |
+| `sheldon/` | sheldon（zshプラグインマネージャ）設定 |
 | `homebrew/` | Brewfile（パッケージ管理） |
 | `mise/` | miseバージョン管理設定 |
 | `atuin/` | atuinシェル履歴設定 |
@@ -222,7 +224,7 @@ alias work-vpn='sudo openconnect vpn.example.com'
 - **WezTerm** - GPUアクセラレーション対応ターミナル
 - **tmux** - ターミナルマルチプレクサ（ペイン分割・セッション永続化）
 - **Starship** - カスタマイズ可能なプロンプト
-- **Zsh + Antigen** - シェル環境
+- **Zsh + sheldon** - シェル環境
 
 #### tmux 主要キーバインド
 
