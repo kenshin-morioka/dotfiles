@@ -267,3 +267,10 @@ unsetopt list_types
 # ====================
 # shellcheck disable=SC1090
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+
+# ====================
+# Machine Local Settings
+# ====================
+# マシン固有の設定 (git 追跡外)
+# shellcheck disable=SC1090,SC1091
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"

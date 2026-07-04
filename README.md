@@ -63,6 +63,10 @@ Each step can also be run individually (see Make Commands below).
 - Use **mise** instead of rbenv, nodenv, tfenv for unified version management
 - Use Homebrew for tools that don't need per-project versioning
 
+## Machine-local Settings
+
+Machine-specific settings live outside git: `~/.zshrc.local` (sourced at the end of `.zshrc`), `~/.gitconfig.local` (git identity/credentials), and `~/.gitconfig.work` (per-directory work identity via `includeIf`). See the Japanese section for details.
+
 </details>
 
 ## 含まれる設定
@@ -169,6 +173,41 @@ make help  # 利用可能なコマンド一覧を表示
 
 - rbenv, nodenv, tfenv などの個別バージョンマネージャーは **mise** で統一
 - Homebrewは主にシステム全体で1つのバージョンで良いツールに使用
+
+## マシンローカル設定
+
+マシン固有の設定（会社マシンのプロキシ、社用エイリアス、認証情報等）は git 追跡外のファイルに置きます。dotfiles 本体を汚さずに、マシンごとの差分を吸収できます。
+
+| ファイル | 役割 |
+| -------- | ---- |
+| `~/.zshrc.local` | zsh のマシン固有設定。存在すれば `.zshrc` の末尾で自動的に source される |
+| `~/.gitconfig.local` | Git のユーザー名・メールアドレス・認証情報等。`.gitconfig` の `[include]` から読み込まれる |
+| `~/.gitconfig.work` | 仕事用リポジトリ向けの user 設定。`.gitconfig` の `[includeIf "gitdir:..."]` から読み込まれる |
+
+### ~/.zshrc.local の例
+
+```zsh
+# 会社マシン固有の設定
+export HTTP_PROXY="http://proxy.example.com:8080"
+alias work-vpn='sudo openconnect vpn.example.com'
+```
+
+### ~/.gitconfig.local の例
+
+```gitconfig
+[user]
+  name = Your Name
+  email = you@example.com
+```
+
+### ~/.gitconfig.work の例
+
+仕事用の org ディレクトリを clone したら、`git/.gitconfig` の `[includeIf]` のコメントを外し、パスを実態に合わせた上で `~/.gitconfig.work` を作成します。対象ディレクトリ配下のリポジトリでは自動的にこちらの設定が優先されます。
+
+```gitconfig
+[user]
+  email = you@work.example.com
+```
 
 ## 主要ツール
 
