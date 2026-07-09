@@ -16,9 +16,10 @@ ts.install(ensure_installed)
 ---@param lang string
 local function attach(bufnr, lang)
   -- 1MB 超のファイルは初回パースが重すぎるためハイライトを無効化
+  -- minified 等の超長行ファイルは1行分のハイライト処理で描画がフリーズするため同様に無効化
   local name = vim.api.nvim_buf_get_name(bufnr)
   local stat = name ~= '' and vim.uv.fs_stat(name) or nil
-  if stat ~= nil and stat.size > 1024 * 1024 then
+  if (stat ~= nil and stat.size > 1024 * 1024) or require('bigfile').has_long_line(bufnr) then
     return
   end
 
