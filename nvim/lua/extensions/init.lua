@@ -47,7 +47,12 @@ local plugins = {
       'nvim-tree/nvim-web-devicons',
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
       -- 未入力時に過去に選択したファイルを frecency 順で上位表示する
-      { 'prochri/telescope-all-recent.nvim', dependencies = { 'kkharji/sqlite.lua' } },
+      -- 最新 main は select_drop 等 telescope master 前提のため 0.1.x 互換のコミットに固定
+      {
+        'prochri/telescope-all-recent.nvim',
+        commit = 'e437f60ea468268e49ffdc0c9ed7c5ba384e63cf',
+        dependencies = { 'kkharji/sqlite.lua' },
+      },
     },
   },
   {
