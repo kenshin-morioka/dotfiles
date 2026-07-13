@@ -41,17 +41,15 @@ vim.filetype.add({
 })
 
 -- buffer
-vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
-  pattern = '*',
-  group = vim.api.nvim_create_augroup('buffer_set_options', {}),
-  callback = function()
-    -- swapfile作成を有効化（クラッシュ時のデータ復旧用）
-    vim.bo.swapfile = true
-    -- tab幅
-    vim.bo.tabstop = 2
-    -- tabをスペースに変換
-    vim.bo.expandtab = true
-    -- オートインデントをtabstopの値に
-    vim.bo.shiftwidth = 0
-  end
-})
+-- swapfile作成を有効化（クラッシュ時のデータ復旧用）
+vim.opt.swapfile = true
+
+-- インデントのデフォルト値（BufEnter で強制すると ftplugin や editorconfig を
+-- 上書きしてしまうため、デフォルト値として設定するだけに留める）
+-- 優先順位: デフォルト値 < after/ftplugin/<filetype>.lua < .editorconfig
+-- tab幅
+vim.opt.tabstop = 2
+-- tabをスペースに変換
+vim.opt.expandtab = true
+-- オートインデントをtabstopの値に
+vim.opt.shiftwidth = 0
