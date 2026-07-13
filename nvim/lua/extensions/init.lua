@@ -46,6 +46,8 @@ local plugins = {
       'nvim-lua/plenary.nvim',
       'nvim-tree/nvim-web-devicons',
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+      -- 未入力時に過去に選択したファイルを frecency 順で上位表示する
+      { 'prochri/telescope-all-recent.nvim', dependencies = { 'kkharji/sqlite.lua' } },
     },
   },
   {
