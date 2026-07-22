@@ -328,6 +328,8 @@ nvim .
 | `Ctrl+U` | 最近のディレクトリにfzfで移動 |
 | `lb` | git branchをfzfで選択（グローバルエイリアス） |
 | `de` | dockerコンテナをfzfで選択してexec |
+| `cgr` | Cargo.tomlを探してsrc/bin配下のバイナリをfzfで選択し`cargo run --bin`実行 |
+| `cgb` | 同様に`cargo build --bin`実行 |
 
 ### Claude Code
 
