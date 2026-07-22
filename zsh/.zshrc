@@ -141,6 +141,44 @@ function claude-worktree-resume-all() {
 }
 
 # ====================
+# cargo
+# ====================
+# カレントディレクトリから上に辿って Cargo.toml を探し、src/bin 配下のファイルを
+# fzf で選んで cargo <subcommand> --bin を実行 (どの Rust プロジェクト配下でも動く)
+function _cargo-fzf-bin() {
+  local subcmd="$1"
+  local proj="$PWD"
+  while [ "$proj" != "/" ] && [ ! -f "$proj/Cargo.toml" ]; do
+    proj="$(dirname "$proj")"
+  done
+  if [ ! -f "$proj/Cargo.toml" ]; then
+    echo "Cargo.toml not found"
+    return 1
+  fi
+  if [ ! -d "$proj/src/bin" ]; then
+    echo "not found: $proj/src/bin"
+    return 1
+  fi
+
+  local -a bins
+  # shellcheck disable=SC1036 # zsh の glob 修飾子 (N:t:r) は shellcheck が解釈できない
+  bins=("$proj"/src/bin/*.rs(N:t:r))
+  if [ ${#bins[@]} -eq 0 ]; then
+    echo "no .rs files in $proj/src/bin"
+    return 1
+  fi
+
+  local bin
+  bin=$(print -rl -- "${bins[@]}" | fzf --height=40% --reverse --prompt="cargo $subcmd --bin> ")
+  if [ -n "$bin" ]; then
+    (cd "$proj" && cargo "$subcmd" --bin "$bin")
+  fi
+}
+
+function cgr() { _cargo-fzf-bin run; }
+function cgb() { _cargo-fzf-bin build; }
+
+# ====================
 # tmux
 # ====================
 # 既存セッションがあれば fzf で選択して attach、なければ新規作成
