@@ -156,25 +156,22 @@ function _cargo-project-root() {
   echo "$proj"
 }
 
-# src/bin 配下の .rs を fzf で選んで cargo run --bin を実行
+# bin ターゲットを fzf で選んで cargo run --bin を実行
+# cargo metadata から列挙するので src/bin/foo/main.rs 形式や [[bin]] 定義も拾える
 function crb() {
   local proj
   proj=$(_cargo-project-root) || return 1
-  if [ ! -d "$proj/src/bin" ]; then
-    echo "not found: $proj/src/bin"
-    return 1
-  fi
 
-  local -a bins
-  # shellcheck disable=SC1036 # zsh の glob 修飾子 (N:t:r) は shellcheck が解釈できない
-  bins=("$proj"/src/bin/*.rs(N:t:r))
-  if [ ${#bins[@]} -eq 0 ]; then
-    echo "no .rs files in $proj/src/bin"
+  local targets
+  targets=$(cargo metadata --no-deps --format-version 1 --manifest-path "$proj/Cargo.toml" |
+    jq -r '.packages[].targets[] | select(.kind | index("bin")) | .name')
+  if [ -z "$targets" ]; then
+    echo "no bin targets in $proj"
     return 1
   fi
 
   local bin
-  bin=$(print -rl -- "${bins[@]}" | fzf --height=40% --reverse --prompt="cargo run --bin> ")
+  bin=$(echo "$targets" | fzf --height=40% --reverse --prompt="cargo run --bin> ")
   if [ -n "$bin" ]; then
     (cd "$proj" && cargo run --bin "$bin")
   fi
