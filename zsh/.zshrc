@@ -143,18 +143,23 @@ function claude-worktree-resume-all() {
 # ====================
 # cargo
 # ====================
-# カレントディレクトリから上に辿って Cargo.toml を探し、src/bin 配下のファイルを
-# fzf で選んで cargo <subcommand> --bin を実行 (どの Rust プロジェクト配下でも動く)
-function _cargo-fzf-bin() {
-  local subcmd="$1"
+# カレントディレクトリから上に辿って Cargo.toml のあるディレクトリを出力
+function _cargo-project-root() {
   local proj="$PWD"
   while [ "$proj" != "/" ] && [ ! -f "$proj/Cargo.toml" ]; do
     proj="$(dirname "$proj")"
   done
   if [ ! -f "$proj/Cargo.toml" ]; then
-    echo "Cargo.toml not found"
+    echo "Cargo.toml not found" >&2
     return 1
   fi
+  echo "$proj"
+}
+
+# src/bin 配下の .rs を fzf で選んで cargo run --bin を実行
+function crb() {
+  local proj
+  proj=$(_cargo-project-root) || return 1
   if [ ! -d "$proj/src/bin" ]; then
     echo "not found: $proj/src/bin"
     return 1
@@ -169,14 +174,23 @@ function _cargo-fzf-bin() {
   fi
 
   local bin
-  bin=$(print -rl -- "${bins[@]}" | fzf --height=40% --reverse --prompt="cargo $subcmd --bin> ")
+  bin=$(print -rl -- "${bins[@]}" | fzf --height=40% --reverse --prompt="cargo run --bin> ")
   if [ -n "$bin" ]; then
-    (cd "$proj" && cargo "$subcmd" --bin "$bin")
+    (cd "$proj" && cargo run --bin "$bin")
   fi
 }
 
-function cgr() { _cargo-fzf-bin run; }
-function cgb() { _cargo-fzf-bin build; }
+# cargo のサブコマンドを fzf で選んでプロジェクトルートで実行
+function cg() {
+  local proj
+  proj=$(_cargo-project-root) || return 1
+
+  local subcmd
+  subcmd=$(print -rl -- run build test check clippy fmt doc clean | fzf --height=40% --reverse --prompt="cargo> ")
+  if [ -n "$subcmd" ]; then
+    (cd "$proj" && cargo "$subcmd")
+  fi
+}
 
 # ====================
 # tmux
