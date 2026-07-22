@@ -328,6 +328,8 @@ nvim .
 | `Ctrl+U` | 最近のディレクトリにfzfで移動 |
 | `lb` | git branchをfzfで選択（グローバルエイリアス） |
 | `de` | dockerコンテナをfzfで選択してexec |
+| `crb` | Cargo.tomlを探して(cargo metadataでbinターゲットを列挙し)fzfで選択して`cargo run --bin`実行 |
+| `cg` | Cargo.tomlを探してサブコマンド（run/build/test/check/clippy/fmt/doc/clean）をfzfで選択して実行 |
 
 ### Claude Code
 
