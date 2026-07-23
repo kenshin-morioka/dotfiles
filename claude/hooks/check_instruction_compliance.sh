@@ -9,6 +9,13 @@
 
 set -euo pipefail
 
+# 手動切り替え: このファイルが存在する間は検査を無効化する
+# 無効化: touch ~/.claude/hooks/check_instruction_compliance.disabled
+# 有効化: rm    ~/.claude/hooks/check_instruction_compliance.disabled
+if [ -f "$HOME/.claude/hooks/check_instruction_compliance.disabled" ]; then
+  exit 0
+fi
+
 hook_data=$(cat)
 
 hook_event=$(echo "$hook_data" | jq -r '.hook_event_name // ""')
@@ -20,6 +27,17 @@ transcript_path=$(echo "$hook_data" | jq -r '.transcript_path // ""')
 # Stop のたびにほぼ空のプロンプトで claude -p を起動するコスト・レイテンシを避ける。
 if [ "$hook_event" != "PreToolUse" ] || [ -z "$tool_name" ]; then
   exit 0
+fi
+
+# モデル別スキップ: fable は指示外の実装をしないため検査不要 (sonnet/opus のみ検査する)
+if [ -n "$transcript_path" ] && [ -f "$transcript_path" ]; then
+  session_model=$(jq -r -s '
+    map(select(.type == "assistant" and (.message.model? // "") != "")) |
+    (last | .message.model) // ""
+  ' "$transcript_path" 2>/dev/null || echo "")
+  case "$session_model" in
+    *fable*) exit 0 ;;
+  esac
 fi
 
 # 直近のユーザー指示メッセージを抽出 (最後 3 件)
@@ -34,7 +52,7 @@ else
   recent_user_msgs='"(transcript_path 不明)"'
 fi
 
-prompt=$(cat <<EOF
+prompt=$(cat <<PROMPT_EOF
 【直近のユーザー指示 (最新3件)】
 $recent_user_msgs
 
@@ -44,7 +62,7 @@ tool_name: $tool_name
 tool_input: $tool_input
 
 上記の操作にユーザーの直近指示にない追加要素が含まれていないか判定し、PASS または FAIL: <該当箇所> のみで返答してください。
-EOF
+PROMPT_EOF
 )
 
 # 検査エージェントの起動失敗・ハング時は fail-open (exit 0) して誤ブロックを避ける。
