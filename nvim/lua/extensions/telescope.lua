@@ -29,6 +29,20 @@ telescope.setup {
 }
 telescope.load_extension 'fzf'
 
+-- telescope.setup の後に呼ぶ必要がある
+require('telescope-all-recent').setup {
+  default = {
+    disable = true, -- 未指定の picker では無効にする
+  },
+  pickers = {
+    find_files = {
+      disable = false,
+      use_cwd = true, -- cwd ごとに履歴を分ける
+      sorting = 'frecency',
+    },
+  },
+}
+
 local builtin = require 'telescope.builtin'
 
 vim.keymap.set('n', '<leader>ff', function()
