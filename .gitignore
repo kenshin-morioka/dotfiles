@@ -12,3 +12,4 @@ claude/CLAUDE.md
 claude/skills/
 claude/settings.json
 claude.json
+claude/hooks/*.disabled
