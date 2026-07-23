@@ -141,6 +141,55 @@ function claude-worktree-resume-all() {
 }
 
 # ====================
+# cargo
+# ====================
+# カレントディレクトリから上に辿って Cargo.toml のあるディレクトリを出力
+function _cargo-project-root() {
+  local proj="$PWD"
+  while [ "$proj" != "/" ] && [ ! -f "$proj/Cargo.toml" ]; do
+    proj="$(dirname "$proj")"
+  done
+  if [ ! -f "$proj/Cargo.toml" ]; then
+    echo "Cargo.toml not found" >&2
+    return 1
+  fi
+  echo "$proj"
+}
+
+# bin ターゲットを fzf で選んで cargo run --bin を実行
+# cargo metadata から列挙するので src/bin/foo/main.rs 形式や [[bin]] 定義も拾える
+function crb() {
+  local proj
+  proj=$(_cargo-project-root) || return 1
+
+  local targets
+  targets=$(cargo metadata --no-deps --format-version 1 --manifest-path "$proj/Cargo.toml" |
+    jq -r '.packages[].targets[] | select(.kind | index("bin")) | .name')
+  if [ -z "$targets" ]; then
+    echo "no bin targets in $proj"
+    return 1
+  fi
+
+  local bin
+  bin=$(echo "$targets" | fzf --height=40% --reverse --prompt="cargo run --bin> ")
+  if [ -n "$bin" ]; then
+    (cd "$proj" && cargo run --bin "$bin")
+  fi
+}
+
+# cargo のサブコマンドを fzf で選んでプロジェクトルートで実行
+function cg() {
+  local proj
+  proj=$(_cargo-project-root) || return 1
+
+  local subcmd
+  subcmd=$(print -rl -- run build test check clippy fmt doc clean | fzf --height=40% --reverse --prompt="cargo> ")
+  if [ -n "$subcmd" ]; then
+    (cd "$proj" && cargo "$subcmd")
+  fi
+}
+
+# ====================
 # tmux
 # ====================
 # 既存セッションがあれば fzf で選択して attach、なければ新規作成
