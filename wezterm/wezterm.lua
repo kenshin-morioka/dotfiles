@@ -57,6 +57,30 @@ wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, _hover, max
 	}
 end)
 
+-- マウス選択でクリップボードを上書きしない。
+-- macOS には X11 の PrimarySelection に相当するバッファがなく、
+-- CompleteSelection("PrimarySelection") でもシステムクリップボードへ書き込まれてしまう
+-- (macOS の set_clipboard 実装は Clipboard 種別を無視する) ため、
+-- 選択完了時にコピー自体を行わない。選択状態は残るので Cmd+C で明示的にコピーする。
+-- 選択なしのクリック時はリンクを開く (デフォルトの CompleteSelectionOrOpenLink 相当)
+local act = wezterm.action
+local complete_selection_without_copy = wezterm.action_callback(function(window, pane)
+	local sel = window:get_selection_text_for_pane(pane)
+	if sel == nil or sel == "" then
+		window:perform_action(act.OpenLinkAtMouseCursor, pane)
+	end
+end)
+config.mouse_bindings = {}
+for _, streak in ipairs({ 1, 2, 3 }) do
+	for _, mods in ipairs({ "NONE", "SHIFT", "ALT", "SHIFT|ALT" }) do
+		table.insert(config.mouse_bindings, {
+			event = { Up = { streak = streak, button = "Left" } },
+			mods = mods,
+			action = complete_selection_without_copy,
+		})
+	end
+end
+
 -- keybindの設定
 local keybind = require("keybinds")
 config.disable_default_key_bindings = true
