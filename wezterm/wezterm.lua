@@ -57,6 +57,22 @@ wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, _hover, max
 	}
 end)
 
+-- マウス選択でクリップボードを上書きしない (PrimarySelection のみに保持)。
+-- クリップボードへのコピーは Cmd+C / Ctrl+Shift+C で明示的に行う
+local act = wezterm.action
+config.mouse_bindings = {}
+for _, streak in ipairs({ 1, 2, 3 }) do
+	local action = streak == 1 and act.CompleteSelectionOrOpenLinkAtMouseCursor("PrimarySelection")
+		or act.CompleteSelection("PrimarySelection")
+	for _, mods in ipairs({ "NONE", "SHIFT", "ALT", "SHIFT|ALT" }) do
+		table.insert(config.mouse_bindings, {
+			event = { Up = { streak = streak, button = "Left" } },
+			mods = mods,
+			action = action,
+		})
+	end
+end
+
 -- keybindの設定
 local keybind = require("keybinds")
 config.disable_default_key_bindings = true
