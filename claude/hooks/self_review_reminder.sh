@@ -22,8 +22,8 @@ fi
 
 COMMAND=$(echo "$INPUT" | jq -r '.tool_input.command // empty')
 
-# git commit コマンドかどうか判定
-if ! echo "$COMMAND" | grep -qE "(^|&&|;|\|)\s*git\s+commit"; then
+# git commit コマンドかどうか判定（git -C <dir> commit 等のグローバルオプション付きも検知する）
+if ! echo "$COMMAND" | grep -qE "(^|&&|;|\|)\s*git(\s+-\S+(\s+[^-[:space:]]\S*)?)*\s+commit"; then
   exit 0
 fi
 
@@ -54,7 +54,7 @@ if [ -f "${FLAG_FILE}" ]; then
   rm -f "${FLAG_FILE}"
 fi
 
-REASON="セルフレビュー未実施のためコミットをブロックしました。/self-review スキルを実行し、チェックリストに照合して違反があれば修正してください。完了後に touch '${FLAG_FILE}' を実行してから再度コミットしてください。"
+REASON="セルフレビュー未実施のためコミットをブロックしました。/self-review スキルを実行し、チェックリストに照合して違反があれば修正してください。スキル完了後に再度コミットしてください。"
 
 jq -n --arg reason "${REASON}" \
   '{hookSpecificOutput: {hookEventName: "PreToolUse", permissionDecision: "deny", permissionDecisionReason: $reason}}'
