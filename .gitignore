@@ -12,5 +12,6 @@ claude/CLAUDE.md
 claude/skills/
 claude/settings.json
 claude/settings.broken-symlink-backup-*.json
+claude/settings.json.bak
 claude.json
 claude/hooks/*.disabled
