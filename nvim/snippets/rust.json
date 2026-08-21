@@ -1,0 +1,21 @@
+{
+  "competitive programming boilerplate": {
+    "prefix": "cpmain",
+    "body": [
+      "use proconio::input;",
+      "use std::io::{self, BufWriter, Write};",
+      "",
+      "fn main() {",
+      "    input! {",
+      "        $1",
+      "    }",
+      "",
+      "    let out = io::stdout();",
+      "    let mut out = BufWriter::new(out.lock());",
+      "",
+      "    $0",
+      "}"
+    ],
+    "description": "proconio + BufWriter の競プロ用ボイラープレート"
+  }
+}
