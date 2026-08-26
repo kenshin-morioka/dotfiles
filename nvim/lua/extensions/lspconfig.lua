@@ -2,7 +2,9 @@
 -- NOTE: vim.diagnostic.config はここ 1 箇所に統合する。
 -- 他所（appearance.lua 等）で呼ぶと signs キーごと上書きされアイコンが消える。
 vim.diagnostic.config({
-  virtual_text = true,
+  -- virtual_text は画面分割時に横へ見切れるため、カーソル行のみ下に折り返し表示する virtual_lines を使う
+  virtual_text = false,
+  virtual_lines = { current_line = true },
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = '',
