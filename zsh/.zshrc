@@ -67,6 +67,8 @@ fi
   abbr -S lla='eza -la --git --group-directories-first'
   abbr -S v='vim'
   abbr -S g='git'
+  # dc は電卓コマンド /usr/bin/dc と同名のため --force が必要
+  abbr -S --force dc='docker compose'
   abbr -S gco='git checkout'
   abbr -S gst='git status'
   abbr -S gsw='git switch'
