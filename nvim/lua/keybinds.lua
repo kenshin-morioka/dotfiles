@@ -47,6 +47,10 @@ vim.keymap.set({ "v", "s" }, "<S-M-Right>", "w") -- 選択範囲を次の単語�
 vim.keymap.set("s", "gc", "<C-g>gc", { remap = true }) -- セレクトモードでコメントトグル
 vim.keymap.set("s", "gb", "<C-g>gb", { remap = true }) -- セレクトモードでブロックコメントトグル
 
+-- Jumplist（Ctrl+o は Raycast 等の macOS ショートカットと干渉、<C-i> は Tab の :bnext に潰されるため leader で代替）
+vim.keymap.set("n", "<leader>o", "<C-o>") -- ジャンプ前の位置に戻る
+vim.keymap.set("n", "<leader>i", "<C-i>") -- 戻った後に再び進む
+
 -- Diagnostics
 vim.keymap.set("n", "<leader>dd", vim.diagnostic.open_float) -- diagnosticsをフロート表示
 vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist) -- diagnosticsをリスト表示
