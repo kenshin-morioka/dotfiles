@@ -11,7 +11,9 @@ local plugins = {
   },
   {
     'Mofiqul/vscode.nvim',
-    event = { 'VimEnter' },
+    -- カラースキームは起動時に即ロードする。priority は lazy = false のときだけ効く
+    -- (event 指定だと無視され、起動直後に未スタイル状態が一瞬見える)
+    lazy = false,
     priority = 1000,
     config = function() require 'extensions.vscode-theme' end,
   },
@@ -22,7 +24,10 @@ local plugins = {
   },
   {
     'kevinhwang91/nvim-hlslens',
-    event = { 'FilterWritePre' },
+    -- 検索 (/ ? * 等) の直前にロードする。nvim-scrollbar の search handler が
+    -- require('hlslens') した場合も lazy.nvim 経由でロードされる
+    event = { 'CmdlineEnter' },
+    keys = { '*', '#', 'n', 'N' },
     config = function() require 'extensions.nvim-hlslens' end,
   },
   {
