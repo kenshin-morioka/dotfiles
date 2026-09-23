@@ -1,0 +1,18 @@
+# selene 用の Neovim 標準ライブラリ定義。
+# selene.toml の std = "lua51+vim" から参照される (lua51 に vim グローバル等を追加する)
+base: lua51
+
+globals:
+  # Neovim API。型定義は膨大なので any で受ける
+  vim:
+    any: true
+  # LuaJIT のグローバル
+  jit:
+    any: true
+  unpack:
+    args:
+      - type: table
+      - type: number
+        required: false
+      - type: number
+        required: false
