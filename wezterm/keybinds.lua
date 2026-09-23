@@ -1,6 +1,16 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 
+-- ペインをタブ全体の 5% 単位でリサイズする (Left/Right は列数、Up/Down は行数を基準にする)
+local function adjust_pane_size(direction)
+	return wezterm.action_callback(function(window, pane)
+		local tab_size = window:active_tab():get_size()
+		local base = (direction == "Left" or direction == "Right") and tab_size.cols or tab_size.rows
+		local amount = math.max(1, math.floor(base * 0.05))
+		window:perform_action(act.AdjustPaneSize({ direction, amount }), pane)
+	end)
+end
+
 return {
 	keys = {
 		-- ActivateTabRelative
@@ -21,6 +31,8 @@ return {
 		{ key = "0", mods = "SHIFT|CTRL", action = act.ResetFontSize },
 		{ key = "=", mods = "SHIFT|CTRL", action = act.IncreaseFontSize },
 		{ key = "-", mods = "SHIFT|CTRL", action = act.DecreaseFontSize },
+		-- 記号キーは SHIFT が正規化されないため、Shift+- で入力される "_" も明示的に定義する
+		{ key = "_", mods = "SHIFT|CTRL", action = act.DecreaseFontSize },
 
 		-- clipboard
 		{ key = "c", mods = "SHIFT|CTRL", action = act.CopyTo("Clipboard") },
@@ -28,28 +40,10 @@ return {
 		{ key = "v", mods = "SHIFT|CTRL", action = act.PasteFrom("Clipboard") },
 		{ key = "v", mods = "SUPER", action = act.PasteFrom("Clipboard") },
 
-		{ key = "F", mods = "SHIFT|CTRL", action = act.Search("CurrentSelectionOrEmptyString") },
-		{ key = "H", mods = "SHIFT|CTRL", action = act.HideApplication },
-		{ key = "K", mods = "SHIFT|CTRL", action = act.ClearScrollback("ScrollbackOnly") },
-		{ key = "L", mods = "SHIFT|CTRL", action = act.ShowDebugOverlay },
-		{ key = "M", mods = "SHIFT|CTRL", action = act.Hide },
-		{ key = "N", mods = "SHIFT|CTRL", action = act.SpawnWindow },
-		{ key = "P", mods = "SHIFT|CTRL", action = act.ActivateCommandPalette },
-		{ key = "Q", mods = "SHIFT|CTRL", action = act.QuitApplication },
-		{ key = "R", mods = "SHIFT|CTRL", action = act.ReloadConfiguration },
-		{ key = "T", mods = "SHIFT|CTRL", action = act.SpawnTab("CurrentPaneDomain") },
-		{
-			key = "U",
-			mods = "SHIFT|CTRL",
-			action = act.CharSelect({ copy_on_select = true, copy_to = "ClipboardAndPrimarySelection" }),
-		},
-		{ key = "W", mods = "SHIFT|CTRL", action = act.CloseCurrentTab({ confirm = true }) },
-		{ key = "X", mods = "SHIFT|CTRL", action = act.ActivateCopyMode },
-		{ key = "Z", mods = "SHIFT|CTRL", action = act.TogglePaneZoomState },
 		{ key = "[", mods = "SHIFT|SUPER", action = act.ActivateTabRelative(-1) },
 		{ key = "]", mods = "SHIFT|SUPER", action = act.ActivateTabRelative(1) },
-		{ key = "_", mods = "SHIFT|CTRL", action = act.DecreaseFontSize },
 
+		-- SHIFT|CTRL は小文字キーで定義する (wezterm が正規化するため大文字側の重複定義は不要)
 		{ key = "f", mods = "SHIFT|CTRL", action = act.Search("CurrentSelectionOrEmptyString") },
 		{ key = "f", mods = "SUPER", action = act.Search("CurrentSelectionOrEmptyString") },
 		{ key = "h", mods = "SHIFT|CTRL", action = act.HideApplication },
@@ -79,49 +73,13 @@ return {
 		{ key = "z", mods = "SHIFT|CTRL", action = act.TogglePaneZoomState },
 		{ key = "phys:Space", mods = "SHIFT|CTRL", action = act.QuickSelect },
 		{ key = "LeftArrow", mods = "SHIFT|CTRL", action = act.ActivatePaneDirection("Left") },
-		{
-			key = "LeftArrow",
-			mods = "SHIFT|ALT|CTRL",
-			action = wezterm.action_callback(function(window, pane)
-				local tab = window:active_tab()
-				local tab_size = tab:get_size()
-				local amount = math.max(1, math.floor(tab_size.cols * 0.05))
-				window:perform_action(act.AdjustPaneSize({ "Left", amount }), pane)
-			end),
-		},
+		{ key = "LeftArrow", mods = "SHIFT|ALT|CTRL", action = adjust_pane_size("Left") },
 		{ key = "RightArrow", mods = "SHIFT|CTRL", action = act.ActivatePaneDirection("Right") },
-		{
-			key = "RightArrow",
-			mods = "SHIFT|ALT|CTRL",
-			action = wezterm.action_callback(function(window, pane)
-				local tab = window:active_tab()
-				local tab_size = tab:get_size()
-				local amount = math.max(1, math.floor(tab_size.cols * 0.05))
-				window:perform_action(act.AdjustPaneSize({ "Right", amount }), pane)
-			end),
-		},
+		{ key = "RightArrow", mods = "SHIFT|ALT|CTRL", action = adjust_pane_size("Right") },
 		{ key = "UpArrow", mods = "SHIFT|CTRL", action = act.ActivatePaneDirection("Up") },
-		{
-			key = "UpArrow",
-			mods = "SHIFT|ALT|CTRL",
-			action = wezterm.action_callback(function(window, pane)
-				local tab = window:active_tab()
-				local tab_size = tab:get_size()
-				local amount = math.max(1, math.floor(tab_size.rows * 0.05))
-				window:perform_action(act.AdjustPaneSize({ "Up", amount }), pane)
-			end),
-		},
+		{ key = "UpArrow", mods = "SHIFT|ALT|CTRL", action = adjust_pane_size("Up") },
 		{ key = "DownArrow", mods = "SHIFT|CTRL", action = act.ActivatePaneDirection("Down") },
-		{
-			key = "DownArrow",
-			mods = "SHIFT|ALT|CTRL",
-			action = wezterm.action_callback(function(window, pane)
-				local tab = window:active_tab()
-				local tab_size = tab:get_size()
-				local amount = math.max(1, math.floor(tab_size.rows * 0.05))
-				window:perform_action(act.AdjustPaneSize({ "Down", amount }), pane)
-			end),
-		},
+		{ key = "DownArrow", mods = "SHIFT|ALT|CTRL", action = adjust_pane_size("Down") },
 		{ key = "Copy", mods = "NONE", action = act.CopyTo("Clipboard") },
 		{ key = "Paste", mods = "NONE", action = act.PasteFrom("Clipboard") },
 
@@ -147,27 +105,21 @@ return {
 			{ key = "Enter", mods = "NONE", action = act.CopyMode("MoveToStartOfNextLine") },
 			{ key = "Escape", mods = "NONE", action = act.CopyMode("Close") },
 			{ key = "Space", mods = "NONE", action = act.CopyMode({ SetSelectionMode = "Cell" }) },
+			-- 大文字キー (F G H L M O T V) は wezterm が正規化するため SHIFT 側の重複定義は不要。
+			-- 記号キー ($ ^) は正規化されないため NONE と SHIFT の両方を定義する
 			{ key = "$", mods = "NONE", action = act.CopyMode("MoveToEndOfLineContent") },
 			{ key = "$", mods = "SHIFT", action = act.CopyMode("MoveToEndOfLineContent") },
 			{ key = ",", mods = "NONE", action = act.CopyMode("JumpReverse") },
 			{ key = "0", mods = "NONE", action = act.CopyMode("MoveToStartOfLine") },
 			{ key = ";", mods = "NONE", action = act.CopyMode("JumpAgain") },
 			{ key = "F", mods = "NONE", action = act.CopyMode({ JumpBackward = { prev_char = false } }) },
-			{ key = "F", mods = "SHIFT", action = act.CopyMode({ JumpBackward = { prev_char = false } }) },
 			{ key = "G", mods = "NONE", action = act.CopyMode("MoveToScrollbackBottom") },
-			{ key = "G", mods = "SHIFT", action = act.CopyMode("MoveToScrollbackBottom") },
 			{ key = "H", mods = "NONE", action = act.CopyMode("MoveToViewportTop") },
-			{ key = "H", mods = "SHIFT", action = act.CopyMode("MoveToViewportTop") },
 			{ key = "L", mods = "NONE", action = act.CopyMode("MoveToViewportBottom") },
-			{ key = "L", mods = "SHIFT", action = act.CopyMode("MoveToViewportBottom") },
 			{ key = "M", mods = "NONE", action = act.CopyMode("MoveToViewportMiddle") },
-			{ key = "M", mods = "SHIFT", action = act.CopyMode("MoveToViewportMiddle") },
 			{ key = "O", mods = "NONE", action = act.CopyMode("MoveToSelectionOtherEndHoriz") },
-			{ key = "O", mods = "SHIFT", action = act.CopyMode("MoveToSelectionOtherEndHoriz") },
 			{ key = "T", mods = "NONE", action = act.CopyMode({ JumpBackward = { prev_char = true } }) },
-			{ key = "T", mods = "SHIFT", action = act.CopyMode({ JumpBackward = { prev_char = true } }) },
 			{ key = "V", mods = "NONE", action = act.CopyMode({ SetSelectionMode = "Line" }) },
-			{ key = "V", mods = "SHIFT", action = act.CopyMode({ SetSelectionMode = "Line" }) },
 			{ key = "^", mods = "NONE", action = act.CopyMode("MoveToStartOfLineContent") },
 			{ key = "^", mods = "SHIFT", action = act.CopyMode("MoveToStartOfLineContent") },
 			{ key = "b", mods = "NONE", action = act.CopyMode("MoveBackwardWord") },
