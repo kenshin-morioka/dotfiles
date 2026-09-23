@@ -92,14 +92,17 @@ config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 2000 }
 local background = require("background")
 config.background = background.default
 
--- 背景透過トグル（LEADER + b で opacity 0.70 ⇄ 1.0 を切り替え）
-wezterm.GLOBAL.opacity = 0.70
+-- 背景透過トグル（LEADER + b で opacity 0.85 ⇄ 1.0 を切り替え）
+-- automatically_reload_config による再評価で状態がリセットされないよう、未設定のときだけ初期化する
+if wezterm.GLOBAL.opacity == nil then
+	wezterm.GLOBAL.opacity = background.default_opacity
+end
 
 wezterm.on("toggle-opacity", function(window, _pane)
-	if wezterm.GLOBAL.opacity == 0.70 then
+	if wezterm.GLOBAL.opacity == background.default_opacity then
 		wezterm.GLOBAL.opacity = 1.0
 	else
-		wezterm.GLOBAL.opacity = 0.70
+		wezterm.GLOBAL.opacity = background.default_opacity
 	end
 	window:set_config_overrides({
 		background = background.create(wezterm.GLOBAL.opacity),
