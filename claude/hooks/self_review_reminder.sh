@@ -37,7 +37,14 @@ if ! ls "${CHECKLIST_DIR}"/*.md >/dev/null 2>&1; then
   exit 0
 fi
 
-GIT_DIR=$(git rev-parse --absolute-git-dir 2>/dev/null || true)
+# 判定対象のリポジトリを決める。
+# hook の cwd は Claude Code 側のセッション cwd であり、`git -C <dir> commit` の場合は
+# コマンド側のディレクトリが正。-C 指定があればそれを、無ければ hook 入力の cwd を使う
+GIT_C_DIR=$(echo "$COMMAND" | grep -oE "git[[:space:]]+-C[[:space:]]+('[^']+'|\"[^\"]+\"|[^[:space:]]+)" | head -n 1 | sed -E "s/^git[[:space:]]+-C[[:space:]]+//; s/^['\"]//; s/['\"]\$//" || true)
+REPO_DIR="${GIT_C_DIR:-$(echo "$INPUT" | jq -r '.cwd // empty')}"
+REPO_DIR="${REPO_DIR:-.}"
+
+GIT_DIR=$(git -C "${REPO_DIR}" rev-parse --absolute-git-dir 2>/dev/null || true)
 
 if [ -z "${GIT_DIR}" ]; then
   exit 0
