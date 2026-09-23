@@ -62,10 +62,28 @@ function M.is_big(bufnr)
   return big
 end
 
--- 読み込み完了時に判定をキャッシュし、巨大ファイルなら通知する
-vim.api.nvim_create_autocmd('BufReadPost', {
-  group = vim.api.nvim_create_augroup('bigfile_detect', {}),
+--- キャッシュを破棄する (再読込・保存で内容が変わるため)
+---@param bufnr number
+local function invalidate(bufnr)
+  vim.b[bufnr].bigfile = nil
+  vim.b[bufnr].bigfile_long_line = nil
+end
+
+local group = vim.api.nvim_create_augroup('bigfile_detect', {})
+
+-- 保存後はキャッシュを破棄し、次回の is_big() で再判定させる
+vim.api.nvim_create_autocmd('BufWritePost', {
+  group = group,
   callback = function(ev)
+    invalidate(ev.buf)
+  end,
+})
+
+-- 読み込み (:e! 等の再読込を含む) 完了時に判定し直してキャッシュし、巨大ファイルなら通知する
+vim.api.nvim_create_autocmd('BufReadPost', {
+  group = group,
+  callback = function(ev)
+    invalidate(ev.buf)
     if M.is_big(ev.buf) then
       vim.notify(
         ('bigfile: %s は巨大ファイルのため一部の重い機能を無効化しました'):format(
