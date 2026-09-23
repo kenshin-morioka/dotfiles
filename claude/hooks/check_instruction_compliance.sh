@@ -42,14 +42,15 @@ fi
 
 # 直近のユーザー指示メッセージを抽出 (最後 3 件)
 if [ -n "$transcript_path" ] && [ -f "$transcript_path" ]; then
-  recent_user_msgs=$(jq -s '
+  # -r で生文字列にする (無いと JSON エンコードされた "..." や \n リテラルがプロンプトに混入する)
+  recent_user_msgs=$(jq -r -s '
     map(select(.type == "user" and (.message.content | type == "string"))) |
     .[-3:] |
     map(.message.content) |
     join("\n---\n")
-  ' "$transcript_path" 2>/dev/null || echo '""')
+  ' "$transcript_path" 2>/dev/null || echo "")
 else
-  recent_user_msgs='"(transcript_path 不明)"'
+  recent_user_msgs="(transcript_path 不明)"
 fi
 
 prompt=$(cat <<PROMPT_EOF
@@ -81,7 +82,8 @@ if ! result=$(echo "$prompt" | ${timeout_cmd:+"$timeout_cmd" 30} claude -p --age
 fi
 
 # 明示的に FAIL と判定された場合のみブロックする
-if echo "$result" | grep -q "FAIL"; then
+# (返答本文中に FAIL が引用されただけで誤ブロックしないよう行頭アンカーで判定する)
+if echo "$result" | grep -qE '^[[:space:]]*FAIL'; then
   echo "[指示外検出フック (別コンテキスト判定)]" >&2
   echo "$result" >&2
   echo "" >&2
