@@ -1,7 +1,8 @@
 local wezterm = require("wezterm")
 
 local function BaseName(s)
-	return string.gsub(s, "(.*[/\\])(.*)", "%2")
+	-- string.gsub は (文字列, 置換回数) の 2 値を返すため括弧で 1 値に絞る
+	return (string.gsub(s, "(.*[/\\])(.*)", "%2"))
 end
 
 local function expand_tilde(p)
@@ -108,7 +109,7 @@ end
 local M = {}
 
 function M.tab_label(pane)
-	local fallback = (BaseName(pane.title))
+	local fallback = BaseName(pane.title)
 	local path = pane_cwd_path(pane)
 	if not path then
 		return fallback
