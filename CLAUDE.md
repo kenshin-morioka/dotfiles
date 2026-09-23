@@ -9,7 +9,7 @@
 
 - **設定ファイルの追加・移動・削除**時は、必ず `Makefile` の `LINKS` 変数を確認・更新すること
 - ファイルをリネームした場合、古いシンボリックリンクが残るため `make unlink && make link` が必要になることを伝えること
-- ディレクトリ単位でリンクされているもの（nvim, wezterm, mise, act, flipper, github-copilot, cowsay, checklists）は、配下にファイルを追加するだけで自動的にリンク先に反映される
+- ディレクトリ単位でリンクされているもの（nvim, wezterm, mise, atuin, sheldon, act, flipper, github-copilot, cowsay, claude/checklists, claude/skills, claude/agents, claude/commands, claude/hooks）は、配下にファイルを追加するだけで自動的にリンク先に反映される
 
 ## pre-commit フック
 
