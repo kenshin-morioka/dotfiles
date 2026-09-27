@@ -14,7 +14,7 @@ Personal dotfiles configuration for macOS.
 | `nvim/` | Neovim config (lazy.nvim, LSP, Telescope, NeoTree, etc.) |
 | `wezterm/` | WezTerm terminal config |
 | `tmux/` | tmux config (TPM, resurrect, continuum, vim-tmux-navigator) |
-| `zsh/` | Zsh config (.zshrc, .zprofile) |
+| `zsh/` | Zsh config (.zshrc, .zshenv) |
 | `sheldon/` | sheldon (zsh plugin manager) config |
 | `homebrew/` | Brewfile (package management) |
 | `mise/` | mise version manager config |
@@ -79,7 +79,7 @@ Machine-specific settings live outside git: `~/.zshrc.local` (sourced at the end
 | `nvim/` | Neovim設定（lazy.nvim、LSP、Telescope、NeoTree等） |
 | `wezterm/` | WezTermターミナル設定 |
 | `tmux/` | tmux設定（TPM、resurrect、continuum、vim-tmux-navigator） |
-| `zsh/` | Zsh設定（.zshrc、.zprofile） |
+| `zsh/` | Zsh設定（.zshrc、.zshenv） |
 | `sheldon/` | sheldon（zshプラグインマネージャ）設定 |
 | `homebrew/` | Brewfile（パッケージ管理） |
 | `mise/` | miseバージョン管理設定 |
