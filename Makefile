@@ -52,6 +52,7 @@ install:  ## 新マシンのセットアップを一括実行（冪等・再実�
 LINKS := \
 	$(HOME)/.zshrc:$(DOTFILES_DIR)/zsh/.zshrc \
 	$(HOME)/.zshenv:$(DOTFILES_DIR)/zsh/.zshenv \
+	$(HOME)/.claude.json:$(DOTFILES_DIR)/claude.json \
 	$(HOME)/.config/nvim:$(DOTFILES_DIR)/nvim \
 	$(HOME)/.config/starship.toml:$(DOTFILES_DIR)/starship.toml \
 	$(HOME)/.config/wezterm:$(DOTFILES_DIR)/wezterm \
