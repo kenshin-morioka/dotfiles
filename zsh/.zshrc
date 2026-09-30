@@ -50,7 +50,8 @@ autoload -Uz compinit && compinit
 alias ls='eza --group-directories-first'
 alias cat='bat --paging=never'
 alias vim='nvim'
-alias -g lb='`git branch | fzf --prompt "GIT BRANCH> " | head -n 1 | sed -e "s/^\*\s*//g"`'
+# BSD sed は \s 非対応のため [[:space:]] を使う。fzf は単一選択なので head は不要
+alias -g lb='`git branch | fzf --prompt "GIT BRANCH> " | sed -e "s/^\*[[:space:]]*//"`'
 alias de='docker exec -it $(docker ps | fzf | cut -d " " -f 1) /bin/bash'
 
 if [[ $(uname) = "Darwin" ]]; then
@@ -96,11 +97,14 @@ fi
 # ====================
 # Functions
 # ====================
+# 起動前に 1 秒だけ cmatrix を流す遊び。cmatrix / timeout が無い環境では素直に nvim を起動する
 function nvim() {
-  if command -v gtimeout &>/dev/null; then
-    gtimeout 1 cmatrix -u 1
-  elif command -v timeout &>/dev/null; then
-    timeout 1 cmatrix -u 1
+  if command -v cmatrix &>/dev/null; then
+    if command -v gtimeout &>/dev/null; then
+      gtimeout 1 cmatrix -u 1
+    elif command -v timeout &>/dev/null; then
+      timeout 1 cmatrix -u 1
+    fi
   fi
   command nvim "$@"
 }
@@ -286,7 +290,6 @@ bindkey '^u' fzf-cdr
 # ====================
 # History
 # ====================
-setopt hist_ignore_dups
 setopt EXTENDED_HISTORY
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
