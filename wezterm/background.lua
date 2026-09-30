@@ -18,6 +18,8 @@ function M.create(opacity)
 	}
 end
 
-M.default = M.create(0.85)
+-- 起動時の既定 opacity。wezterm.lua の透過トグルもこの値を基準にする
+M.default_opacity = 0.85
+M.default = M.create(M.default_opacity)
 
 return M
