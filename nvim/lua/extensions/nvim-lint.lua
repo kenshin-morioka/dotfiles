@@ -12,7 +12,8 @@ lint.linters_by_ft = {
   lua = { 'selene' },
   sh = { 'shellcheck' },
   bash = { 'shellcheck' },
-  zsh = { 'shellcheck' },
+  -- shellcheck は zsh 非対応 (SC1071) のため zsh 本体の構文チェック (zsh -n) を使う
+  zsh = { 'zsh' },
   json = { 'jsonlint' },
   markdown = { 'markdownlint' },
   ['*'] = { 'typos' },
