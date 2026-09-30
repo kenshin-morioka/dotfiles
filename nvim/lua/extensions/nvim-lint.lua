@@ -1,9 +1,12 @@
 local lint = require('lint')
 
--- markdownlintの設定ファイルを指定
+-- markdownlint の設定ファイルを指定
+-- ~/.config/nvim は dotfiles/nvim へのシンボリックリンクなので、realpath で実体に解決してから
+-- 親ディレクトリ (dotfiles ルート) の .markdownlint.json を参照する
+local config_dir = vim.uv.fs_realpath(vim.fn.stdpath('config')) or vim.fn.stdpath('config')
 lint.linters.markdownlint.args = {
   '--config',
-  vim.fn.stdpath('config') .. '/../.markdownlint.json',
+  vim.fs.joinpath(vim.fs.dirname(config_dir), '.markdownlint.json'),
   '--stdin',
 }
 
