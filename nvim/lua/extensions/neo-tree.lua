@@ -4,9 +4,11 @@ vim.api.nvim_create_user_command("LazyGitCurrent", function()
   vim.cmd('startinsert')
 end, {})
 
-vim.keymap.set('n', '<C-t>', function()
+-- <C-t> はタグスタック戻り (Vim 標準) を潰し、ツリー内の <C-t> (open_in_wezterm) とも
+-- 意味が異なり紛らわしいため <leader>B に割り当てる (<leader>b = ツリートグルと対)
+vim.keymap.set('n', '<leader>B', function()
   require("neo-tree.command").execute({ action = "open_directory_in_new_tab" })
-end, { silent = true })
+end, { silent = true, desc = 'Open directory tree in new tab' })
 
 require("neo-tree").setup({
   close_if_last_window = true,
@@ -33,7 +35,8 @@ require("neo-tree").setup({
       ["P"] = { "toggle_preview", config = { use_float = false, use_image_nvim = false } },
       ["<C-g>"] = "open_lazygit",
       ["<C-t>"] = "open_in_wezterm",
-      ["<C-h>"] = "toggle_hidden",
+      -- <C-h> は vim-tmux-navigator (左ペイン移動) と衝突するため neo-tree 既定の H を使う
+      ["H"] = "toggle_hidden",
       -- <bs>(Mac の delete キー)で上の階層へルートが移動するのを無効化
       ["<bs>"] = "none",
     },

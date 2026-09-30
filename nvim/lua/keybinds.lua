@@ -51,6 +51,15 @@ vim.keymap.set("s", "gb", "<C-g>gb", { remap = true }) -- セレクトモード�
 vim.keymap.set("n", "<leader>o", "<C-o>") -- ジャンプ前の位置に戻る
 vim.keymap.set("n", "<leader>i", "<C-i>") -- 戻った後に再び進む
 
+-- Nvim 0.11+ 標準の LSP マッピング (grr/grn/gri/gra/grt) を削除する。
+-- lspconfig.lua で gr (参照一覧) をバッファローカルに定義しており、
+-- gr* プレフィックスが残っていると gr 押下後に timeoutlen 分の待ちが発生するため
+for _, lhs in ipairs({ "grr", "grn", "gri", "gra", "grt" }) do
+    for _, mode in ipairs({ "n", "x" }) do
+        pcall(vim.keymap.del, mode, lhs)
+    end
+end
+
 -- Diagnostics
 vim.keymap.set("n", "<leader>dd", vim.diagnostic.open_float) -- diagnosticsをフロート表示
 vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist) -- diagnosticsをリスト表示
@@ -67,8 +76,20 @@ vim.keymap.set("v", "<Tab>", ">gv")
 vim.keymap.set("v", "<S-Tab>", "<gv")
 
 -- Select mode: Tab/Shift-Tabでインデント（選択維持してSelectモードに戻る）
-vim.keymap.set("s", "<Tab>", "<C-g>>gv<C-g>")
-vim.keymap.set("s", "<S-Tab>", "<C-g><gv<C-g>")
+-- LuaSnip のプレースホルダ選択中 (スニペット展開直後の select モード) は
+-- インデントではなくプレースホルダ間のジャンプに使う
+local function select_tab(dir, indent_keys)
+    return function()
+        local ok, ls = pcall(require, "luasnip")
+        if ok and ls.locally_jumpable(dir) then
+            ls.jump(dir)
+            return
+        end
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(indent_keys, true, false, true), "n", false)
+    end
+end
+vim.keymap.set("s", "<Tab>", select_tab(1, "<C-g>>gv<C-g>"))
+vim.keymap.set("s", "<S-Tab>", select_tab(-1, "<C-g><gv<C-g>"))
 
 -- Save without formatting
 vim.cmd("cnoreabbrev nw noautocmd w")
