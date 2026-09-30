@@ -12,6 +12,9 @@ set -euo pipefail
 
 TARGET="$HOME/.claude/settings.json"
 SOURCE="$HOME/src/github.com/kenshin-morioka/dotfiles/claude/settings.json"
+# バックアップの保持世代数。これを超えた古いものは削除する (無制限に堆積させない)
+BACKUP_KEEP=3
+BACKUP_PREFIX="${SOURCE%.json}.broken-symlink-backup-"
 
 if [ -L "$TARGET" ]; then
   exit 0
@@ -22,9 +25,20 @@ if [ ! -f "$SOURCE" ]; then
 fi
 
 if [ -f "$TARGET" ]; then
-  backup="${SOURCE%.json}.broken-symlink-backup-$(date +%Y%m%d%H%M%S).json"
+  backup="${BACKUP_PREFIX}$(date +%Y%m%d%H%M%S).json"
   cp "$TARGET" "$backup"
-  echo "{\"systemMessage\": \"~/.claude/settings.json のsymlinkが切れていたため復元しました（旧内容は $backup にバックアップ）\"}"
+
+  # ローテーション: ファイル名のタイムスタンプ順 (= glob の名前順) に並ぶので、古いものから削る
+  shopt -s nullglob
+  backups=("${BACKUP_PREFIX}"*.json)
+  shopt -u nullglob
+  if [ "${#backups[@]}" -gt "$BACKUP_KEEP" ]; then
+    for old in "${backups[@]:0:${#backups[@]}-BACKUP_KEEP}"; do
+      rm -f "$old"
+    done
+  fi
+
+  echo "{\"systemMessage\": \"~/.claude/settings.json のsymlinkが切れていたため復元しました（旧内容は $backup にバックアップ、最新 ${BACKUP_KEEP} 世代のみ保持）\"}"
 fi
 
 rm -f "$TARGET"
