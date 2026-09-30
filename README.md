@@ -20,10 +20,15 @@ Personal dotfiles configuration for macOS.
 | `mise/` | mise version manager config |
 | `atuin/` | atuin shell history config |
 | `starship.toml` | Starship prompt config |
-| `claude/` | Claude Code config (self-review checklists: general, Rails, test/RSpec) |
-| `act/` | GitHub Actions local runner config |
-| `macos/` | AppleScript source for macOS launcher .app |
+| `git/` | Git config (`.gitconfig`; identity lives in gitignored `.gitconfig.local`) |
 | `ssh/` | SSH client config (generic settings only; hosts live in `~/.ssh/config.local`) |
+| `claude/` | Claude Code config (hooks, custom agents, slash commands, statusline script; global `CLAUDE.md` / self-review checklists / `settings.json` are gitignored) |
+| `act/` | GitHub Actions local runner config |
+| `github-copilot/` | GitHub Copilot CLI config |
+| `flipper/` | Flipper config |
+| `cowsay/` | Custom cowsay cow files |
+| `macos/` | AppleScript source for macOS launcher .app |
+| `docs/` | Cheat sheet and setup notes |
 
 ## Setup
 
@@ -42,8 +47,9 @@ Each step can also be run individually (see Make Commands below).
 | Command | Description |
 | --- | --- |
 | `make install` | One-shot machine setup (idempotent, safe to re-run) |
-| `make link` | Create symlinks |
+| `make link` | Create symlinks (runs `make ssh-migrate` first) |
 | `make unlink` | Remove symlinks |
+| `make ssh-migrate` | Move an existing real `~/.ssh/config` to `~/.ssh/config.local` before linking |
 | `make brew` | Install all packages from Brewfile |
 | `make brew-add PKG=xxx` | Add and install a package |
 | `make brew-add-cask PKG=xxx` | Add and install a cask |
@@ -85,10 +91,15 @@ Machine-specific settings live outside git: `~/.zshrc.local` (sourced at the end
 | `mise/` | miseバージョン管理設定 |
 | `atuin/` | atuinシェル履歴設定 |
 | `starship.toml` | Starshipプロンプト設定 |
-| `claude/` | Claude Code設定（セルフレビューチェックリスト: 汎用、Rails、テスト/RSpec） |
-| `act/` | GitHub Actions ローカル実行設定 |
-| `macos/` | macOS 用ランチャー .app の AppleScript ソース |
+| `git/` | Git 設定（`.gitconfig`。ユーザー情報は git 追跡外の `.gitconfig.local`） |
 | `ssh/` | SSH クライアント設定（汎用設定のみ。ホスト定義は `~/.ssh/config.local`） |
+| `claude/` | Claude Code 設定（hooks、カスタムエージェント、スラッシュコマンド、statusline スクリプト。グローバル `CLAUDE.md` / セルフレビューチェックリスト / `settings.json` は git 追跡外） |
+| `act/` | GitHub Actions ローカル実行設定 |
+| `github-copilot/` | GitHub Copilot CLI 設定 |
+| `flipper/` | Flipper 設定 |
+| `cowsay/` | 自作 cowsay の cow ファイル |
+| `macos/` | macOS 用ランチャー .app の AppleScript ソース |
+| `docs/` | チートシート・セットアップメモ |
 
 ## セットアップ
 
@@ -156,8 +167,9 @@ make help  # 利用可能なコマンド一覧を表示
 | コマンド | 説明 |
 | --------- | ------ |
 | `make install` | 新マシンのセットアップを一括実行（冪等・再実行可） |
-| `make link` | シンボリックリンクを作成 |
+| `make link` | シンボリックリンクを作成（先に `make ssh-migrate` が自動実行される） |
 | `make unlink` | シンボリックリンクを削除 |
+| `make ssh-migrate` | 既存の実ファイル `~/.ssh/config` をリンク前に `~/.ssh/config.local` へ退避 |
 | `make brew` | Brewfileの全パッケージをインストール |
 | `make brew-add PKG=xxx` | パッケージを追加・インストール |
 | `make brew-add-cask PKG=xxx` | Caskを追加・インストール |
