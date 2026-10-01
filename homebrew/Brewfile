@@ -62,10 +62,15 @@ brew "rustup"
 
 # Utilities
 brew "imagemagick"
+brew "sops"
 brew "terminal-notifier"
 brew "tree-sitter-cli" # nvim-treesitter (main) のパーサービルドに必要
+
+# Taps
+tap "terraform-linters/tap"
 
 # Casks
 cask "claude-code"
 cask "session-manager-plugin" # 要sudo権限での手動インストール
+cask "tflint"
 cask "wezterm@nightly"
