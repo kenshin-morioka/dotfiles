@@ -104,16 +104,23 @@ ssh-migrate:  ## 既存の ~/.ssh/config を config.local へ退避 (link の前
 link: ssh-migrate
 link:  ## シンボリックリンクを作成
 	@echo "🔗 シンボリックリンクを作成中..."
-	@for pair in $(LINKS); do \
+	@conflict=0; \
+	for pair in $(LINKS); do \
 		$(split_pair); \
 		if [ ! -e "$$src" ]; then \
 			echo "  skip: $$src (not found)"; \
 			continue; \
 		fi; \
+		if [ -e "$$dst" ] && [ ! -L "$$dst" ]; then \
+			echo "  ❌ $$dst が実ファイルとして存在するため上書きしません。内容を $$src に移してから削除してください"; \
+			conflict=1; \
+			continue; \
+		fi; \
 		mkdir -p "$$(dirname "$$dst")"; \
 		ln -snf "$$src" "$$dst"; \
 		echo "  リンク作成: $$dst -> $$src"; \
-	done
+	done; \
+	exit $$conflict
 
 unlink:  ## シンボリックリンクを削除
 	@echo "❌ シンボリックリンクを削除中..."
