@@ -51,6 +51,7 @@ install:  ## 新マシンのセットアップを一括実行（冪等・再実�
 # リンク定義 (リンク先:元ファイル)
 LINKS := \
 	$(HOME)/.zshrc:$(DOTFILES_DIR)/zsh/.zshrc \
+	$(HOME)/.zshrc.local:$(DOTFILES_DIR)/zsh/.zshrc.local \
 	$(HOME)/.zshenv:$(DOTFILES_DIR)/zsh/.zshenv \
 	$(HOME)/.config/nvim:$(DOTFILES_DIR)/nvim \
 	$(HOME)/.config/starship.toml:$(DOTFILES_DIR)/starship.toml \
@@ -108,6 +109,11 @@ link:  ## シンボリックリンクを作成
 		if [ ! -e "$$src" ]; then \
 			echo "  skip: $$src (not found)"; \
 			continue; \
+		fi; \
+		if [ -e "$$dst" ] && [ ! -L "$$dst" ]; then \
+			backup="$$dst.backup.$$(date +%Y%m%d%H%M%S)"; \
+			mv "$$dst" "$$backup"; \
+			echo "  📦 既存の $$dst を $$backup に退避しました"; \
 		fi; \
 		mkdir -p "$$(dirname "$$dst")"; \
 		ln -snf "$$src" "$$dst"; \

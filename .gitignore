@@ -7,6 +7,8 @@ configstore
 .android/cache
 claude/checklists/
 git/.gitconfig.local
+git/.gitconfig.work
+zsh/.zshrc.local
 .claude/worktrees
 claude/CLAUDE.md
 claude/skills/
