@@ -18,7 +18,8 @@ Host *
   ServerAliveCountMax 3
   # 接続を多重化し、同一ホストへの 2 回目以降の ssh / scp / git を高速化する
   ControlMaster auto
-  ControlPath ~/.ssh/sockets/%r@%h-%p
+  # %h (実ホスト名) だと同じ HostName を持つ別名同士で接続を共有し、別アカウントの鍵で認証されるため %n (指定したホスト名) で分ける
+  ControlPath ~/.ssh/sockets/%r@%n-%p
   ControlPersist 10m
   # known_hosts のホスト名をハッシュ化する (流出時にアクセス先を秘匿)
   HashKnownHosts yes

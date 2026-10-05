@@ -45,7 +45,4 @@
 	navigate = true
 	# 行番号を表示
 	line-numbers = true
-# 仕事用リポジトリでは別の user 設定を使う (実体は git 追跡外)
-# 対象の org ディレクトリを clone したら、パスを実態に合わせてコメントを外す
-# [includeIf "gitdir:~/src/github.com/dely/"]
-# 	path = ~/.gitconfig.work
+# 仕事用の GitHub アカウントへの切り替え (URL 書き換え・user) は公開しないため .gitconfig.local に書く
