@@ -318,3 +318,7 @@ unsetopt list_types
 # マシン固有の設定 (git 追跡外)
 # shellcheck disable=SC1090,SC1091
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
+
+# Vite+ bin (https://viteplus.dev)
+# shellcheck disable=SC1091
+[ -f "${HOME}/.config/vite-plus/env" ] && . "${HOME}/.config/vite-plus/env"

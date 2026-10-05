@@ -20,3 +20,7 @@ export HISTFILE="${XDG_STATE_HOME:-${HOME}/.local/state}/zsh/history"
 [ -d "$(dirname "${HISTFILE}")" ] || mkdir -p "$(dirname "${HISTFILE}")"
 export HISTSIZE=100000
 export SAVEHIST=100000
+
+# Vite+ bin (https://viteplus.dev)
+# shellcheck disable=SC1091
+[ -f "${HOME}/.config/vite-plus/env" ] && . "${HOME}/.config/vite-plus/env"
