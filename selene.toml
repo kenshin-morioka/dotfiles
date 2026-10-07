@@ -1,8 +1,7 @@
-std = "lua51"
+# Neovim (nvim/) と WezTerm (wezterm/) の Lua 設定を lint する。
+# vim グローバルは vim.yml で定義しているため undefined_variable (typo 検出) を有効にできる
+std = "lua51+vim"
 
 [lints]
-global_usage = "allow"
-undefined_variable = "allow"
-unused_variable = "allow"
+# `{ 'a', key = 'b' }` のような配列+ハッシュ混在テーブルはプラグイン設定 (lazy.nvim 等) の慣用表現なので許可
 mixed_table = "allow"
-unscoped_variables = "allow"
