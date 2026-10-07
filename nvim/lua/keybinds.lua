@@ -9,8 +9,9 @@ vim.keymap.set("n", ";", ":")
 -- automatically joump to end of text you pasted
 vim.keymap.set("v", "y", "y`]")
 vim.keymap.set("n", "p", "p`]")
-vim.keymap.set("v", "p", '"_c<C-r>+<Esc>') -- クリップボードを保持したままペースト
-vim.keymap.set("s", "p", '<C-g>"_c<C-r>+<Esc>') -- セレクトモード：ビジュアルに切り替えてからペースト
+-- <C-r><C-o>+ はレジスタ内容をリテラル挿入する (<C-r>+ だと autoindent / autopairs の影響を受ける)
+vim.keymap.set("v", "p", '"_c<C-r><C-o>+<Esc>') -- クリップボードを保持したままペースト
+vim.keymap.set("s", "p", '<C-g>"_c<C-r><C-o>+<Esc>') -- セレクトモード：ビジュアルに切り替えてからペースト
 
 vim.keymap.set("n", "ZZ", "<NOP>")
 vim.keymap.set("n", "ZQ", "<NOP>")
