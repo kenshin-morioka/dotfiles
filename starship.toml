@@ -19,10 +19,6 @@ $os\
 # コマンドラインに1行分のスペースを入れない
 add_newline = false
 
-# left_promptとright_promptの間を何で埋めるか設定
-[fill]
-symbol = ' '
-
 [os]
 format = "[$symbol]($style)"
 style = "fg:#2E3440 bg:#88C0D0 bold"
