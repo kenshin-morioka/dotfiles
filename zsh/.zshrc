@@ -106,7 +106,16 @@ function select-ai-cli() {
   command -v codex &>/dev/null && choices+=(codex)
   (( ${#choices} > 0 )) || return
   selected=$(print -rl -- "${choices[@]}" | fzf --height=40% --reverse --prompt='AI> ') || return
-  command "$selected" "$@"
+  if [[ "$selected" = codex ]]; then
+    codex "$@"
+  else
+    command "$selected" "$@"
+  fi
+}
+
+# 共有設定をプロファイルとして適用し、信頼済みプロジェクトなどの自動生成設定はローカルに保持する
+function codex() {
+  command codex --profile dotfiles "$@"
 }
 
 # 起動前に 1 秒だけ cmatrix を流す遊び。cmatrix / timeout が無い環境では素直に nvim を起動する
