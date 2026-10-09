@@ -99,8 +99,13 @@ fi
 # ====================
 # Claude Code または Codex を fzf で選択して起動する
 function select-ai-cli() {
+  local -a choices
   local selected
-  selected=$(print -rl -- claude codex | fzf --height=40% --reverse --prompt='AI> ') || return
+  choices=()
+  command -v claude &>/dev/null && choices+=(claude)
+  command -v codex &>/dev/null && choices+=(codex)
+  (( ${#choices} > 0 )) || return
+  selected=$(print -rl -- "${choices[@]}" | fzf --height=40% --reverse --prompt='AI> ') || return
   command "$selected" "$@"
 }
 
