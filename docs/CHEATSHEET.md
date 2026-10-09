@@ -333,11 +333,11 @@ nvim .
 | `crb` | Cargo.tomlを探して(cargo metadataでbinターゲットを列挙し)fzfで選択して`cargo run --bin`実行 |
 | `cg` | Cargo.tomlを探してサブコマンド（run/build/test/check/clippy/fmt/doc/clean）をfzfで選択して実行 |
 
-### Claude Code
+### Claude Code / Codex
 
 | コマンド | 説明 |
 | -------- | ---- |
-| `c` | `claude` |
+| `c` | fzfで `claude` / `codex` を選択して起動 |
 | `cct` | `claude --continue` |
 | `cr` | `claude --resume` |
 | `crs` | `claude --resume`（末尾スペース付き、引数指定向け） |
