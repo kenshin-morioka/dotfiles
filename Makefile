@@ -69,6 +69,7 @@ LINKS := \
 	$(HOME)/.claude/commands:$(DOTFILES_DIR)/claude/commands \
 	$(HOME)/.claude/hooks:$(DOTFILES_DIR)/claude/hooks \
 	$(HOME)/.claude/statusline-command.sh:$(DOTFILES_DIR)/claude/statusline-command.sh \
+	$(HOME)/.codex/dotfiles.config.toml:$(DOTFILES_DIR)/codex/dotfiles.config.toml \
 	$(HOME)/.codex/AGENTS.md:$(DOTFILES_DIR)/AGENTS.md \
 	$(HOME)/.config/flipper:$(DOTFILES_DIR)/flipper \
 	$(HOME)/.config/github-copilot:$(DOTFILES_DIR)/github-copilot \
