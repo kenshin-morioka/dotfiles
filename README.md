@@ -20,6 +20,7 @@ Personal dotfiles configuration for macOS.
 | `mise/` | mise version manager config |
 | `atuin/` | atuin shell history config |
 | `starship.toml` | Starship prompt config |
+| `CLAUDE.md` / `AGENTS.md` | Repository instructions for Claude Code and Codex |
 | `claude/` | Claude Code config (self-review checklists: general, Rails, test/RSpec) |
 | `act/` | GitHub Actions local runner config |
 | `macos/` | AppleScript source for macOS launcher .app |
@@ -85,6 +86,7 @@ Machine-specific settings live outside git: `~/.zshrc.local` (sourced at the end
 | `mise/` | miseバージョン管理設定 |
 | `atuin/` | atuinシェル履歴設定 |
 | `starship.toml` | Starshipプロンプト設定 |
+| `CLAUDE.md` / `AGENTS.md` | Claude Code / Codex 共通のリポジトリルール |
 | `claude/` | Claude Code設定（セルフレビューチェックリスト: 汎用、Rails、テスト/RSpec） |
 | `act/` | GitHub Actions ローカル実行設定 |
 | `macos/` | macOS 用ランチャー .app の AppleScript ソース |
@@ -120,7 +122,7 @@ make install
 | ステップ | 内容 |
 | -------- | ---- |
 | `make brew` | Brewfile の全パッケージをインストール |
-| `make link` | シンボリックリンクを作成 |
+| `make link` | シンボリックリンクを作成（Codex の `~/.codex/AGENTS.md` を含む） |
 | `make macos-defaults` | macOS defaults を適用 |
 | fzf キーバインド | `$(brew --prefix)/opt/fzf/install` を rc 非改変オプション付きで実行 |
 | `make tmux-init` | TPM (Tmux Plugin Manager) をインストール |
