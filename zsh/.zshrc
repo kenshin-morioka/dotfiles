@@ -81,7 +81,7 @@ fi
   abbr -S gmg='git merge --no-ff'
   abbr -S gpoh='git push origin HEAD'
   abbr -S lg='lazygit'
-  abbr -S c='claude'
+  abbr -S c='select-ai-cli'
   abbr -S cct='claude --continue'
   abbr -S cr='claude --resume'
   abbr -S crs='claude --resume '
@@ -97,6 +97,13 @@ fi
 # ====================
 # Functions
 # ====================
+# Claude Code または Codex を fzf で選択して起動する
+function select-ai-cli() {
+  local selected
+  selected=$(print -rl -- claude codex | fzf --height=40% --reverse --prompt='AI> ') || return
+  command "$selected" "$@"
+}
+
 # 起動前に 1 秒だけ cmatrix を流す遊び。cmatrix / timeout が無い環境では素直に nvim を起動する
 function nvim() {
   if command -v cmatrix &>/dev/null; then
