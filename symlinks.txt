@@ -1,0 +1,28 @@
+# シンボリックリンク定義 (mise run link / unlink が参照)
+# 書式: <リンク先 ($HOME からの相対パス)>:<元ファイル (リポジトリルートからの相対パス)>
+.zshrc:zsh/.zshrc
+.zshrc.local:zsh/.zshrc.local
+.zshenv:zsh/.zshenv
+.config/nvim:nvim
+.config/starship.toml:starship.toml
+.config/wezterm:wezterm
+.config/tmux/tmux.conf:tmux/tmux.conf
+.config/mise:mise
+.config/atuin:atuin
+.config/sheldon:sheldon
+.config/act:act
+.claude/CLAUDE.md:claude/CLAUDE.md
+.claude/settings.json:claude/settings.json
+.claude/checklists:claude/checklists
+.claude/skills:claude/skills
+.claude/agents:claude/agents
+.claude/commands:claude/commands
+.claude/hooks:claude/hooks
+.claude/statusline-command.sh:claude/statusline-command.sh
+.codex/AGENTS.md:AGENTS.md
+.config/flipper:flipper
+.config/github-copilot:github-copilot
+.cowsay:cowsay
+.gitconfig:git/.gitconfig
+.gitconfig.local:git/.gitconfig.local
+.ssh/config:ssh/config

@@ -1,0 +1,300 @@
+# dotfiles のタスク定義 (mise run <task> で実行 / mise tasks で一覧表示)
+# - リポジトリのルートは mise が設定する $MISE_PROJECT_ROOT から解決する (CI 等、checkout 先が異なる環境でも動くように)
+
+[settings]
+# mise/config.toml がプロジェクト設定としても読み込まれるため、タスク実行前に言語ランタイムが自動インストールされるのを防ぐ
+task.run_auto_install = false
+
+# --------------------------------------
+# 一括セットアップ
+#
+[tasks.install]
+description = "新マシンのセットアップを一括実行（冪等・再実行可）"
+shell = "bash -c"
+quiet = true
+run = '''
+set -euo pipefail
+echo "🚀 セットアップを開始します..."
+# Homebrew は前提条件。未インストールなら明確に案内して中断する（自動インストールはしない）
+if ! command -v brew >/dev/null 2>&1; then
+  echo "❌ Homebrew がインストールされていません"
+  echo "   以下を実行してから再度 mise run install を実行してください:"
+  echo '   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
+  exit 1
+fi
+mise run brew
+mise run link
+mise run macos-defaults
+# fzf キーバインド: install スクリプトは ~/.fzf.zsh を同内容で再生成するだけなので再実行しても安全（冪等）。
+# --no-update-rc により rc ファイルへの追記を抑止する（.zshrc はリポジトリへのシンボリックリンクのため、書き換えられると差分が発生する）。
+echo "🔑 fzf キーバインドをセットアップ中..."
+"$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc --no-bash --no-fish
+mise run tmux-init
+mise run claude-init
+# pre-commit フックを設定（既に設定済みでも同じフックを上書きするだけで冪等）
+echo "🪝 pre-commit フックを設定中..."
+cd "$MISE_PROJECT_ROOT" && pre-commit install
+# mise の設定ファイルを信頼（trust 済みでも成功する。mise 未セットアップ等での失敗は || true で無視）
+echo "🤝 mise 設定を信頼中..."
+mise trust "$MISE_PROJECT_ROOT/mise/config.toml" || true
+echo "✅ セットアップが完了しました！"
+'''
+
+# --------------------------------------
+# シンボリックリンク (定義は symlinks.txt)
+#
+# 既存の ~/.ssh/config (実ファイル) をシンボリックリンクで上書きしてしまう前に
+# ~/.ssh/config.local へ退避する。ssh/config は config.local を Include するため挙動は変わらない。
+[tasks.ssh-migrate]
+description = "既存の ~/.ssh/config を config.local へ退避 (link の前に自動実行)"
+shell = "bash -c"
+quiet = true
+run = '''
+set -euo pipefail
+if [ -f "$HOME/.ssh/config" ] && [ ! -L "$HOME/.ssh/config" ]; then
+  if [ -e "$HOME/.ssh/config.local" ]; then
+    echo "❌ ~/.ssh/config (実ファイル) と ~/.ssh/config.local が両方存在します"
+    echo "   上書き事故を防ぐため中断しました。~/.ssh/config の内容を config.local に手動で統合してください"
+    exit 1
+  fi
+  cp "$HOME/.ssh/config" "$HOME/.ssh/config.local"
+  chmod 600 "$HOME/.ssh/config.local"
+  echo "📦 既存の ~/.ssh/config を ~/.ssh/config.local に退避しました"
+fi
+# ControlPath (接続多重化ソケット) 用ディレクトリ
+mkdir -p "$HOME/.ssh/sockets"
+chmod 700 "$HOME/.ssh/sockets"
+'''
+
+[tasks.link]
+description = "シンボリックリンクを作成"
+depends = ["ssh-migrate"]
+shell = "bash -c"
+quiet = true
+run = '''
+set -euo pipefail
+echo "🔗 シンボリックリンクを作成中..."
+grep -Ev '^[[:space:]]*(#|$)' "$MISE_PROJECT_ROOT/symlinks.txt" | while IFS=: read -r dst src; do
+  dst="$HOME/$dst"
+  src="$MISE_PROJECT_ROOT/$src"
+  if [ ! -e "$src" ]; then
+    echo "  skip: $src (not found)"
+    continue
+  fi
+  if [ -e "$dst" ] && [ ! -L "$dst" ]; then
+    backup="$dst.backup.$(date +%Y%m%d%H%M%S)"
+    mv "$dst" "$backup"
+    echo "  📦 既存の $dst を $backup に退避しました"
+  fi
+  mkdir -p "$(dirname "$dst")"
+  ln -snf "$src" "$dst"
+  echo "  リンク作成: $dst -> $src"
+done
+'''
+
+[tasks.unlink]
+description = "シンボリックリンクを削除"
+shell = "bash -c"
+quiet = true
+run = '''
+set -euo pipefail
+echo "❌ シンボリックリンクを削除中..."
+grep -Ev '^[[:space:]]*(#|$)' "$MISE_PROJECT_ROOT/symlinks.txt" | while IFS=: read -r dst _src; do
+  dst="$HOME/$dst"
+  if [ -L "$dst" ]; then
+    rm "$dst"
+    echo "  リンク削除: $dst"
+  fi
+done
+'''
+
+# --------------------------------------
+# Homebrew
+#
+[tasks.brew]
+description = "全パッケージをインストール"
+shell = "bash -c"
+quiet = true
+run = '''
+set -euo pipefail
+echo "🍺 パッケージをインストール中..."
+brew bundle --file="$MISE_PROJECT_ROOT/homebrew/Brewfile"
+'''
+
+[tasks.brew-add]
+description = "パッケージを追加 (mise run brew-add <パッケージ名>)"
+usage = 'arg "<pkg>" help="パッケージ名"'
+shell = "bash -c"
+quiet = true
+run = '''
+set -euo pipefail
+brewfile="$MISE_PROJECT_ROOT/homebrew/Brewfile"
+pkg="$usage_pkg"
+if grep -q "^brew \"$pkg\"" "$brewfile"; then
+  echo "⚠️  $pkg は既にBrewfileに存在します"
+else
+  brew install "$pkg"
+  echo "brew \"$pkg\"" >> "$brewfile"
+  echo "✅ $pkg を追加・インストールしました"
+fi
+'''
+
+[tasks.brew-add-cask]
+description = "Caskを追加 (mise run brew-add-cask <パッケージ名>)"
+usage = 'arg "<pkg>" help="パッケージ名"'
+shell = "bash -c"
+quiet = true
+run = '''
+set -euo pipefail
+brewfile="$MISE_PROJECT_ROOT/homebrew/Brewfile"
+pkg="$usage_pkg"
+if grep -q "^cask \"$pkg\"" "$brewfile"; then
+  echo "⚠️  $pkg は既にBrewfileに存在します"
+else
+  brew install --cask "$pkg"
+  echo "cask \"$pkg\"" >> "$brewfile"
+  echo "✅ $pkg を追加・インストールしました"
+fi
+'''
+
+[tasks.brew-sync]
+description = "現在のパッケージをBrewfileに同期"
+shell = "bash -c"
+quiet = true
+run = '''
+set -euo pipefail
+echo "🔄 インストール済みパッケージをBrewfileに同期中..."
+brew bundle dump --force --file="$MISE_PROJECT_ROOT/homebrew/Brewfile"
+echo "✅ Brewfileを更新しました"
+'''
+
+[tasks.brew-list]
+description = "Brewfileの内容を表示"
+shell = "bash -c"
+quiet = true
+run = '''
+set -euo pipefail
+echo "📦 Brewfileのパッケージ一覧:"
+cat "$MISE_PROJECT_ROOT/homebrew/Brewfile"
+'''
+
+# --------------------------------------
+# Neovim
+#
+[tasks.nvim-update]
+description = "Neovim プラグインを更新してコミット & push まで実行"
+shell = "bash -c"
+quiet = true
+run = '''
+set -euo pipefail
+echo "🔄 Neovim プラグインを更新中..."
+nvim --headless "+Lazy! sync" +qa
+mise run lazy-commit
+'''
+
+[tasks.lazy-commit]
+description = "nvim/lazy-lock.json の変更だけをコミット & push"
+shell = "bash -c"
+quiet = true
+run = '''
+set -euo pipefail
+cd "$MISE_PROJECT_ROOT"
+other_changes=$(git status --porcelain | grep -v 'nvim/lazy-lock.json' || true)
+if [ -n "$other_changes" ]; then
+  echo "❌ lazy-lock.json 以外の変更があります:"
+  echo "$other_changes"
+  exit 1
+fi
+if git diff --quiet -- nvim/lazy-lock.json && git diff --cached --quiet -- nvim/lazy-lock.json; then
+  echo "✅ lazy-lock.json に変更なし"
+  exit 0
+fi
+git add nvim/lazy-lock.json
+git commit -m "lazy update"
+git push origin HEAD
+echo "✅ lazy update を push しました"
+'''
+
+# --------------------------------------
+# tmux
+#
+[tasks.tmux-init]
+description = "TPM (Tmux Plugin Manager) をインストール"
+shell = "bash -c"
+quiet = true
+run = '''
+set -euo pipefail
+tpm_dir="$HOME/.config/tmux/plugins/tpm"
+if [ -d "$tpm_dir" ]; then
+  echo "⚠️  TPM は既にインストール済みです: $tpm_dir"
+else
+  echo "📦 TPM をクローン中..."
+  git clone https://github.com/tmux-plugins/tpm "$tpm_dir"
+  echo "✅ TPM をインストールしました。tmux 起動後に prefix + I でプラグインを取得してください"
+fi
+'''
+
+# --------------------------------------
+# macOS Launcher App (Finder ダブルクリック → Neovim)
+#
+[tasks.macos-app]
+description = "Finder ダブルクリックで Neovim を開く .app を ~/Applications に生成"
+shell = "bash -c"
+quiet = true
+run = '''
+set -euo pipefail
+app_name="OpenInNeovim"
+app_dst="$HOME/Applications/$app_name.app"
+app_src="$MISE_PROJECT_ROOT/macos/$app_name.applescript"
+app_icon_src="$MISE_PROJECT_ROOT/macos/icons/$app_name.png"
+app_id="com.kenshin-morioka.openinneovim"
+lsregister="/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister"
+
+echo "🛠  $app_name.app をビルド中..."
+mkdir -p "$HOME/Applications"
+rm -rf "$app_dst"
+osacompile -o "$app_dst" "$app_src"
+# osacompile 既定では CFBundleIdentifier が空で Launch Services がデフォルトハンドラ登録を拒否するため埋める
+plist="$app_dst/Contents/Info.plist"
+/usr/libexec/PlistBuddy -c "Delete :CFBundleIdentifier" "$plist" 2>/dev/null || true
+/usr/libexec/PlistBuddy -c "Add :CFBundleIdentifier string $app_id" "$plist"
+# Neovim ロゴ PNG をマルチ解像度 .icns にして差し替え。
+# osacompile の `on open` ハンドラ付き .app は droplet 扱いで CFBundleIconFile=droplet なので droplet.icns を上書きする。
+# また Assets.car (compiled icon catalog) が .icns より優先されるため削除する。
+iconset="$(mktemp -d)/$app_name.iconset"
+mkdir -p "$iconset"
+for size in 16 32 64 128 256 512; do
+  sips -z "$size" "$size" "$app_icon_src" --out "$iconset/icon_${size}x${size}.png" >/dev/null
+done
+iconutil -c icns "$iconset" -o "$app_dst/Contents/Resources/droplet.icns"
+cp "$app_dst/Contents/Resources/droplet.icns" "$app_dst/Contents/Resources/applet.icns"
+rm -f "$app_dst/Contents/Resources/Assets.car"
+codesign --force --deep --sign - "$app_dst"
+"$lsregister" -f "$app_dst"
+echo "✅ $app_dst を生成しました (bundle id: $app_id)"
+echo "   Finder で対象ファイルを右クリック → 情報を見る → このアプリケーションで開く → $app_name → すべてを変更"
+'''
+
+[tasks.macos-defaults]
+description = "macOS の defaults を適用 (WezTerm の PressAndHold 無効化等)"
+quiet = true
+run = 'bash "$MISE_PROJECT_ROOT/macos/defaults.sh"'
+
+# --------------------------------------
+# Claude Code
+#
+[tasks.claude-init]
+description = "セルフレビューチェックリストディレクトリを生成"
+shell = "bash -c"
+quiet = true
+run = '''
+set -euo pipefail
+checklist_dir="$MISE_PROJECT_ROOT/claude/checklists"
+if [ -d "$checklist_dir" ]; then
+  echo "⚠️  $checklist_dir は既に存在します"
+else
+  mkdir -p "$checklist_dir"
+  echo "<!-- セルフレビューチェックリストを作成してください -->" > "$checklist_dir/SELF_REVIEW_CHECKLIST.md"
+  echo "✅ $checklist_dir を作成しました"
+fi
+'''
