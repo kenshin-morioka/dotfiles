@@ -28,34 +28,35 @@ Personal dotfiles configuration for macOS.
 
 ## Setup
 
-Basically a single `make install` does everything (idempotent — safe to re-run).
+Basically a single `mise run install` does everything (idempotent — safe to re-run).
 
 1. Clone: `ghq get git@github.com:kenshin-morioka/dotfiles.git`
 2. Install Homebrew: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-3. Run `make install` — this runs `make brew` (packages), `make link` (symlinks), `make macos-defaults`, fzf keybindings install, `make tmux-init` (TPM), `make claude-init` (checklist template), `pre-commit install`, and `mise trust` all at once
-4. Post-install manual steps: launch tmux and press `Ctrl-b I` to fetch plugins; customize the generated self-review checklist yourself
-5. (Optional) Build the Finder-double-click → Neovim launcher .app: `make macos-app` — creates `~/Applications/OpenInNeovim.app`. Assign it as the default opener via Finder → `Cmd+I` → "Open with" → "Change All...". If TCC prompts get annoying across folders (Desktop / Documents / etc.), add `OpenInNeovim.app` to System Settings → Privacy & Security → Full Disk Access.
+3. Install mise and trust this repo: `brew install mise && mise trust --all`
+4. Run `mise run install` — this runs `mise run brew` (packages), `mise run link` (symlinks), `mise run macos-defaults`, fzf keybindings install, `mise run tmux-init` (TPM), `mise run claude-init` (checklist template), `pre-commit install`, and `mise trust` all at once
+5. Post-install manual steps: launch tmux and press `Ctrl-b I` to fetch plugins; customize the generated self-review checklist yourself
+6. (Optional) Build the Finder-double-click → Neovim launcher .app: `mise run macos-app` — creates `~/Applications/OpenInNeovim.app`. Assign it as the default opener via Finder → `Cmd+I` → "Open with" → "Change All...". If TCC prompts get annoying across folders (Desktop / Documents / etc.), add `OpenInNeovim.app` to System Settings → Privacy & Security → Full Disk Access.
 
-Each step can also be run individually (see Make Commands below).
+Each step can also be run individually (see Tasks below).
 
-## Make Commands
+## Tasks
 
 | Command | Description |
 | --- | --- |
-| `make install` | One-shot machine setup (idempotent, safe to re-run) |
-| `make link` | Create symlinks |
-| `make unlink` | Remove symlinks |
-| `make brew` | Install all packages from Brewfile |
-| `make brew-add PKG=xxx` | Add and install a package |
-| `make brew-add-cask PKG=xxx` | Add and install a cask |
-| `make brew-sync` | Sync installed packages to Brewfile |
-| `make brew-list` | Show Brewfile contents |
-| `make claude-init` | Create self-review checklist template |
-| `make tmux-init` | Install TPM (Tmux Plugin Manager) |
-| `make nvim-update` | Run `:Lazy sync` headlessly and commit & push `lazy-lock.json` |
-| `make lazy-commit` | Commit & push `lazy-lock.json` only (after updating in nvim) |
-| `make macos-app` | Build the Finder-double-click → Neovim launcher .app into `~/Applications` |
-| `make macos-defaults` | Apply macOS defaults (keyboard repeat, Finder, screenshots, .DS_Store, Dock, WezTerm press-and-hold) |
+| `mise run install` | One-shot machine setup (idempotent, safe to re-run) |
+| `mise run link` | Create symlinks |
+| `mise run unlink` | Remove symlinks |
+| `mise run brew` | Install all packages from Brewfile |
+| `mise run brew-add xxx` | Add and install a package |
+| `mise run brew-add-cask xxx` | Add and install a cask |
+| `mise run brew-sync` | Sync installed packages to Brewfile |
+| `mise run brew-list` | Show Brewfile contents |
+| `mise run claude-init` | Create self-review checklist template |
+| `mise run tmux-init` | Install TPM (Tmux Plugin Manager) |
+| `mise run nvim-update` | Run `:Lazy sync` headlessly and commit & push `lazy-lock.json` |
+| `mise run lazy-commit` | Commit & push `lazy-lock.json` only (after updating in nvim) |
+| `mise run macos-app` | Build the Finder-double-click → Neovim launcher .app into `~/Applications` |
+| `mise run macos-defaults` | Apply macOS defaults (keyboard repeat, Finder, screenshots, .DS_Store, Dock, WezTerm press-and-hold) |
 
 ## Package Management
 
@@ -94,7 +95,7 @@ Machine-specific settings live outside git: `~/.zshrc.local` (sourced at the end
 
 ## セットアップ
 
-基本は `make install` 一発で完了します（冪等なので何度実行しても安全です）。
+基本は `mise run install` 一発で完了します（冪等なので何度実行しても安全です）。
 
 ### 1. リポジトリのクローン
 
@@ -114,63 +115,65 @@ git clone git@github.com:kenshin-morioka/dotfiles.git ~/src/github.com/kenshin-m
 
 ```bash
 cd ~/src/github.com/kenshin-morioka/dotfiles
-make install
+brew install mise
+mise trust --all
+mise run install
 ```
 
 以下がまとめて実行されます。各ステップは冪等なので、途中で失敗しても再実行するだけで続きから揃います。
 
 | ステップ | 内容 |
 | -------- | ---- |
-| `make brew` | Brewfile の全パッケージをインストール |
-| `make link` | シンボリックリンクを作成（Codex の `~/.codex/AGENTS.md` を含む） |
-| `make macos-defaults` | macOS defaults を適用 |
+| `mise run brew` | Brewfile の全パッケージをインストール |
+| `mise run link` | シンボリックリンクを作成（Codex の `~/.codex/AGENTS.md` を含む） |
+| `mise run macos-defaults` | macOS defaults を適用 |
 | fzf キーバインド | `$(brew --prefix)/opt/fzf/install` を rc 非改変オプション付きで実行 |
-| `make tmux-init` | TPM (Tmux Plugin Manager) をインストール |
-| `make claude-init` | セルフレビューチェックリストの雛形を生成 |
+| `mise run tmux-init` | TPM (Tmux Plugin Manager) をインストール |
+| `mise run claude-init` | セルフレビューチェックリストの雛形を生成 |
 | `pre-commit install` | pre-commit フックをリポジトリに設定 |
 | `mise trust` | `mise/config.toml` を信頼 |
 
 セットアップ後の手動作業:
 
 - tmux を起動し `Ctrl-b I` (Shift+i) でプラグイン (resurrect / continuum / vim-tmux-navigator 等) を取得
-- `make claude-init` で生成されたチェックリストの中身を自分でカスタマイズ
+- `mise run claude-init` で生成されたチェックリストの中身を自分でカスタマイズ
 
-各ステップは `make brew` / `make link` のように個別にも実行できます（詳細は後述の「Makeコマンド」参照）。
+各ステップは `mise run brew` / `mise run link` のように個別にも実行できます（詳細は後述の「タスク一覧」参照）。
 
 なお、`git/.gitconfig` は `merge.conflictstyle = zdiff3` を使用するため Git 2.35.0 以降を前提としています（Homebrew の git を使っていれば問題ありません）。
 
 ### 4. (任意) Finder ダブルクリックで Neovim を起動するランチャー .app を生成
 
 ```bash
-make macos-app
+mise run macos-app
 ```
 
 `~/Applications/OpenInNeovim.app` が生成されます。Finder で対象ファイルを選択 → `Cmd+I` → 「このアプリケーションで開く」を `OpenInNeovim` に変更 → 「すべてを変更...」で拡張子ごとに固定できます。
 
 複数フォルダ (デスクトップ / 書類 等) で毎回 TCC プロンプトが出るのが煩わしい場合は、システム設定 → プライバシーとセキュリティ → フルディスクアクセスに `OpenInNeovim.app` を追加してください。
 
-## Makeコマンド
+## タスク一覧
 
 ```bash
-make help  # 利用可能なコマンド一覧を表示
+mise tasks  # 利用可能なタスク一覧を表示
 ```
 
 | コマンド | 説明 |
 | --------- | ------ |
-| `make install` | 新マシンのセットアップを一括実行（冪等・再実行可） |
-| `make link` | シンボリックリンクを作成 |
-| `make unlink` | シンボリックリンクを削除 |
-| `make brew` | Brewfileの全パッケージをインストール |
-| `make brew-add PKG=xxx` | パッケージを追加・インストール |
-| `make brew-add-cask PKG=xxx` | Caskを追加・インストール |
-| `make brew-sync` | インストール済みパッケージをBrewfileに同期 |
-| `make brew-list` | Brewfileの内容を表示 |
-| `make claude-init` | セルフレビューチェックリストを生成 |
-| `make tmux-init` | TPM (Tmux Plugin Manager) をインストール |
-| `make nvim-update` | ヘッドレスで `:Lazy sync` を実行し `lazy-lock.json` をコミット & push |
-| `make lazy-commit` | nvim で更新後、`lazy-lock.json` のみをコミット & push |
-| `make macos-app` | Finder ダブルクリックで Neovim を開くランチャー .app を `~/Applications` に生成 |
-| `make macos-defaults` | macOS defaults を適用（キーリピート高速化 / Finder / スクリーンショット / .DS_Store 抑止 / Dock / WezTerm の press-and-hold 無効化） |
+| `mise run install` | 新マシンのセットアップを一括実行（冪等・再実行可） |
+| `mise run link` | シンボリックリンクを作成 |
+| `mise run unlink` | シンボリックリンクを削除 |
+| `mise run brew` | Brewfileの全パッケージをインストール |
+| `mise run brew-add xxx` | パッケージを追加・インストール |
+| `mise run brew-add-cask xxx` | Caskを追加・インストール |
+| `mise run brew-sync` | インストール済みパッケージをBrewfileに同期 |
+| `mise run brew-list` | Brewfileの内容を表示 |
+| `mise run claude-init` | セルフレビューチェックリストを生成 |
+| `mise run tmux-init` | TPM (Tmux Plugin Manager) をインストール |
+| `mise run nvim-update` | ヘッドレスで `:Lazy sync` を実行し `lazy-lock.json` をコミット & push |
+| `mise run lazy-commit` | nvim で更新後、`lazy-lock.json` のみをコミット & push |
+| `mise run macos-app` | Finder ダブルクリックで Neovim を開くランチャー .app を `~/Applications` に生成 |
+| `mise run macos-defaults` | macOS defaults を適用（キーリピート高速化 / Finder / スクリーンショット / .DS_Store 抑止 / Dock / WezTerm の press-and-hold 無効化） |
 
 ## パッケージ管理の使い分け
 
@@ -301,7 +304,7 @@ Config files ... are not trusted. Trust them with `mise trust`.
 ```
 
 miseはセキュリティのため、Git管理下の設定ファイルを明示的に信頼する必要があります。
-`make install` 実行時に自動で trust されますが、個別に実行する場合は以下の通りです。
+`mise run install` 実行時に自動で trust されますが、個別に実行する場合は以下の通りです。
 
 ```bash
 mise trust ~/src/github.com/kenshin-morioka/dotfiles/mise/config.toml
@@ -309,7 +312,7 @@ mise trust ~/src/github.com/kenshin-morioka/dotfiles/mise/config.toml
 
 ### pre-commitフックの設定
 
-`make install` 実行時に自動で設定されますが、個別に実行する場合は以下の通りです。
+`mise run install` 実行時に自動で設定されますが、個別に実行する場合は以下の通りです。
 
 ```bash
 pre-commit install

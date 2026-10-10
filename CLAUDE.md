@@ -2,13 +2,13 @@
 
 ## シンボリックリンク構成
 
-このリポジトリのファイルは `make link` により本番パスにシンボリックリンクされている。
+このリポジトリのファイルは `mise run link` により本番パスにシンボリックリンクされている。
 **ファイルの編集は即座にシステムに反映される**ことを常に意識すること。
 
 ### シンボリックリンク対応を忘れてはいけない操作
 
-- **設定ファイルの追加・移動・削除**時は、必ず `Makefile` の `LINKS` 変数を確認・更新すること
-- ファイルをリネームした場合、古いシンボリックリンクが残るため `make unlink && make link` が必要になることを伝えること
+- **設定ファイルの追加・移動・削除**時は、必ず `symlinks.txt` を確認・更新すること
+- ファイルをリネームした場合、古いシンボリックリンクが残るため `mise run unlink && mise run link` が必要になることを伝えること
 - ディレクトリ単位でリンクされているもの（nvim, wezterm, mise, act, flipper, github-copilot, cowsay, checklists）は、配下にファイルを追加するだけで自動的にリンク先に反映される
 
 ## pre-commit フック
@@ -39,9 +39,9 @@
 以下の対応を忘れないこと。関連する変更を行った場合は、必ずセットで更新すること。
 
 - **キーバインド追加・変更時** → `docs/CHEATSHEET.md` を必ず同時に更新する
-- **新しいツール導入時** → `homebrew/Brewfile` にパッケージを追加する（`make brew-add` 使用）
+- **新しいツール導入時** → `homebrew/Brewfile` にパッケージを追加する（`mise run brew-add` 使用）
 - **言語ランタイムのバージョン変更時** → `mise/config.toml` を更新する
-- **シンボリックリンク対象の追加・変更時** → `Makefile` の `LINKS` 変数を更新する
+- **シンボリックリンク対象の追加・変更時** → `symlinks.txt` を更新する
 - **zsh エイリアス・abbreviation 追加時** → `docs/CHEATSHEET.md` への記載を検討する
 - **Neovim プラグイン追加時** → `nvim/lua/extensions/` 配下に設定ファイルを作成し、キーバインドがあれば `docs/CHEATSHEET.md` に追記する
 
@@ -65,5 +65,5 @@
 
 ### Brewfile（homebrew/Brewfile）
 
-- パッケージ追加は `make brew-add PKG=<名前>` または `make brew-add-cask PKG=<名前>` を使用すること
+- パッケージ追加は `mise run brew-add <名前>` または `mise run brew-add-cask <名前>` を使用すること
 - 直接 Brewfile を手動編集した場合は `brew bundle --file=homebrew/Brewfile` で整合性を確認すること
