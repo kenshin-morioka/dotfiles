@@ -9,22 +9,22 @@ Personal dotfiles configuration for macOS.
 
 ## Contents
 
-| Directory | Description |
-| --- | --- |
-| `nvim/` | Neovim config (lazy.nvim, LSP, Telescope, NeoTree, etc.) |
-| `wezterm/` | WezTerm terminal config |
-| `tmux/` | tmux config (TPM, resurrect, continuum, vim-tmux-navigator) |
-| `zsh/` | Zsh config (.zshrc, .zshenv) |
-| `sheldon/` | sheldon (zsh plugin manager) config |
-| `homebrew/` | Brewfile (package management) |
-| `mise/` | mise version manager config |
-| `atuin/` | atuin shell history config |
-| `starship.toml` | Starship prompt config |
-| `CLAUDE.md` / `AGENTS.md` | Repository instructions for Claude Code and Codex |
-| `claude/` | Claude Code config (self-review checklists: general, Rails, test/RSpec) |
-| `act/` | GitHub Actions local runner config |
-| `macos/` | AppleScript source for macOS launcher .app |
-| `ssh/` | SSH client config (generic settings only; hosts live in `~/.ssh/config.local`) |
+| Directory                 | Description                                                                    |
+| ------------------------- | ------------------------------------------------------------------------------ |
+| `nvim/`                   | Neovim config (lazy.nvim, LSP, Telescope, NeoTree, etc.)                       |
+| `wezterm/`                | WezTerm terminal config                                                        |
+| `tmux/`                   | tmux config (TPM, resurrect, continuum, vim-tmux-navigator)                    |
+| `zsh/`                    | Zsh config (.zshrc, .zshenv)                                                   |
+| `sheldon/`                | sheldon (zsh plugin manager) config                                            |
+| `homebrew/`               | Brewfile (package management)                                                  |
+| `mise/`                   | mise version manager config                                                    |
+| `atuin/`                  | atuin shell history config                                                     |
+| `starship.toml`           | Starship prompt config                                                         |
+| `CLAUDE.md` / `AGENTS.md` | Repository instructions for Claude Code and Codex                              |
+| `claude/`                 | Claude Code config (self-review checklists: general, Rails, test/RSpec)        |
+| `act/`                    | GitHub Actions local runner config                                             |
+| `macos/`                  | AppleScript source for macOS launcher .app                                     |
+| `ssh/`                    | SSH client config (generic settings only; hosts live in `~/.ssh/config.local`) |
 
 ## Setup
 
@@ -60,10 +60,10 @@ Each step can also be run individually (see Tasks below).
 
 ## Package Management
 
-| Tool | Purpose | Examples |
-| ---- | ------- | -------- |
-| **Homebrew** | System tools, GUI apps (cask) | git, neovim, mise, claude-code |
-| **mise** | Language runtimes, dev tools (version management) | node, ruby, go, pnpm |
+| Tool         | Purpose                                           | Examples                       |
+| ------------ | ------------------------------------------------- | ------------------------------ |
+| **Homebrew** | System tools, GUI apps (cask)                     | git, neovim, mise, claude-code |
+| **mise**     | Language runtimes, dev tools (version management) | node, ruby, go, pnpm           |
 
 - Use **mise** instead of rbenv, nodenv, tfenv for unified version management
 - Use Homebrew for tools that don't need per-project versioning
@@ -76,22 +76,22 @@ Machine-specific settings live outside git: `~/.zshrc.local` (sourced at the end
 
 ## 含まれる設定
 
-| ディレクトリ | 説明 |
-| ------------- | ------ |
-| `nvim/` | Neovim設定（lazy.nvim、LSP、Telescope、NeoTree等） |
-| `wezterm/` | WezTermターミナル設定 |
-| `tmux/` | tmux設定（TPM、resurrect、continuum、vim-tmux-navigator） |
-| `zsh/` | Zsh設定（.zshrc、.zshenv） |
-| `sheldon/` | sheldon（zshプラグインマネージャ）設定 |
-| `homebrew/` | Brewfile（パッケージ管理） |
-| `mise/` | miseバージョン管理設定 |
-| `atuin/` | atuinシェル履歴設定 |
-| `starship.toml` | Starshipプロンプト設定 |
-| `CLAUDE.md` / `AGENTS.md` | Claude Code / Codex 共通のリポジトリルール |
-| `claude/` | Claude Code設定（セルフレビューチェックリスト: 汎用、Rails、テスト/RSpec） |
-| `act/` | GitHub Actions ローカル実行設定 |
-| `macos/` | macOS 用ランチャー .app の AppleScript ソース |
-| `ssh/` | SSH クライアント設定（汎用設定のみ。ホスト定義は `~/.ssh/config.local`） |
+| ディレクトリ              | 説明                                                                       |
+| ------------------------- | -------------------------------------------------------------------------- |
+| `nvim/`                   | Neovim設定（lazy.nvim、LSP、Telescope、NeoTree等）                         |
+| `wezterm/`                | WezTermターミナル設定                                                      |
+| `tmux/`                   | tmux設定（TPM、resurrect、continuum、vim-tmux-navigator）                  |
+| `zsh/`                    | Zsh設定（.zshrc、.zshenv）                                                 |
+| `sheldon/`                | sheldon（zshプラグインマネージャ）設定                                     |
+| `homebrew/`               | Brewfile（パッケージ管理）                                                 |
+| `mise/`                   | miseバージョン管理設定                                                     |
+| `atuin/`                  | atuinシェル履歴設定                                                        |
+| `starship.toml`           | Starshipプロンプト設定                                                     |
+| `CLAUDE.md` / `AGENTS.md` | Claude Code / Codex 共通のリポジトリルール                                 |
+| `claude/`                 | Claude Code設定（セルフレビューチェックリスト: 汎用、Rails、テスト/RSpec） |
+| `act/`                    | GitHub Actions ローカル実行設定                                            |
+| `macos/`                  | macOS 用ランチャー .app の AppleScript ソース                              |
+| `ssh/`                    | SSH クライアント設定（汎用設定のみ。ホスト定義は `~/.ssh/config.local`）   |
 
 ## セットアップ
 
@@ -177,10 +177,10 @@ mise tasks  # 利用可能なタスク一覧を表示
 
 ## パッケージ管理の使い分け
 
-| ツール | 用途 | 例 |
-| ------ | ---- | --- |
-| **Homebrew** | システム基盤ツール、GUIアプリ（cask） | git, neovim, mise, claude-code |
-| **mise** | 言語ランタイム、開発ツール（バージョン管理が必要なもの） | node, ruby, go, pnpm |
+| ツール       | 用途                                                     | 例                             |
+| ------------ | -------------------------------------------------------- | ------------------------------ |
+| **Homebrew** | システム基盤ツール、GUIアプリ（cask）                    | git, neovim, mise, claude-code |
+| **mise**     | 言語ランタイム、開発ツール（バージョン管理が必要なもの） | node, ruby, go, pnpm           |
 
 - rbenv, nodenv, tfenv などの個別バージョンマネージャーは **mise** で統一
 - Homebrewは主にシステム全体で1つのバージョンで良いツールに使用
@@ -189,12 +189,12 @@ mise tasks  # 利用可能なタスク一覧を表示
 
 マシン固有の設定（会社マシンのプロキシ、社用エイリアス、認証情報等）は git 追跡外のファイルに置きます。dotfiles 本体を汚さずに、マシンごとの差分を吸収できます。
 
-| ファイル | 役割 |
-| -------- | ---- |
-| `~/.zshrc.local` | zsh のマシン固有設定。存在すれば `.zshrc` の末尾で自動的に source される |
-| `~/.gitconfig.local` | Git のユーザー名・メールアドレス・認証情報等。`.gitconfig` の `[include]` から読み込まれる |
-| `~/.gitconfig.work` | 仕事用リポジトリ向けの user 設定。`.gitconfig` の `[includeIf "gitdir:..."]` から読み込まれる |
-| `~/.ssh/config.local` | SSH のホスト定義（サーバー名・IP・ユーザー名等）。`ssh/config` の先頭で `Include` される |
+| ファイル              | 役割                                                                                          |
+| --------------------- | --------------------------------------------------------------------------------------------- |
+| `~/.zshrc.local`      | zsh のマシン固有設定。存在すれば `.zshrc` の末尾で自動的に source される                      |
+| `~/.gitconfig.local`  | Git のユーザー名・メールアドレス・認証情報等。`.gitconfig` の `[include]` から読み込まれる    |
+| `~/.gitconfig.work`   | 仕事用リポジトリ向けの user 設定。`.gitconfig` の `[includeIf "gitdir:..."]` から読み込まれる |
+| `~/.ssh/config.local` | SSH のホスト定義（サーバー名・IP・ユーザー名等）。`ssh/config` の先頭で `Include` される      |
 
 ### ~/.zshrc.local の例
 
@@ -238,35 +238,35 @@ alias work-vpn='sudo openconnect vpn.example.com'
 
 prefix キーは `Ctrl-b` (デフォルト)。以下は prefix を押した後のキー。
 
-| キー | 動作 |
-| ---- | ---- |
-| `\|` | ペイン縦分割（カレントディレクトリ引き継ぎ） |
-| `-` | ペイン横分割（カレントディレクトリ引き継ぎ） |
-| `c` | 新規ウィンドウ（カレントディレクトリ引き継ぎ） |
-| `H` / `J` / `K` / `L` | ペインを5セル分リサイズ |
-| `r` | 設定リロード |
-| `I` | TPM プラグインインストール |
-| `Ctrl-s` | tmux-resurrect でセッション保存 |
-| `Ctrl-r` | tmux-resurrect でセッション復元 |
-| `[` | コピーモード開始（vi キーバインド、`v` で選択 `y` でコピー） |
+| キー                  | 動作                                                         |
+| --------------------- | ------------------------------------------------------------ |
+| `\|`                  | ペイン縦分割（カレントディレクトリ引き継ぎ）                 |
+| `-`                   | ペイン横分割（カレントディレクトリ引き継ぎ）                 |
+| `c`                   | 新規ウィンドウ（カレントディレクトリ引き継ぎ）               |
+| `H` / `J` / `K` / `L` | ペインを5セル分リサイズ                                      |
+| `r`                   | 設定リロード                                                 |
+| `I`                   | TPM プラグインインストール                                   |
+| `Ctrl-s`              | tmux-resurrect でセッション保存                              |
+| `Ctrl-r`              | tmux-resurrect でセッション復元                              |
+| `[`                   | コピーモード開始（vi キーバインド、`v` で選択 `y` でコピー） |
 
 prefix 不要のキー (vim-tmux-navigator):
 
-| キー | 動作 |
-| ---- | ---- |
+| キー           | 動作                                        |
+| -------------- | ------------------------------------------- |
 | `Ctrl-h/j/k/l` | Neovim split と tmux ペインをシームレス移動 |
 
 #### シェル関数 / abbreviation
 
-| コマンド | 展開先 / 動作 |
-| -------- | ------------- |
-| `cl` | `clear` |
-| `t` | `tmux` (素の起動) |
-| `tm` | 既存セッションがあれば fzf で選択して attach、なければ新規作成 |
-| `tma` | 全 tmux セッションを WezTerm の新しいタブで一気に attach |
-| `tk` | `tmux kill-session` |
-| `tka` | `tmux kill-server` |
-| `tkr` | tmux-resurrect の `last` リンクを削除（次回起動時の自動復元を断つ） |
+| コマンド | 展開先 / 動作                                                       |
+| -------- | ------------------------------------------------------------------- |
+| `cl`     | `clear`                                                             |
+| `t`      | `tmux` (素の起動)                                                   |
+| `tm`     | 既存セッションがあれば fzf で選択して attach、なければ新規作成      |
+| `tma`    | 全 tmux セッションを WezTerm の新しいタブで一気に attach            |
+| `tk`     | `tmux kill-session`                                                 |
+| `tka`    | `tmux kill-server`                                                  |
+| `tkr`    | tmux-resurrect の `last` リンクを削除（次回起動時の自動復元を断つ） |
 
 ### 開発ツール
 
