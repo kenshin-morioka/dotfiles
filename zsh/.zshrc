@@ -337,3 +337,6 @@ unsetopt list_types
 # Vite+ bin (https://viteplus.dev)
 # shellcheck disable=SC1091
 [ -f "${HOME}/.config/vite-plus/env" ] && . "${HOME}/.config/vite-plus/env"
+
+# Added by Devin
+export PATH="/Users/moriokakenshin/.codeium/windsurf/bin:$PATH"
