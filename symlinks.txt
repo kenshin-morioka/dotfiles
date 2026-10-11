@@ -19,6 +19,7 @@
 .claude/commands:claude/commands
 .claude/hooks:claude/hooks
 .claude/statusline-command.sh:claude/statusline-command.sh
+.codex/dotfiles.config.toml:codex/dotfiles.config.toml
 .codex/AGENTS.md:AGENTS.md
 .config/flipper:flipper
 .config/github-copilot:github-copilot

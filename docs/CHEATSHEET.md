@@ -337,6 +337,7 @@ nvim .
 
 | コマンド | 説明 |
 | -------- | ---- |
+| `codex` | dotfiles管理の `dotfiles` プロファイルを適用してCodexを起動 |
 | `c` | fzfで `claude` / `codex` を選択して起動 |
 | `cct` | `claude --continue` |
 | `cr` | `claude --resume` |
