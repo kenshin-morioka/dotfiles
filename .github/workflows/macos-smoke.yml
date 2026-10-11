@@ -1,4 +1,4 @@
-# macOS ランナーで make link の smoke test を行う
+# macOS ランナーで mise run link の smoke test を行う
 # Brewfile は brew bundle install だと時間がかかりすぎるため、構文検証として brew bundle list に留める
 name: macos-smoke
 
@@ -6,12 +6,14 @@ on:
   push:
     branches: [main]
     paths:
-      - Makefile
+      - mise.toml
+      - symlinks.txt
       - homebrew/Brewfile
       - .github/workflows/macos-smoke.yml
   pull_request:
     paths:
-      - Makefile
+      - mise.toml
+      - symlinks.txt
       - homebrew/Brewfile
       - .github/workflows/macos-smoke.yml
 
@@ -23,16 +25,22 @@ permissions:
   contents: read
 
 jobs:
-  make-link:
+  mise-link:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Dry run (make -n link)
-        run: make -n link
+      - name: Install mise
+        run: brew install mise
 
-      - name: Run make link
-        run: make link
+      - name: Trust mise config
+        run: mise trust --all
+
+      - name: Dry run (mise run -n link)
+        run: mise run -n link
+
+      - name: Run mise run link
+        run: mise run link
 
       - name: Verify symlinks
         # git 追跡対象のリンク元のみ検証する
