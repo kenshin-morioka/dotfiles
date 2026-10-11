@@ -103,7 +103,7 @@ function select-ai-cli() {
   local selected
   choices=()
   command -v claude &>/dev/null && choices+=(claude)
-  command -v codex &>/dev/null && choices+=(codex)
+  whence -p codex &>/dev/null && choices+=(codex)
   (( ${#choices} > 0 )) || return
   selected=$(print -rl -- "${choices[@]}" | fzf --height=40% --reverse --prompt='AI> ') || return
   if [[ "$selected" = codex ]]; then

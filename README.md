@@ -9,60 +9,61 @@ Personal dotfiles configuration for macOS.
 
 ## Contents
 
-| Directory | Description |
-| --- | --- |
-| `nvim/` | Neovim config (lazy.nvim, LSP, Telescope, NeoTree, etc.) |
-| `wezterm/` | WezTerm terminal config |
-| `tmux/` | tmux config (TPM, resurrect, continuum, vim-tmux-navigator) |
-| `zsh/` | Zsh config (.zshrc, .zshenv) |
-| `sheldon/` | sheldon (zsh plugin manager) config |
-| `homebrew/` | Brewfile (package management) |
-| `mise/` | mise version manager config |
-| `atuin/` | atuin shell history config |
-| `starship.toml` | Starship prompt config |
-| `CLAUDE.md` / `AGENTS.md` | Repository instructions for Claude Code and Codex |
-| `claude/` | Claude Code config (self-review checklists: general, Rails, test/RSpec) |
-| `act/` | GitHub Actions local runner config |
-| `macos/` | AppleScript source for macOS launcher .app |
-| `ssh/` | SSH client config (generic settings only; hosts live in `~/.ssh/config.local`) |
+| Directory                 | Description                                                                    |
+| ------------------------- | ------------------------------------------------------------------------------ |
+| `nvim/`                   | Neovim config (lazy.nvim, LSP, Telescope, NeoTree, etc.)                       |
+| `wezterm/`                | WezTerm terminal config                                                        |
+| `tmux/`                   | tmux config (TPM, resurrect, continuum, vim-tmux-navigator)                    |
+| `zsh/`                    | Zsh config (.zshrc, .zshenv)                                                   |
+| `sheldon/`                | sheldon (zsh plugin manager) config                                            |
+| `homebrew/`               | Brewfile (package management)                                                  |
+| `mise/`                   | mise version manager config                                                    |
+| `atuin/`                  | atuin shell history config                                                     |
+| `starship.toml`           | Starship prompt config                                                         |
+| `CLAUDE.md` / `AGENTS.md` | Repository instructions for Claude Code and Codex                              |
+| `claude/`                 | Claude Code config (self-review checklists: general, Rails, test/RSpec)        |
+| `act/`                    | GitHub Actions local runner config                                             |
+| `macos/`                  | AppleScript source for macOS launcher .app                                     |
+| `ssh/`                    | SSH client config (generic settings only; hosts live in `~/.ssh/config.local`) |
 
 ## Setup
 
-Basically a single `make install` does everything (idempotent — safe to re-run).
+Basically a single `mise run install` does everything (idempotent — safe to re-run).
 
 1. Clone: `ghq get git@github.com:kenshin-morioka/dotfiles.git`
 2. Install Homebrew: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-3. Run `make install` — this runs `make brew` (packages), `make link` (symlinks), `make macos-defaults`, fzf keybindings install, `make tmux-init` (TPM), `make claude-init` (checklist template), `pre-commit install`, and `mise trust` all at once
-4. Post-install manual steps: launch tmux and press `Ctrl-b I` to fetch plugins; customize the generated self-review checklist yourself
-5. (Optional) Build the Finder-double-click → Neovim launcher .app: `make macos-app` — creates `~/Applications/OpenInNeovim.app`. Assign it as the default opener via Finder → `Cmd+I` → "Open with" → "Change All...". If TCC prompts get annoying across folders (Desktop / Documents / etc.), add `OpenInNeovim.app` to System Settings → Privacy & Security → Full Disk Access.
+3. Install mise and trust this repo: `brew install mise && mise trust --all`
+4. Run `mise run install` — this runs `mise run brew` (packages), `mise run link` (symlinks), `mise run macos-defaults`, fzf keybindings install, `mise run tmux-init` (TPM), `mise run claude-init` (checklist template), `pre-commit install`, and `mise trust` all at once
+5. Post-install manual steps: launch tmux and press `Ctrl-b I` to fetch plugins; customize the generated self-review checklist yourself
+6. (Optional) Build the Finder-double-click → Neovim launcher .app: `mise run macos-app` — creates `~/Applications/OpenInNeovim.app`. Assign it as the default opener via Finder → `Cmd+I` → "Open with" → "Change All...". If TCC prompts get annoying across folders (Desktop / Documents / etc.), add `OpenInNeovim.app` to System Settings → Privacy & Security → Full Disk Access.
 
-Each step can also be run individually (see Make Commands below).
+Each step can also be run individually (see Tasks below).
 
-## Make Commands
+## Tasks
 
 | Command | Description |
 | --- | --- |
-| `make install` | One-shot machine setup (idempotent, safe to re-run) |
-| `make link` | Create symlinks |
-| `make unlink` | Remove symlinks |
-| `make brew` | Install all packages from Brewfile |
-| `make brew-add PKG=xxx` | Add and install a package |
-| `make brew-add-cask PKG=xxx` | Add and install a cask |
-| `make brew-sync` | Sync installed packages to Brewfile |
-| `make brew-list` | Show Brewfile contents |
-| `make claude-init` | Create self-review checklist template |
-| `make tmux-init` | Install TPM (Tmux Plugin Manager) |
-| `make nvim-update` | Run `:Lazy sync` headlessly and commit & push `lazy-lock.json` |
-| `make lazy-commit` | Commit & push `lazy-lock.json` only (after updating in nvim) |
-| `make macos-app` | Build the Finder-double-click → Neovim launcher .app into `~/Applications` |
-| `make macos-defaults` | Apply macOS defaults (keyboard repeat, Finder, screenshots, .DS_Store, Dock, WezTerm press-and-hold) |
+| `mise run install` | One-shot machine setup (idempotent, safe to re-run) |
+| `mise run link` | Create symlinks |
+| `mise run unlink` | Remove symlinks |
+| `mise run brew` | Install all packages from Brewfile |
+| `mise run brew-add xxx` | Add and install a package |
+| `mise run brew-add-cask xxx` | Add and install a cask |
+| `mise run brew-sync` | Sync installed packages to Brewfile |
+| `mise run brew-list` | Show Brewfile contents |
+| `mise run claude-init` | Create self-review checklist template |
+| `mise run tmux-init` | Install TPM (Tmux Plugin Manager) |
+| `mise run nvim-update` | Run `:Lazy sync` headlessly and commit & push `lazy-lock.json` |
+| `mise run lazy-commit` | Commit & push `lazy-lock.json` only (after updating in nvim) |
+| `mise run macos-app` | Build the Finder-double-click → Neovim launcher .app into `~/Applications` |
+| `mise run macos-defaults` | Apply macOS defaults (keyboard repeat, Finder, screenshots, .DS_Store, Dock, WezTerm press-and-hold) |
 
 ## Package Management
 
-| Tool | Purpose | Examples |
-| ---- | ------- | -------- |
-| **Homebrew** | System tools, GUI apps (cask) | git, neovim, mise, claude-code |
-| **mise** | Language runtimes, dev tools (version management) | node, ruby, go, pnpm |
+| Tool         | Purpose                                           | Examples                       |
+| ------------ | ------------------------------------------------- | ------------------------------ |
+| **Homebrew** | System tools, GUI apps (cask)                     | git, neovim, mise, claude-code |
+| **mise**     | Language runtimes, dev tools (version management) | node, ruby, go, pnpm           |
 
 - Use **mise** instead of rbenv, nodenv, tfenv for unified version management
 - Use Homebrew for tools that don't need per-project versioning
@@ -75,26 +76,26 @@ Machine-specific settings live outside git: `~/.zshrc.local` (sourced at the end
 
 ## 含まれる設定
 
-| ディレクトリ | 説明 |
-| ------------- | ------ |
-| `nvim/` | Neovim設定（lazy.nvim、LSP、Telescope、NeoTree等） |
-| `wezterm/` | WezTermターミナル設定 |
-| `tmux/` | tmux設定（TPM、resurrect、continuum、vim-tmux-navigator） |
-| `zsh/` | Zsh設定（.zshrc、.zshenv） |
-| `sheldon/` | sheldon（zshプラグインマネージャ）設定 |
-| `homebrew/` | Brewfile（パッケージ管理） |
-| `mise/` | miseバージョン管理設定 |
-| `atuin/` | atuinシェル履歴設定 |
-| `starship.toml` | Starshipプロンプト設定 |
-| `CLAUDE.md` / `AGENTS.md` | Claude Code / Codex 共通のリポジトリルール |
-| `claude/` | Claude Code設定（セルフレビューチェックリスト: 汎用、Rails、テスト/RSpec） |
-| `act/` | GitHub Actions ローカル実行設定 |
-| `macos/` | macOS 用ランチャー .app の AppleScript ソース |
-| `ssh/` | SSH クライアント設定（汎用設定のみ。ホスト定義は `~/.ssh/config.local`） |
+| ディレクトリ              | 説明                                                                       |
+| ------------------------- | -------------------------------------------------------------------------- |
+| `nvim/`                   | Neovim設定（lazy.nvim、LSP、Telescope、NeoTree等）                         |
+| `wezterm/`                | WezTermターミナル設定                                                      |
+| `tmux/`                   | tmux設定（TPM、resurrect、continuum、vim-tmux-navigator）                  |
+| `zsh/`                    | Zsh設定（.zshrc、.zshenv）                                                 |
+| `sheldon/`                | sheldon（zshプラグインマネージャ）設定                                     |
+| `homebrew/`               | Brewfile（パッケージ管理）                                                 |
+| `mise/`                   | miseバージョン管理設定                                                     |
+| `atuin/`                  | atuinシェル履歴設定                                                        |
+| `starship.toml`           | Starshipプロンプト設定                                                     |
+| `CLAUDE.md` / `AGENTS.md` | Claude Code / Codex 共通のリポジトリルール                                 |
+| `claude/`                 | Claude Code設定（セルフレビューチェックリスト: 汎用、Rails、テスト/RSpec） |
+| `act/`                    | GitHub Actions ローカル実行設定                                            |
+| `macos/`                  | macOS 用ランチャー .app の AppleScript ソース                              |
+| `ssh/`                    | SSH クライアント設定（汎用設定のみ。ホスト定義は `~/.ssh/config.local`）   |
 
 ## セットアップ
 
-基本は `make install` 一発で完了します（冪等なので何度実行しても安全です）。
+基本は `mise run install` 一発で完了します（冪等なので何度実行しても安全です）。
 
 ### 1. リポジトリのクローン
 
@@ -114,70 +115,72 @@ git clone git@github.com:kenshin-morioka/dotfiles.git ~/src/github.com/kenshin-m
 
 ```bash
 cd ~/src/github.com/kenshin-morioka/dotfiles
-make install
+brew install mise
+mise trust --all
+mise run install
 ```
 
 以下がまとめて実行されます。各ステップは冪等なので、途中で失敗しても再実行するだけで続きから揃います。
 
 | ステップ | 内容 |
 | -------- | ---- |
-| `make brew` | Brewfile の全パッケージをインストール |
-| `make link` | シンボリックリンクを作成（Codex の `~/.codex/AGENTS.md` を含む） |
-| `make macos-defaults` | macOS defaults を適用 |
+| `mise run brew` | Brewfile の全パッケージをインストール |
+| `mise run link` | シンボリックリンクを作成（Codex の `~/.codex/AGENTS.md` を含む） |
+| `mise run macos-defaults` | macOS defaults を適用 |
 | fzf キーバインド | `$(brew --prefix)/opt/fzf/install` を rc 非改変オプション付きで実行 |
-| `make tmux-init` | TPM (Tmux Plugin Manager) をインストール |
-| `make claude-init` | セルフレビューチェックリストの雛形を生成 |
+| `mise run tmux-init` | TPM (Tmux Plugin Manager) をインストール |
+| `mise run claude-init` | セルフレビューチェックリストの雛形を生成 |
 | `pre-commit install` | pre-commit フックをリポジトリに設定 |
 | `mise trust` | `mise/config.toml` を信頼 |
 
 セットアップ後の手動作業:
 
 - tmux を起動し `Ctrl-b I` (Shift+i) でプラグイン (resurrect / continuum / vim-tmux-navigator 等) を取得
-- `make claude-init` で生成されたチェックリストの中身を自分でカスタマイズ
+- `mise run claude-init` で生成されたチェックリストの中身を自分でカスタマイズ
 
-各ステップは `make brew` / `make link` のように個別にも実行できます（詳細は後述の「Makeコマンド」参照）。
+各ステップは `mise run brew` / `mise run link` のように個別にも実行できます（詳細は後述の「タスク一覧」参照）。
 
 なお、`git/.gitconfig` は `merge.conflictstyle = zdiff3` を使用するため Git 2.35.0 以降を前提としています（Homebrew の git を使っていれば問題ありません）。
 
 ### 4. (任意) Finder ダブルクリックで Neovim を起動するランチャー .app を生成
 
 ```bash
-make macos-app
+mise run macos-app
 ```
 
 `~/Applications/OpenInNeovim.app` が生成されます。Finder で対象ファイルを選択 → `Cmd+I` → 「このアプリケーションで開く」を `OpenInNeovim` に変更 → 「すべてを変更...」で拡張子ごとに固定できます。
 
 複数フォルダ (デスクトップ / 書類 等) で毎回 TCC プロンプトが出るのが煩わしい場合は、システム設定 → プライバシーとセキュリティ → フルディスクアクセスに `OpenInNeovim.app` を追加してください。
 
-## Makeコマンド
+## タスク一覧
 
 ```bash
-make help  # 利用可能なコマンド一覧を表示
+mise tasks  # 利用可能なタスク一覧を表示
 ```
 
 | コマンド | 説明 |
 | --------- | ------ |
-| `make install` | 新マシンのセットアップを一括実行（冪等・再実行可） |
-| `make link` | シンボリックリンクを作成 |
-| `make unlink` | シンボリックリンクを削除 |
-| `make brew` | Brewfileの全パッケージをインストール |
-| `make brew-add PKG=xxx` | パッケージを追加・インストール |
-| `make brew-add-cask PKG=xxx` | Caskを追加・インストール |
-| `make brew-sync` | インストール済みパッケージをBrewfileに同期 |
-| `make brew-list` | Brewfileの内容を表示 |
-| `make claude-init` | セルフレビューチェックリストを生成 |
-| `make tmux-init` | TPM (Tmux Plugin Manager) をインストール |
-| `make nvim-update` | ヘッドレスで `:Lazy sync` を実行し `lazy-lock.json` をコミット & push |
-| `make lazy-commit` | nvim で更新後、`lazy-lock.json` のみをコミット & push |
-| `make macos-app` | Finder ダブルクリックで Neovim を開くランチャー .app を `~/Applications` に生成 |
-| `make macos-defaults` | macOS defaults を適用（キーリピート高速化 / Finder / スクリーンショット / .DS_Store 抑止 / Dock / WezTerm の press-and-hold 無効化） |
+| `mise run install` | 新マシンのセットアップを一括実行（冪等・再実行可） |
+| `mise run link` | シンボリックリンクを作成 |
+| `mise run unlink` | シンボリックリンクを削除 |
+| `mise run brew` | Brewfileの全パッケージをインストール |
+| `mise run brew-add xxx` | パッケージを追加・インストール |
+| `mise run brew-add-cask xxx` | Caskを追加・インストール |
+| `mise run brew-sync` | インストール済みパッケージをBrewfileに同期 |
+| `mise run brew-list` | Brewfileの内容を表示 |
+| `mise run claude-init` | セルフレビューチェックリストを生成 |
+| `mise run tmux-init` | TPM (Tmux Plugin Manager) をインストール |
+| `mise run nvim-update` | ヘッドレスで `:Lazy sync` を実行し `lazy-lock.json` をコミット & push |
+| `mise run lazy-commit` | nvim で更新後、`lazy-lock.json` のみをコミット & push |
+| `mise run macos-app` | Finder ダブルクリックで Neovim を開くランチャー .app を `~/Applications` に生成 |
+| `mise run macos-defaults` | macOS defaults を適用（キーリピート高速化 / Finder / スクリーンショット / .DS_Store 抑止 / Dock / WezTerm の press-and-hold 無効化） |
 
 ## パッケージ管理の使い分け
 
-| ツール | 用途 | 例 |
-| ------ | ---- | --- |
-| **Homebrew** | システム基盤ツール、GUIアプリ（cask） | git, neovim, mise, claude-code |
-| **mise** | 言語ランタイム、開発ツール（バージョン管理が必要なもの） | node, ruby, go, pnpm |
+| ツール       | 用途                                                     | 例                             |
+| ------------ | -------------------------------------------------------- | ------------------------------ |
+| **Homebrew** | システム基盤ツール、GUIアプリ（cask）                    | git, neovim, mise, claude-code |
+| **mise**     | 言語ランタイム、開発ツール（バージョン管理が必要なもの） | node, ruby, go, pnpm           |
 
 - rbenv, nodenv, tfenv などの個別バージョンマネージャーは **mise** で統一
 - Homebrewは主にシステム全体で1つのバージョンで良いツールに使用
@@ -186,12 +189,12 @@ make help  # 利用可能なコマンド一覧を表示
 
 マシン固有の設定（会社マシンのプロキシ、社用エイリアス、認証情報等）は git 追跡外のファイルに置きます。dotfiles 本体を汚さずに、マシンごとの差分を吸収できます。
 
-| ファイル | 役割 |
-| -------- | ---- |
-| `~/.zshrc.local` | zsh のマシン固有設定。存在すれば `.zshrc` の末尾で自動的に source される |
-| `~/.gitconfig.local` | Git のユーザー名・メールアドレス・認証情報等。`.gitconfig` の `[include]` から読み込まれる |
-| `~/.gitconfig.work` | 仕事用リポジトリ向けの user 設定。`.gitconfig` の `[includeIf "gitdir:..."]` から読み込まれる |
-| `~/.ssh/config.local` | SSH のホスト定義（サーバー名・IP・ユーザー名等）。`ssh/config` の先頭で `Include` される |
+| ファイル              | 役割                                                                                          |
+| --------------------- | --------------------------------------------------------------------------------------------- |
+| `~/.zshrc.local`      | zsh のマシン固有設定。存在すれば `.zshrc` の末尾で自動的に source される                      |
+| `~/.gitconfig.local`  | Git のユーザー名・メールアドレス・認証情報等。`.gitconfig` の `[include]` から読み込まれる    |
+| `~/.gitconfig.work`   | 仕事用リポジトリ向けの user 設定。`.gitconfig` の `[includeIf "gitdir:..."]` から読み込まれる |
+| `~/.ssh/config.local` | SSH のホスト定義（サーバー名・IP・ユーザー名等）。`ssh/config` の先頭で `Include` される      |
 
 ### ~/.zshrc.local の例
 
@@ -235,35 +238,35 @@ alias work-vpn='sudo openconnect vpn.example.com'
 
 prefix キーは `Ctrl-b` (デフォルト)。以下は prefix を押した後のキー。
 
-| キー | 動作 |
-| ---- | ---- |
-| `\|` | ペイン縦分割（カレントディレクトリ引き継ぎ） |
-| `-` | ペイン横分割（カレントディレクトリ引き継ぎ） |
-| `c` | 新規ウィンドウ（カレントディレクトリ引き継ぎ） |
-| `H` / `J` / `K` / `L` | ペインを5セル分リサイズ |
-| `r` | 設定リロード |
-| `I` | TPM プラグインインストール |
-| `Ctrl-s` | tmux-resurrect でセッション保存 |
-| `Ctrl-r` | tmux-resurrect でセッション復元 |
-| `[` | コピーモード開始（vi キーバインド、`v` で選択 `y` でコピー） |
+| キー                  | 動作                                                         |
+| --------------------- | ------------------------------------------------------------ |
+| `\|`                  | ペイン縦分割（カレントディレクトリ引き継ぎ）                 |
+| `-`                   | ペイン横分割（カレントディレクトリ引き継ぎ）                 |
+| `c`                   | 新規ウィンドウ（カレントディレクトリ引き継ぎ）               |
+| `H` / `J` / `K` / `L` | ペインを5セル分リサイズ                                      |
+| `r`                   | 設定リロード                                                 |
+| `I`                   | TPM プラグインインストール                                   |
+| `Ctrl-s`              | tmux-resurrect でセッション保存                              |
+| `Ctrl-r`              | tmux-resurrect でセッション復元                              |
+| `[`                   | コピーモード開始（vi キーバインド、`v` で選択 `y` でコピー） |
 
 prefix 不要のキー (vim-tmux-navigator):
 
-| キー | 動作 |
-| ---- | ---- |
+| キー           | 動作                                        |
+| -------------- | ------------------------------------------- |
 | `Ctrl-h/j/k/l` | Neovim split と tmux ペインをシームレス移動 |
 
 #### シェル関数 / abbreviation
 
-| コマンド | 展開先 / 動作 |
-| -------- | ------------- |
-| `cl` | `clear` |
-| `t` | `tmux` (素の起動) |
-| `tm` | 既存セッションがあれば fzf で選択して attach、なければ新規作成 |
-| `tma` | 全 tmux セッションを WezTerm の新しいタブで一気に attach |
-| `tk` | `tmux kill-session` |
-| `tka` | `tmux kill-server` |
-| `tkr` | tmux-resurrect の `last` リンクを削除（次回起動時の自動復元を断つ） |
+| コマンド | 展開先 / 動作                                                       |
+| -------- | ------------------------------------------------------------------- |
+| `cl`     | `clear`                                                             |
+| `t`      | `tmux` (素の起動)                                                   |
+| `tm`     | 既存セッションがあれば fzf で選択して attach、なければ新規作成      |
+| `tma`    | 全 tmux セッションを WezTerm の新しいタブで一気に attach            |
+| `tk`     | `tmux kill-session`                                                 |
+| `tka`    | `tmux kill-server`                                                  |
+| `tkr`    | tmux-resurrect の `last` リンクを削除（次回起動時の自動復元を断つ） |
 
 ### 開発ツール
 
@@ -301,7 +304,7 @@ Config files ... are not trusted. Trust them with `mise trust`.
 ```
 
 miseはセキュリティのため、Git管理下の設定ファイルを明示的に信頼する必要があります。
-`make install` 実行時に自動で trust されますが、個別に実行する場合は以下の通りです。
+`mise run install` 実行時に自動で trust されますが、個別に実行する場合は以下の通りです。
 
 ```bash
 mise trust ~/src/github.com/kenshin-morioka/dotfiles/mise/config.toml
@@ -309,7 +312,7 @@ mise trust ~/src/github.com/kenshin-morioka/dotfiles/mise/config.toml
 
 ### pre-commitフックの設定
 
-`make install` 実行時に自動で設定されますが、個別に実行する場合は以下の通りです。
+`mise run install` 実行時に自動で設定されますが、個別に実行する場合は以下の通りです。
 
 ```bash
 pre-commit install
