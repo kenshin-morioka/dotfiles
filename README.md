@@ -21,7 +21,9 @@ Personal dotfiles configuration for macOS.
 | `atuin/`                  | atuin shell history config                                                     |
 | `starship.toml`           | Starship prompt config                                                         |
 | `CLAUDE.md` / `AGENTS.md` | Repository instructions for Claude Code and Codex                              |
-| `claude/`                 | Claude Code config (self-review checklists: general, Rails, test/RSpec)        |
+| `agents/`                 | Shared AI agent config: public skills, plus a private submodule (`private/`)   |
+| `claude/`                 | Claude Code-specific config (checklists, hooks, settings, subagents, commands) |
+| `codex/`                  | Codex-specific config                                                          |
 | `act/`                    | GitHub Actions local runner config                                             |
 | `macos/`                  | AppleScript source for macOS launcher .app                                     |
 | `ssh/`                    | SSH client config (generic settings only; hosts live in `~/.ssh/config.local`) |
@@ -30,7 +32,7 @@ Personal dotfiles configuration for macOS.
 
 Basically a single `mise run install` does everything (idempotent — safe to re-run).
 
-1. Clone: `ghq get git@github.com:kenshin-morioka/dotfiles.git`
+1. Clone: `ghq get git@github.com:kenshin-morioka/dotfiles.git` (the `agents/private` submodule is fetched by `mise run install`; it requires access to the private `agents-private` repo)
 2. Install Homebrew: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 3. Install mise and trust this repo: `brew install mise && mise trust --all`
 4. Run `mise run install` — this runs `mise run brew` (packages), `mise run link` (symlinks), `mise run macos-defaults`, fzf keybindings install, `mise run tmux-init` (TPM), `mise run claude-init` (checklist template), `pre-commit install`, and `mise trust` all at once
@@ -88,7 +90,9 @@ Machine-specific settings live outside git: `~/.zshrc.local` (sourced at the end
 | `atuin/`                  | atuinシェル履歴設定                                                        |
 | `starship.toml`           | Starshipプロンプト設定                                                     |
 | `CLAUDE.md` / `AGENTS.md` | Claude Code / Codex 共通のリポジトリルール                                 |
-| `claude/`                 | Claude Code設定（セルフレビューチェックリスト: 汎用、Rails、テスト/RSpec） |
+| `agents/`                 | AI エージェント共通設定（公開スキル、非公開 submodule `private/`）         |
+| `claude/`                 | Claude Code 固有設定（チェックリスト、hooks、settings、subagent 等）       |
+| `codex/`                  | Codex 固有設定                                                             |
 | `act/`                    | GitHub Actions ローカル実行設定                                            |
 | `macos/`                  | macOS 用ランチャー .app の AppleScript ソース                              |
 | `ssh/`                    | SSH クライアント設定（汎用設定のみ。ホスト定義は `~/.ssh/config.local`）   |
@@ -125,7 +129,8 @@ mise run install
 | ステップ | 内容 |
 | -------- | ---- |
 | `mise run brew` | Brewfile の全パッケージをインストール |
-| `mise run link` | シンボリックリンクを作成（Codex の `~/.codex/AGENTS.md` を含む） |
+| `git submodule update --init` | `agents/private`（非公開リポジトリ `agents-private`）を取得 |
+| `mise run link` | シンボリックリンクを作成（スキルは `~/.claude/skills/` と `~/.agents/skills/` にスキル単位でリンク） |
 | `mise run macos-defaults` | macOS defaults を適用 |
 | fzf キーバインド | `$(brew --prefix)/opt/fzf/install` を rc 非改変オプション付きで実行 |
 | `mise run tmux-init` | TPM (Tmux Plugin Manager) をインストール |
