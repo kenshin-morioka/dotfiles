@@ -52,9 +52,6 @@ Each step can also be run individually (see Tasks below).
 | `mise run brew-add xxx` | Add and install a package |
 | `mise run brew-add-cask xxx` | Add and install a cask |
 | `mise run brew-sync` | Sync installed packages to Brewfile |
-| `mise run brew-list` | Show Brewfile contents |
-| `mise run claude-init` | Create self-review checklist template |
-| `mise run tmux-init` | Install TPM (Tmux Plugin Manager) |
 | `mise run nvim-update` | Run `:Lazy sync` headlessly and commit & push `lazy-lock.json` |
 | `mise run lazy-commit` | Commit & push `lazy-lock.json` only (after updating in nvim) |
 | `mise run macos-app` | Build the Finder-double-click → Neovim launcher .app into `~/Applications` |
@@ -172,9 +169,6 @@ mise tasks  # 利用可能なタスク一覧を表示
 | `mise run brew-add xxx` | パッケージを追加・インストール |
 | `mise run brew-add-cask xxx` | Caskを追加・インストール |
 | `mise run brew-sync` | インストール済みパッケージをBrewfileに同期 |
-| `mise run brew-list` | Brewfileの内容を表示 |
-| `mise run claude-init` | セルフレビューチェックリストを生成 |
-| `mise run tmux-init` | TPM (Tmux Plugin Manager) をインストール |
 | `mise run nvim-update` | ヘッドレスで `:Lazy sync` を実行し `lazy-lock.json` をコミット & push |
 | `mise run lazy-commit` | nvim で更新後、`lazy-lock.json` のみをコミット & push |
 | `mise run macos-app` | Finder ダブルクリックで Neovim を開くランチャー .app を `~/Applications` に生成 |

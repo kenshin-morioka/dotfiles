@@ -49,6 +49,8 @@ echo "✅ セットアップが完了しました！"
 # 既存の ~/.ssh/config (実ファイル) をシンボリックリンクで上書きしてしまう前に
 # ~/.ssh/config.local へ退避する。ssh/config は config.local を Include するため挙動は変わらない。
 [tasks.ssh-migrate]
+# setup の内部ステップ (単体で使う場面がないため一覧から隠す)
+hide = true
 description = "既存の ~/.ssh/config を config.local へ退避 (link の前に自動実行)"
 shell = "bash -c"
 quiet = true
@@ -205,16 +207,6 @@ brew bundle dump --force --file="$MISE_PROJECT_ROOT/homebrew/Brewfile"
 echo "✅ Brewfileを更新しました"
 '''
 
-[tasks.brew-list]
-description = "Brewfileの内容を表示"
-shell = "bash -c"
-quiet = true
-run = '''
-set -euo pipefail
-echo "📦 Brewfileのパッケージ一覧:"
-cat "$MISE_PROJECT_ROOT/homebrew/Brewfile"
-'''
-
 # --------------------------------------
 # Neovim
 #
@@ -256,6 +248,8 @@ echo "✅ lazy update を push しました"
 # tmux
 #
 [tasks.tmux-init]
+# setup の内部ステップ (単体で使う場面がないため一覧から隠す)
+hide = true
 description = "TPM (Tmux Plugin Manager) をインストール"
 shell = "bash -c"
 quiet = true
@@ -321,6 +315,8 @@ run = 'bash "$MISE_PROJECT_ROOT/macos/defaults.sh"'
 # Claude Code
 #
 [tasks.claude-init]
+# setup の内部ステップ (単体で使う場面がないため一覧から隠す)
+hide = true
 description = "セルフレビューチェックリストディレクトリを生成"
 shell = "bash -c"
 quiet = true
