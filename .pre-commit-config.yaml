@@ -36,6 +36,14 @@ repos:
         language: system
         types: [markdown]
 
+      # 追跡禁止ファイルが .gitignore から外れていないか
+      - id: check-never-tracked
+        name: check never-tracked files
+        entry: scripts/check-never-tracked.sh
+        language: script
+        pass_filenames: false
+        always_run: true
+
   # Secret detection
   - repo: https://github.com/gitleaks/gitleaks
     rev: v8.30.1
