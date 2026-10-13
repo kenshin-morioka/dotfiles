@@ -12,16 +12,16 @@
 .config/atuin:atuin
 .config/sheldon:sheldon
 .config/act:act
-.claude/CLAUDE.md:claude/CLAUDE.md
-.claude/settings.json:claude/settings.json
-.claude/checklists:claude/checklists
-.claude/agents:claude/agents
-.claude/commands:claude/commands
-.claude/hooks:claude/hooks
-.claude/statusline-command.sh:claude/statusline-command.sh
-.codex/dotfiles.config.toml:codex/dotfiles.config.toml
-# AI エージェント共通 (Claude Code / Codex)。スキル単位でリンクし、各ツールが生成するローカル専用スキルと同居できるようにする
+# AI エージェント設定 (agents/)。共通ルール・スキル・チェックリストは両ツールで共有し、ツール固有のものは agents/claude, agents/codex に置く
+# スキルはスキル単位でリンクし、各ツールが生成するローカル専用スキルと同居できるようにする
 .codex/AGENTS.md:agents/private/AGENTS.md
+.claude/CLAUDE.md:agents/private/AGENTS.md
+.claude/checklists:agents/checklists
+.claude/settings.json:agents/claude/settings.json
+.claude/agents:agents/claude/agents
+.claude/hooks:agents/claude/hooks
+.claude/statusline-command.sh:agents/claude/statusline-command.sh
+.codex/dotfiles.config.toml:agents/codex/dotfiles.config.toml
 .claude/skills/*:agents/skills/*
 .claude/skills/*:agents/private/skills/*
 .agents/skills/*:agents/skills/*

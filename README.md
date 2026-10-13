@@ -21,9 +21,7 @@ Personal dotfiles configuration for macOS.
 | `atuin/`                  | atuin shell history config                                                     |
 | `starship.toml`           | Starship prompt config                                                         |
 | `CLAUDE.md` / `AGENTS.md` | Repository instructions for Claude Code and Codex                              |
-| `agents/`                 | Shared AI agent config: public skills, plus a private submodule (`private/`)   |
-| `claude/`                 | Claude Code-specific config (checklists, hooks, settings, subagents, commands) |
-| `codex/`                  | Codex-specific config                                                          |
+| `agents/`                 | AI agent config: shared skills, private submodule, Claude Code / Codex config  |
 | `act/`                    | GitHub Actions local runner config                                             |
 | `macos/`                  | AppleScript source for macOS launcher .app                                     |
 | `ssh/`                    | SSH client config (generic settings only; hosts live in `~/.ssh/config.local`) |
@@ -87,9 +85,7 @@ Machine-specific settings live outside git: `~/.zshrc.local` (sourced at the end
 | `atuin/`                  | atuinシェル履歴設定                                                        |
 | `starship.toml`           | Starshipプロンプト設定                                                     |
 | `CLAUDE.md` / `AGENTS.md` | Claude Code / Codex 共通のリポジトリルール                                 |
-| `agents/`                 | AI エージェント共通設定（公開スキル、非公開 submodule `private/`）         |
-| `claude/`                 | Claude Code 固有設定（チェックリスト、hooks、settings、subagent 等）       |
-| `codex/`                  | Codex 固有設定                                                             |
+| `agents/`                 | AI エージェント設定（共通スキル、非公開 submodule、ツール固有設定）        |
 | `act/`                    | GitHub Actions ローカル実行設定                                            |
 | `macos/`                  | macOS 用ランチャー .app の AppleScript ソース                              |
 | `ssh/`                    | SSH クライアント設定（汎用設定のみ。ホスト定義は `~/.ssh/config.local`）   |
