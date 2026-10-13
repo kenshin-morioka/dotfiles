@@ -120,18 +120,21 @@ quiet = true
 run = '''
 set -euo pipefail
 echo "❌ シンボリックリンクを削除中..."
-grep -Ev '^[[:space:]]*(#|$)' "$MISE_PROJECT_ROOT/symlinks.txt" | while IFS=: read -r dst _src; do
+grep -Ev '^[[:space:]]*(#|$)' "$MISE_PROJECT_ROOT/symlinks.txt" | while IFS=: read -r dst src; do
   dst="$HOME/$dst"
-  # 末尾 `*` の行はリンク先ディレクトリ内のうち、このリポジトリを指すシンボリックリンクだけを削除する
-  # (ツールが生成したローカル専用エントリは残す)
+  src="$MISE_PROJECT_ROOT/$src"
+  # 末尾 `*` の行はリンク先ディレクトリ内のうち、その行の元ディレクトリ配下の同名エントリを指すリンクだけを削除する
+  # (ツールが生成したローカル専用エントリや手動管理のリンクは残す)
   if [ "${dst##*/}" = "*" ]; then
     dst_dir="${dst%/*}"
+    src_dir="${src%/*}"
     [ -d "$dst_dir" ] || continue
     for entry in "$dst_dir"/*; do
       [ -L "$entry" ] || continue
-      case "$(readlink "$entry")" in
-        "$MISE_PROJECT_ROOT"/*) rm "$entry"; echo "  リンク削除: $entry" ;;
-      esac
+      if [ "$(readlink "$entry")" = "$src_dir/${entry##*/}" ]; then
+        rm "$entry"
+        echo "  リンク削除: $entry"
+      fi
     done
     continue
   fi

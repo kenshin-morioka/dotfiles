@@ -35,8 +35,6 @@ repos:
         entry: markdownlint
         language: system
         types: [markdown]
-        # スキルは LLM 向けプロンプトで、テンプレート内のネストしたコードフェンスや太字ラベル等を意図的に使うため対象外
-        exclude: ^agents/skills/
 
   # Secret detection
   - repo: https://github.com/gitleaks/gitleaks

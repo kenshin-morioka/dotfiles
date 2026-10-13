@@ -35,6 +35,7 @@ gh api repos/{owner}/{repo}/pulls/{number}/reviews --jq '.[] | select(.body != "
 ## Step 2: 対応が必要な指摘の特定
 
 収集したコメントから、以下を除外する:
+
 - bot（devin-ai-integration等）のコメント
 - 質問・確認系のコメント（「〜ですか？」「〜では？」で終わるもの）
 - 既に「Resolved」「対応済み」等で解決済みのコメント
