@@ -1,5 +1,6 @@
 # シンボリックリンク定義 (mise run link / unlink が参照)
 # 書式: <リンク先 ($HOME からの相対パス)>:<元ファイル (リポジトリルートからの相対パス)>
+# 元ファイル末尾が `*` の行は配下の各エントリを個別にリンクする (リンク先側の `*` が各エントリ名に置き換わる)
 .zshrc:zsh/.zshrc
 .zshrc.local:zsh/.zshrc.local
 .zshenv:zsh/.zshenv
@@ -14,13 +15,17 @@
 .claude/CLAUDE.md:claude/CLAUDE.md
 .claude/settings.json:claude/settings.json
 .claude/checklists:claude/checklists
-.claude/skills:claude/skills
 .claude/agents:claude/agents
 .claude/commands:claude/commands
 .claude/hooks:claude/hooks
 .claude/statusline-command.sh:claude/statusline-command.sh
 .codex/dotfiles.config.toml:codex/dotfiles.config.toml
-.codex/AGENTS.md:AGENTS.md
+# AI エージェント共通 (Claude Code / Codex)。スキル単位でリンクし、各ツールが生成するローカル専用スキルと同居できるようにする
+.codex/AGENTS.md:agents/private/AGENTS.md
+.claude/skills/*:agents/skills/*
+.claude/skills/*:agents/private/skills/*
+.agents/skills/*:agents/skills/*
+.agents/skills/*:agents/private/skills/*
 .config/flipper:flipper
 .config/github-copilot:github-copilot
 .cowsay:cowsay

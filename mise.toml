@@ -23,6 +23,9 @@ if ! command -v brew >/dev/null 2>&1; then
   exit 1
 fi
 mise run brew
+# agents/private (非公開 submodule) を取得。取得済みなら no-op
+echo "📥 submodule を取得中..."
+git -C "$MISE_PROJECT_ROOT" submodule update --init
 mise run link
 mise run macos-defaults
 # fzf キーバインド: install スクリプトは ~/.fzf.zsh を同内容で再生成するだけなので再実行しても安全（冪等）。
@@ -74,21 +77,39 @@ quiet = true
 run = '''
 set -euo pipefail
 echo "🔗 シンボリックリンクを作成中..."
-grep -Ev '^[[:space:]]*(#|$)' "$MISE_PROJECT_ROOT/symlinks.txt" | while IFS=: read -r dst src; do
-  dst="$HOME/$dst"
-  src="$MISE_PROJECT_ROOT/$src"
-  if [ ! -e "$src" ]; then
-    echo "  skip: $src (not found)"
-    continue
-  fi
+link_one() {
+  local src="$1" dst="$2"
   if [ -e "$dst" ] && [ ! -L "$dst" ]; then
-    backup="$dst.backup.$(date +%Y%m%d%H%M%S)"
+    local backup="$dst.backup.$(date +%Y%m%d%H%M%S)"
     mv "$dst" "$backup"
     echo "  📦 既存の $dst を $backup に退避しました"
   fi
   mkdir -p "$(dirname "$dst")"
   ln -snf "$src" "$dst"
   echo "  リンク作成: $dst -> $src"
+}
+grep -Ev '^[[:space:]]*(#|$)' "$MISE_PROJECT_ROOT/symlinks.txt" | while IFS=: read -r dst src; do
+  dst="$HOME/$dst"
+  src="$MISE_PROJECT_ROOT/$src"
+  # 末尾 `*` は配下のエントリを個別にリンクする (symlinks.txt 冒頭のコメント参照)
+  if [ "${src##*/}" = "*" ]; then
+    src_dir="${src%/*}"
+    dst_dir="${dst%/*}"
+    if [ ! -d "$src_dir" ]; then
+      echo "  skip: $src_dir (not found)"
+      continue
+    fi
+    for entry in "$src_dir"/*; do
+      [ -e "$entry" ] || continue
+      link_one "$entry" "$dst_dir/${entry##*/}"
+    done
+    continue
+  fi
+  if [ ! -e "$src" ]; then
+    echo "  skip: $src (not found)"
+    continue
+  fi
+  link_one "$src" "$dst"
 done
 '''
 
@@ -99,8 +120,24 @@ quiet = true
 run = '''
 set -euo pipefail
 echo "❌ シンボリックリンクを削除中..."
-grep -Ev '^[[:space:]]*(#|$)' "$MISE_PROJECT_ROOT/symlinks.txt" | while IFS=: read -r dst _src; do
+grep -Ev '^[[:space:]]*(#|$)' "$MISE_PROJECT_ROOT/symlinks.txt" | while IFS=: read -r dst src; do
   dst="$HOME/$dst"
+  src="$MISE_PROJECT_ROOT/$src"
+  # 末尾 `*` の行はリンク先ディレクトリ内のうち、その行の元ディレクトリ配下の同名エントリを指すリンクだけを削除する
+  # (ツールが生成したローカル専用エントリや手動管理のリンクは残す)
+  if [ "${dst##*/}" = "*" ]; then
+    dst_dir="${dst%/*}"
+    src_dir="${src%/*}"
+    [ -d "$dst_dir" ] || continue
+    for entry in "$dst_dir"/*; do
+      [ -L "$entry" ] || continue
+      if [ "$(readlink "$entry")" = "$src_dir/${entry##*/}" ]; then
+        rm "$entry"
+        echo "  リンク削除: $entry"
+      fi
+    done
+    continue
+  fi
   if [ -L "$dst" ]; then
     rm "$dst"
     echo "  リンク削除: $dst"

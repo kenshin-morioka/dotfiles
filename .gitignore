@@ -11,6 +11,7 @@ git/.gitconfig.work
 zsh/.zshrc.local
 .claude/worktrees
 claude/CLAUDE.md
+# Claude Code が生成する .trash / synced 等の退避先 (共有スキルの正本は agents/ 配下)
 claude/skills/
 claude/settings.json
 claude/settings.broken-symlink-backup-*.json

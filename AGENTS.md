@@ -10,6 +10,17 @@
 - **設定ファイルの追加・移動・削除**時は、必ず `symlinks.txt` を確認・更新すること
 - ファイルをリネームした場合、古いシンボリックリンクが残るため `mise run unlink && mise run link` が必要になることを伝えること
 - ディレクトリ単位でリンクされているもの（nvim, wezterm, mise, act, flipper, github-copilot, cowsay, checklists）は、配下にファイルを追加するだけで自動的にリンク先に反映される
+- `symlinks.txt` で元ファイル末尾が `*` の行（スキル）は配下のエントリを個別にリンクする。スキルを追加した場合は `mise run link` の再実行が必要
+
+## AI エージェント共通設定（agents/）
+
+Claude Code と Codex で共有するものは `agents/` に置く。ツール固有のものは `claude/` / `codex/` に置く。
+
+- `agents/skills/` — 公開スキル。`~/.claude/skills/<name>` と `~/.agents/skills/<name>` にスキル単位でリンクされる
+- `agents/private/` — 非公開リポジトリ `kenshin-morioka/agents-private` の git submodule。会社固有スキル（`skills/`）と全プロジェクト共通ルール（`AGENTS.md` → `~/.codex/AGENTS.md`、`~/.claude/CLAUDE.md` から import）の正本
+- **会社固有の内容を含むスキル・ルールは必ず `agents/private/` 配下に置く**。このリポジトリは public なので `agents/skills/` には入れない
+- `agents/private/` 配下を変更したら、submodule 側でコミット・push してから、このリポジトリで参照コミットを更新してコミットする
+- クローン直後は `git submodule update --init` が必要（`mise run install` に含まれる）
 
 ## pre-commit フック
 
