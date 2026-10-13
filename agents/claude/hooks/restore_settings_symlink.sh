@@ -1,5 +1,5 @@
 #!/bin/bash
-# SessionStart hook: ~/.claude/settings.json は dotfiles/claude/settings.json への
+# SessionStart hook: ~/.claude/settings.json は dotfiles/agents/claude/settings.json への
 # シンボリックリンクである想定だが、Claude Code 自身が設定変更時 (例: /model) に
 # atomic write (一時ファイル書き込み→rename) で settings.json を書き戻すことがあり、
 # その rename でシンボリックリンクが実体ファイルに置き換わってしまう。
@@ -11,7 +11,7 @@
 set -euo pipefail
 
 TARGET="$HOME/.claude/settings.json"
-SOURCE="$HOME/src/github.com/kenshin-morioka/dotfiles/claude/settings.json"
+SOURCE="$HOME/src/github.com/kenshin-morioka/dotfiles/agents/claude/settings.json"
 
 if [ -L "$TARGET" ]; then
   exit 0

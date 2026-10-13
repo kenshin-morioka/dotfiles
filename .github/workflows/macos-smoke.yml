@@ -44,7 +44,7 @@ jobs:
 
       - name: Verify symlinks
         # git 追跡対象のリンク元のみ検証する
-        # (claude/CLAUDE.md や git/.gitconfig.local 等の gitignore 対象は CI 上に存在せず skip される)
+        # (agents/claude/CLAUDE.md や git/.gitconfig.local 等の gitignore 対象は CI 上に存在せず skip される)
         run: |
           set -euo pipefail
           targets=(

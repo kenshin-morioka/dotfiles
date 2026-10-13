@@ -322,7 +322,7 @@ shell = "bash -c"
 quiet = true
 run = '''
 set -euo pipefail
-checklist_dir="$MISE_PROJECT_ROOT/claude/checklists"
+checklist_dir="$MISE_PROJECT_ROOT/agents/checklists"
 if [ -d "$checklist_dir" ]; then
   echo "⚠️  $checklist_dir は既に存在します"
 else

@@ -99,4 +99,4 @@ Red（失敗テスト）→ Green（最小実装）→ Refactor のサイクル�
 
 - **1→2は同じ会話で続ける**のが効果的（grill-meの文脈がそのまま使える）
 - **improve-codebase-architectureは週1やスプリント終わり**など、区切りのタイミングで実行するとよい
-- スキルの実体は `claude/skills/` 配下にあり、`.gitignore` でGit管理対象外
+- スキルの実体は `agents/skills/`（公開）と `agents/private/skills/`（会社固有、非公開 submodule）にある

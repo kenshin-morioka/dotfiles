@@ -12,15 +12,18 @@
 - ディレクトリ単位でリンクされているもの（nvim, wezterm, mise, act, flipper, github-copilot, cowsay, checklists）は、配下にファイルを追加するだけで自動的にリンク先に反映される
 - `symlinks.txt` で元ファイル末尾が `*` の行（スキル）は配下のエントリを個別にリンクする。スキルを追加した場合は `mise run link` の再実行が必要
 
-## AI エージェント共通設定（agents/）
+## AI エージェント設定（agents/）
 
-Claude Code と Codex で共有するものは `agents/` に置く。ツール固有のものは `claude/` / `codex/` に置く。
+AI エージェントの設定はすべて `agents/` に置く。Claude Code と Codex で共有するものは直下、ツール固有のものは `agents/claude/` / `agents/codex/` に置く。
 
 - `agents/skills/` — 公開スキル。`~/.claude/skills/<name>` と `~/.agents/skills/<name>` にスキル単位でリンクされる
 - `agents/private/` — 非公開リポジトリ `kenshin-morioka/agents-private` の git submodule。会社固有スキル（`skills/`）と全プロジェクト共通ルール（`AGENTS.md` → `~/.codex/AGENTS.md`、`~/.claude/CLAUDE.md` から import）の正本
 - **会社固有の内容を含むスキル・ルールは必ず `agents/private/` 配下に置く**。このリポジトリは public なので `agents/skills/` には入れない
 - `agents/private/` 配下を変更したら、submodule 側でコミット・push してから、このリポジトリで参照コミットを更新してコミットする
 - クローン直後は `git submodule update --init` が必要（`mise run setup` に含まれる）
+- `agents/checklists/` — セルフレビューチェックリスト（`~/.claude/checklists`。共通ルールから参照されるため共有扱い）
+- `agents/claude/` — Claude Code 固有（`CLAUDE.md`, `settings.json`, hooks, subagent, statusline）。`~/.claude/` 配下にリンクされる
+- `agents/codex/` — Codex 固有（`dotfiles.config.toml` → `~/.codex/dotfiles.config.toml`）
 
 ## pre-commit フック
 
@@ -40,9 +43,9 @@ Claude Code と Codex で共有するものは `agents/` に置く。ツール�
 
 以下のファイルは意図的にgit追跡対象外にしている。**絶対に .gitignore から除外しないこと。**
 
-- `claude/CLAUDE.md` — グローバルClaude Code設定（全プロジェクト共通ルール）
-- `claude/checklists/` — セルフレビューチェックリスト
-- `claude/settings.json` — Claude Code のグローバル設定（hooks, statusLine 等。ローカル絶対パスを含むため git 追跡外）
+- `agents/claude/CLAUDE.md` — グローバルClaude Code設定（全プロジェクト共通ルール）
+- `agents/checklists/` — セルフレビューチェックリスト
+- `agents/claude/settings.json` — Claude Code のグローバル設定（hooks, statusLine 等。ローカル絶対パスを含むため git 追跡外）
 - `git/.gitconfig.local` — Git認証情報等のローカル設定
 
 ## 変更時に連動して更新が必要なもの
