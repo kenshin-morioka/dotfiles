@@ -20,7 +20,7 @@ Claude Code と Codex で共有するものは `agents/` に置く。ツール�
 - `agents/private/` — 非公開リポジトリ `kenshin-morioka/agents-private` の git submodule。会社固有スキル（`skills/`）と全プロジェクト共通ルール（`AGENTS.md` → `~/.codex/AGENTS.md`、`~/.claude/CLAUDE.md` から import）の正本
 - **会社固有の内容を含むスキル・ルールは必ず `agents/private/` 配下に置く**。このリポジトリは public なので `agents/skills/` には入れない
 - `agents/private/` 配下を変更したら、submodule 側でコミット・push してから、このリポジトリで参照コミットを更新してコミットする
-- クローン直後は `git submodule update --init` が必要（`mise run install` に含まれる）
+- クローン直後は `git submodule update --init` が必要（`mise run setup` に含まれる）
 
 ## pre-commit フック
 

@@ -8,7 +8,7 @@ task.run_auto_install = false
 # --------------------------------------
 # 一括セットアップ
 #
-[tasks.install]
+[tasks.setup]
 description = "新マシンのセットアップを一括実行（冪等・再実行可）"
 shell = "bash -c"
 quiet = true
@@ -18,7 +18,7 @@ echo "🚀 セットアップを開始します..."
 # Homebrew は前提条件。未インストールなら明確に案内して中断する（自動インストールはしない）
 if ! command -v brew >/dev/null 2>&1; then
   echo "❌ Homebrew がインストールされていません"
-  echo "   以下を実行してから再度 mise run install を実行してください:"
+  echo "   以下を実行してから再度 mise run setup を実行してください:"
   echo '   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
   exit 1
 fi

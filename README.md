@@ -30,12 +30,12 @@ Personal dotfiles configuration for macOS.
 
 ## Setup
 
-Basically a single `mise run install` does everything (idempotent — safe to re-run).
+Basically a single `mise run setup` does everything (idempotent — safe to re-run).
 
-1. Clone: `ghq get git@github.com:kenshin-morioka/dotfiles.git` (the `agents/private` submodule is fetched by `mise run install`; it requires access to the private `agents-private` repo)
+1. Clone: `ghq get git@github.com:kenshin-morioka/dotfiles.git` (the `agents/private` submodule is fetched by `mise run setup`; it requires access to the private `agents-private` repo)
 2. Install Homebrew: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 3. Install mise and trust this repo: `brew install mise && mise trust --all`
-4. Run `mise run install` — this runs `mise run brew` (packages), `mise run link` (symlinks), `mise run macos-defaults`, fzf keybindings install, `mise run tmux-init` (TPM), `mise run claude-init` (checklist template), `pre-commit install`, and `mise trust` all at once
+4. Run `mise run setup` — this runs `mise run brew` (packages), `mise run link` (symlinks), `mise run macos-defaults`, fzf keybindings install, `mise run tmux-init` (TPM), `mise run claude-init` (checklist template), `pre-commit install`, and `mise trust` all at once
 5. Post-install manual steps: launch tmux and press `Ctrl-b I` to fetch plugins; customize the generated self-review checklist yourself
 6. (Optional) Build the Finder-double-click → Neovim launcher .app: `mise run macos-app` — creates `~/Applications/OpenInNeovim.app`. Assign it as the default opener via Finder → `Cmd+I` → "Open with" → "Change All...". If TCC prompts get annoying across folders (Desktop / Documents / etc.), add `OpenInNeovim.app` to System Settings → Privacy & Security → Full Disk Access.
 
@@ -45,7 +45,7 @@ Each step can also be run individually (see Tasks below).
 
 | Command | Description |
 | --- | --- |
-| `mise run install` | One-shot machine setup (idempotent, safe to re-run) |
+| `mise run setup` | One-shot machine setup (idempotent, safe to re-run) |
 | `mise run link` | Create symlinks |
 | `mise run unlink` | Remove symlinks |
 | `mise run brew` | Install all packages from Brewfile |
@@ -99,7 +99,7 @@ Machine-specific settings live outside git: `~/.zshrc.local` (sourced at the end
 
 ## セットアップ
 
-基本は `mise run install` 一発で完了します（冪等なので何度実行しても安全です）。
+基本は `mise run setup` 一発で完了します（冪等なので何度実行しても安全です）。
 
 ### 1. リポジトリのクローン
 
@@ -121,7 +121,7 @@ git clone git@github.com:kenshin-morioka/dotfiles.git ~/src/github.com/kenshin-m
 cd ~/src/github.com/kenshin-morioka/dotfiles
 brew install mise
 mise trust --all
-mise run install
+mise run setup
 ```
 
 以下がまとめて実行されます。各ステップは冪等なので、途中で失敗しても再実行するだけで続きから揃います。
@@ -165,7 +165,7 @@ mise tasks  # 利用可能なタスク一覧を表示
 
 | コマンド | 説明 |
 | --------- | ------ |
-| `mise run install` | 新マシンのセットアップを一括実行（冪等・再実行可） |
+| `mise run setup` | 新マシンのセットアップを一括実行（冪等・再実行可） |
 | `mise run link` | シンボリックリンクを作成 |
 | `mise run unlink` | シンボリックリンクを削除 |
 | `mise run brew` | Brewfileの全パッケージをインストール |
@@ -309,7 +309,7 @@ Config files ... are not trusted. Trust them with `mise trust`.
 ```
 
 miseはセキュリティのため、Git管理下の設定ファイルを明示的に信頼する必要があります。
-`mise run install` 実行時に自動で trust されますが、個別に実行する場合は以下の通りです。
+`mise run setup` 実行時に自動で trust されますが、個別に実行する場合は以下の通りです。
 
 ```bash
 mise trust ~/src/github.com/kenshin-morioka/dotfiles/mise/config.toml
@@ -317,7 +317,7 @@ mise trust ~/src/github.com/kenshin-morioka/dotfiles/mise/config.toml
 
 ### pre-commitフックの設定
 
-`mise run install` 実行時に自動で設定されますが、個別に実行する場合は以下の通りです。
+`mise run setup` 実行時に自動で設定されますが、個別に実行する場合は以下の通りです。
 
 ```bash
 pre-commit install
