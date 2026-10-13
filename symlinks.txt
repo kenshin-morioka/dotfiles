@@ -15,8 +15,8 @@
 # AI エージェント設定 (agents/)。共通ルール・スキル・チェックリストは両ツールで共有し、ツール固有のものは agents/claude, agents/codex に置く
 # スキルはスキル単位でリンクし、各ツールが生成するローカル専用スキルと同居できるようにする
 .codex/AGENTS.md:agents/private/AGENTS.md
+.claude/CLAUDE.md:agents/private/AGENTS.md
 .claude/checklists:agents/checklists
-.claude/CLAUDE.md:agents/claude/CLAUDE.md
 .claude/settings.json:agents/claude/settings.json
 .claude/agents:agents/claude/agents
 .claude/hooks:agents/claude/hooks
