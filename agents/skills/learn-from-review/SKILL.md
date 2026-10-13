@@ -22,14 +22,14 @@ PRで受けたレビュー指摘に対して、コード修正とチェックリ
 引数にPR URLがあればそのPRを、なければ現在のブランチに紐づくPRを特定する。
 
 ```bash
-gh pr view --json number,url
+gh pr view --json number,url,author
 ```
 
 PRのレビューコメントを取得する:
 
 ```bash
-gh api repos/{owner}/{repo}/pulls/{number}/comments --jq '.[] | {path, line, body, user: .user.login}'
-gh api repos/{owner}/{repo}/pulls/{number}/reviews --jq '.[] | select(.body != "") | {body, user: .user.login, state}'
+gh api --paginate repos/{owner}/{repo}/pulls/{number}/comments --jq '.[] | {path, line, body, user: .user.login}'
+gh api --paginate repos/{owner}/{repo}/pulls/{number}/reviews --jq '.[] | select(.body != "") | {body, user: .user.login, state}'
 ```
 
 ## Step 2: 対応が必要な指摘の特定
@@ -37,9 +37,9 @@ gh api repos/{owner}/{repo}/pulls/{number}/reviews --jq '.[] | select(.body != "
 収集したコメントから、以下を除外する:
 
 - bot（devin-ai-integration等）のコメント
-- 質問・確認系のコメント（「〜ですか？」「〜では？」で終わるもの）
+- 純粋な質問・確認のコメント。語尾（「〜ですか？」等）ではなく意図で判定し、疑問形でも具体的な修正を求めていれば対象に含める。判断に迷うものはユーザーに確認する
 - 既に「Resolved」「対応済み」等で解決済みのコメント
-- PR作成者自身のコメント
+- PR作成者自身のコメント（`author.login` と `user` を照合する）
 
 残ったコメントを「コードの改善を求める指摘」として一覧化する。
 

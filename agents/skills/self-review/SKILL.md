@@ -16,11 +16,13 @@ allowed-tools: Read, Glob, Grep, Bash
 
 ## Step 1: 変更内容の把握
 
-以下の優先順で変更を取得する:
+作業ツリーの変更（ステージ済み・未ステージの両方）をまとめて取得する:
 
-1. ステージング済み: `git diff --cached`
-2. 未ステージ: `git diff`
-3. 直近コミット: `git diff HEAD~1`
+```bash
+git diff HEAD
+```
+
+作業ツリーに変更がない場合のみ、直近コミット（`git diff HEAD~1`）を対象にする。
 
 ## Step 2: チェックリストの検出と選択
 
@@ -67,13 +69,3 @@ allowed-tools: Read, Glob, Grep, Bash
 ```
 
 NEEDS_FIX の場合は違反箇所の修正案も提示する。
-
-## Step 5: コミットブロック解除フラグの作成
-
-総合判定が PASS になったら（NEEDS_FIX の場合は違反を修正して解消した後に）、以下を実行してコミットブロック解除フラグを作成する:
-
-```bash
-touch "$(git rev-parse --absolute-git-dir)/self-review-done"
-```
-
-このフラグは PreToolUse hook（`~/.claude/hooks/self_review_reminder.sh`）が `git commit` を許可する条件として参照し、許可時に消費（削除）される。違反が未解消のままフラグを作成してはならない。
