@@ -346,3 +346,11 @@ unsetopt list_types
 # Vite+ bin (https://viteplus.dev)
 # shellcheck disable=SC1091
 [ -f "${HOME}/.config/vite-plus/env" ] && . "${HOME}/.config/vite-plus/env"
+
+# pnpm
+export PNPM_HOME="/Users/moriokakenshin/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
