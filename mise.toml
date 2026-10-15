@@ -40,6 +40,9 @@ cd "$MISE_PROJECT_ROOT" && pre-commit install
 # mise の設定ファイルを信頼（trust 済みでも成功する。mise 未セットアップ等での失敗は || true で無視）
 echo "🤝 mise 設定を信頼中..."
 mise trust "$MISE_PROJECT_ROOT/mise/config.toml" || true
+# tflint は Homebrew ではなく mise (mise/config.toml) で管理している。task.run_auto_install = false のため明示的にインストールする
+echo "🔧 tflint をインストール中..."
+mise install tflint
 echo "✅ セットアップが完了しました！"
 '''
 
