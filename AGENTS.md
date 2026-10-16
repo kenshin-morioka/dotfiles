@@ -9,7 +9,7 @@
 
 - **設定ファイルの追加・移動・削除**時は、必ず `symlinks.txt` を確認・更新すること
 - ファイルをリネームした場合、古いシンボリックリンクが残るため `mise run unlink && mise run link` が必要になることを伝えること
-- ディレクトリ単位でリンクされているもの（nvim, wezterm, mise, act, flipper, github-copilot, cowsay, checklists）は、配下にファイルを追加するだけで自動的にリンク先に反映される
+- ディレクトリ単位でリンクされているもの（nvim, wezterm, mise, atuin, sheldon, act, flipper, github-copilot, cowsay, agents/checklists, agents/claude/agents, agents/claude/hooks）は、配下にファイルを追加するだけで自動的にリンク先に反映される
 - `symlinks.txt` で元ファイル末尾が `*` の行（スキル）は配下のエントリを個別にリンクする。スキルを追加した場合は `mise run link` の再実行が必要
 
 ## AI エージェント設定（agents/）
