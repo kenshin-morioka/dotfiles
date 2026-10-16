@@ -127,6 +127,7 @@ mise run setup
 | -------- | ---- |
 | `mise run brew` | Brewfile の全パッケージをインストール |
 | `git submodule update --init` | `agents`（非公開リポジトリ `agents`）を取得 |
+| `git config submodule.recurse true` | pull 時に submodule も更新する（このリポジトリのみ） |
 | `mise run link` | シンボリックリンクを作成（スキルは `~/.claude/skills/` と `~/.agents/skills/` にスキル単位でリンク） |
 | `mise run macos-defaults` | macOS defaults を適用 |
 | fzf キーバインド | `$(brew --prefix)/opt/fzf/install` を rc 非改変オプション付きで実行 |
