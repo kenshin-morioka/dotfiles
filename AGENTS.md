@@ -9,7 +9,7 @@
 
 - **設定ファイルの追加・移動・削除**時は、必ず `symlinks.txt` を確認・更新すること
 - ファイルをリネームした場合、古いシンボリックリンクが残るため `mise run unlink && mise run link` が必要になることを伝えること
-- ディレクトリ単位でリンクされているもの（nvim, wezterm, mise, atuin, sheldon, act, flipper, github-copilot, cowsay, agents/checklists, agents/claude/agents, agents/claude/hooks）は、配下にファイルを追加するだけで自動的にリンク先に反映される
+- ディレクトリ単位でリンクされているもの（nvim, wezterm, mise, atuin, sheldon, act, flipper, github-copilot, cowsay, agents/checklists, agents/hooks, agents/claude/agents）は、配下にファイルを追加するだけで自動的にリンク先に反映される
 - `symlinks.txt` で元ファイル末尾が `*` の行（スキル）は配下のエントリを個別にリンクする。スキルを追加した場合は `mise run link` の再実行が必要
 
 ### ホーム配下のリンク一覧
@@ -30,7 +30,8 @@ AI エージェントの設定はすべて `agents/` に置く。Claude Code と
 - `agents/private/` 配下を変更したら、submodule 側でコミット・push してから、このリポジトリで参照コミットを更新してコミットする
 - クローン直後は `git submodule update --init` が必要（`mise run setup` に含まれる）
 - `agents/checklists/` — セルフレビューチェックリスト（`~/.claude/checklists`。共通ルールから参照されるため共有扱い）
-- `agents/claude/` — Claude Code 固有（`settings.json`, hooks, subagent, statusline）。`~/.claude/` 配下にリンクされる
+- `agents/hooks/` — Claude Code / Codex 共有の hook スクリプト（`~/.claude/hooks` と `~/.codex/hooks` の両方にディレクトリ単位でリンク）。両ツールとも hook の入力 JSON（`tool_name` / `tool_input.command` / `cwd`）と exit 2 によるブロックが同じ形式なので、スクリプトを共有する。登録は各ツールの設定（`agents/claude/settings.json`、`~/.codex/hooks.json`。どちらも git 追跡外）で行う
+- `agents/claude/` — Claude Code 固有（`settings.json`, subagent, statusline）。`~/.claude/` 配下にリンクされる
 - `agents/codex/` — Codex 固有（`dotfiles.config.toml` → `~/.codex/dotfiles.config.toml`）
 
 ## pre-commit フック
@@ -54,6 +55,7 @@ AI エージェントの設定はすべて `agents/` に置く。Claude Code と
 - `agents/claude/CLAUDE.md` — Claude Code 専用ルールが必要になった場合の置き場（現在は未使用。`~/.claude/CLAUDE.md` は `agents/private/AGENTS.md` に直接リンク）
 - `agents/checklists/` — セルフレビューチェックリスト
 - `agents/claude/settings.json` — Claude Code のグローバル設定（hooks, statusLine 等。ローカル絶対パスを含むため git 追跡外）
+- `agents/hooks/*.disabled` — hook の手動無効化フラグ
 - `git/.gitconfig.local` — Git認証情報等のローカル設定
 
 ## 変更時に連動して更新が必要なもの
@@ -61,7 +63,7 @@ AI エージェントの設定はすべて `agents/` に置く。Claude Code と
 以下の対応を忘れないこと。関連する変更を行った場合は、必ずセットで更新すること。
 
 - **キーバインド追加・変更時** → `docs/CHEATSHEET.md` を必ず同時に更新する
-- **全プロジェクト共通ルールを hook / permissions に移したとき** → `agents/claude/hooks/` にスクリプトを置き、`agents/claude/settings.json`（git 追跡外）への登録手順を PR 本文に書く
+- **全プロジェクト共通ルールを hook / permissions に移したとき** → `agents/hooks/` にスクリプトを置き、`agents/claude/settings.json` と `~/.codex/hooks.json`（どちらも git 追跡外）への登録手順を PR 本文に書く。Codex 側は登録後に `/hooks` で trust が必要
 - **新しいツール導入時** → 管理元は `docs/TOOLCHAIN.md` に従う。Homebrew 管理なら `homebrew/Brewfile` に追加（`mise run brew-add` 使用）、言語製のグローバル CLI なら `mise/config.toml` に `npm:` 等のバックエンドで追加する
 - **言語ランタイムのバージョン変更時** → `mise/config.toml` を更新する
 - **シンボリックリンク対象の追加・変更時** → `symlinks.txt` を更新する

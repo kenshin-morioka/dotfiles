@@ -10,7 +10,7 @@
 set -euo pipefail
 
 # 手動切り替え: このファイルが存在する間は検査を無効化する
-# 無効化: touch ~/.claude/hooks/check_instruction_compliance.disabled
+# 無効化: touch ~/.claude/hooks/check_instruction_compliance.disabled (~/.codex/hooks も同じ実体)
 # 有効化: rm    ~/.claude/hooks/check_instruction_compliance.disabled
 if [ -f "$HOME/.claude/hooks/check_instruction_compliance.disabled" ]; then
   exit 0
