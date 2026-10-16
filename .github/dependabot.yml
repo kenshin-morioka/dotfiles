@@ -24,6 +24,7 @@ updates:
 
   # agents (非公開 submodule) の main を追従し、参照更新の手作業をなくす。
   # 更新 PR は .github/workflows/dependabot-auto-merge.yml で自動マージする
+  # 定期実行のほか、このファイルを変更して main にマージしたときにも実行される
   - package-ecosystem: gitsubmodule
     directory: /
     registries:
