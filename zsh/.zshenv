@@ -6,6 +6,8 @@ export GOPATH="${HOME}/go"
 export PATH="${HOME}/.local/bin:/usr/local/sbin:${GOPATH}/bin:${PATH}"
 export PATH="/Applications/WezTerm.app/Contents/MacOS:${PATH}"
 export PATH="${HOME}/.cargo/bin:${PATH}"
+# 非対話シェルでは .zshrc の mise activate が走らないため shims で mise 管理ツールを通す
+export PATH="${HOME}/.local/share/mise/shims:${PATH}"
 
 # Locale
 export LANG="en_US.UTF-8"
@@ -20,7 +22,3 @@ export HISTFILE="${XDG_STATE_HOME:-${HOME}/.local/state}/zsh/history"
 [ -d "$(dirname "${HISTFILE}")" ] || mkdir -p "$(dirname "${HISTFILE}")"
 export HISTSIZE=100000
 export SAVEHIST=100000
-
-# Vite+ bin (https://viteplus.dev)
-# shellcheck disable=SC1091
-[ -f "${HOME}/.config/vite-plus/env" ] && . "${HOME}/.config/vite-plus/env"
