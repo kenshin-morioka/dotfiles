@@ -3,7 +3,7 @@ require('conform').setup({
     lua = { 'stylua' },
     sh = { 'shfmt' },
     bash = { 'shfmt' },
-    zsh = { 'shfmt' },
+    -- shfmt は zsh 方言未対応のため zsh には割り当てない
     json = { 'prettier' },
     yaml = { 'prettier' },
     markdown = { 'prettier' },
