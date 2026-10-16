@@ -22,9 +22,14 @@ Personal dotfiles configuration for macOS.
 | `starship.toml`           | Starship prompt config                                                         |
 | `CLAUDE.md` / `AGENTS.md` | Repository instructions for Claude Code and Codex                              |
 | `agents/`                 | AI agent config: shared skills, private submodule, Claude Code / Codex config  |
+| `git/`                    | Git config (`.gitconfig`; identity lives in untracked `.gitconfig.local`)      |
 | `act/`                    | GitHub Actions local runner config                                             |
+| `github-copilot/`         | GitHub Copilot CLI config                                                      |
+| `flipper/`                | Flipper (mobile app debugger) settings                                         |
+| `cowsay/`                 | Custom cowsay cow files                                                        |
 | `macos/`                  | AppleScript source for macOS launcher .app                                     |
 | `ssh/`                    | SSH client config (generic settings only; hosts live in `~/.ssh/config.local`) |
+| `docs/`                   | Keybinding cheatsheet, toolchain policy, skills workflow                       |
 
 ## Setup
 
@@ -80,9 +85,14 @@ Machine-specific settings live outside git: `~/.zshrc.local` (sourced at the end
 | `starship.toml`           | Starshipプロンプト設定                                                     |
 | `CLAUDE.md` / `AGENTS.md` | Claude Code / Codex 共通のリポジトリルール                                 |
 | `agents/`                 | AI エージェント設定（共通スキル、非公開 submodule、ツール固有設定）        |
+| `git/`                    | Git 設定（`.gitconfig`。ユーザー情報は git 追跡外の `.gitconfig.local`）   |
 | `act/`                    | GitHub Actions ローカル実行設定                                            |
+| `github-copilot/`         | GitHub Copilot CLI 設定                                                    |
+| `flipper/`                | Flipper（モバイルアプリデバッガ）設定                                      |
+| `cowsay/`                 | cowsay のカスタム cow ファイル                                             |
 | `macos/`                  | macOS 用ランチャー .app の AppleScript ソース                              |
 | `ssh/`                    | SSH クライアント設定（汎用設定のみ。ホスト定義は `~/.ssh/config.local`）   |
+| `docs/`                   | キーバインドチートシート・ツール管理方針・スキル運用                       |
 
 ## セットアップ
 
