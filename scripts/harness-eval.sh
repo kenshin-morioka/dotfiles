@@ -18,7 +18,10 @@
 #   「常時ロード分」は cache_creation + cache_read + input_tokens の合計で比較する
 #   codex は cost を返さないため cost_usd は 0 になる
 #
-# 各タスクはカレントディレクトリで `claude -p` / `codex exec` を単発実行するため、通常セッションと同じ CLAUDE.md / skills / MCP が読み込まれる。
+# 各タスクはカレントディレクトリで `claude -p` / `codex exec` を単発実行するため、通常セッションと同じ設定が読み込まれる。
+# 読み込まれる設定はツールごとに別物なので、比較条件を揃えるときは両方を確認すること:
+#   claude: ~/.claude/CLAUDE.md、リポジトリの CLAUDE.md、~/.claude/skills/、~/.claude.json と settings.json の MCP
+#   codex:  ~/.codex/AGENTS.md、リポジトリの AGENTS.md、~/.agents/skills/、~/.codex/config.toml の MCP
 # 比較したいリポジトリに cd してから実行すること。
 
 set -euo pipefail
@@ -26,6 +29,13 @@ set -euo pipefail
 tasks=${1:?tasks.tsv を指定してください}
 label=${2:-$(git rev-parse --short HEAD 2>/dev/null || echo run)}
 tool=${HARNESS_EVAL_TOOL:-claude}
+case "$tool" in
+  claude | codex) ;;
+  *)
+    echo "error: HARNESS_EVAL_TOOL は claude か codex を指定してください (指定値: $tool)" >&2
+    exit 1
+    ;;
+esac
 model=${HARNESS_EVAL_MODEL:-}
 extra_args=${HARNESS_EVAL_ARGS:-}
 
@@ -60,7 +70,7 @@ while IFS=$'\t' read -r id prompt expect; do
                output_tokens: (.output_tokens // 0)}),
           total_cost_usd: 0, duration_ms: 0
         }' 2>/dev/null || echo "{}")
-  else
+  else # claude
     json=$(claude -p "$prompt" --output-format json ${model:+--model "$model"} $extra_args 2>/dev/null </dev/null || echo "{}")
   fi
   result=$(echo "$json" | jq -r '.result // ""')
