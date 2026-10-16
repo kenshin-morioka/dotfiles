@@ -9,20 +9,23 @@
 #   label:     結果ファイル名と CSV の 1 列目に入る識別子 (省略時は HEAD の短縮ハッシュ)
 #
 # 環境変数:
-#   HARNESS_EVAL_MODEL  使用モデル (省略時は claude の既定)
-#   HARNESS_EVAL_ARGS   claude -p に追加で渡す引数 (例: "--allowedTools Read,Grep")
+#   HARNESS_EVAL_TOOL   claude (既定) または codex
+#   HARNESS_EVAL_MODEL  使用モデル (省略時は各ツールの既定)
+#   HARNESS_EVAL_ARGS   claude -p / codex exec に追加で渡す引数 (例: "--allowedTools Read,Grep")
 #
 # 結果: scripts/harness-eval/<label>-<timestamp>.csv (git 追跡外)
 #   列: label,task,pass,input_tokens,cache_creation,cache_read,output_tokens,cost_usd,duration_ms
 #   「常時ロード分」は cache_creation + cache_read + input_tokens の合計で比較する
+#   codex は cost を返さないため cost_usd は 0 になる
 #
-# 各タスクはカレントディレクトリで `claude -p` を単発実行するため、通常セッションと同じ CLAUDE.md / skills / MCP が読み込まれる。
+# 各タスクはカレントディレクトリで `claude -p` / `codex exec` を単発実行するため、通常セッションと同じ CLAUDE.md / skills / MCP が読み込まれる。
 # 比較したいリポジトリに cd してから実行すること。
 
 set -euo pipefail
 
 tasks=${1:?tasks.tsv を指定してください}
 label=${2:-$(git rev-parse --short HEAD 2>/dev/null || echo run)}
+tool=${HARNESS_EVAL_TOOL:-claude}
 model=${HARNESS_EVAL_MODEL:-}
 extra_args=${HARNESS_EVAL_ARGS:-}
 
@@ -43,8 +46,23 @@ while IFS=$'\t' read -r id prompt expect; do
   total_n=$((total_n + 1))
 
   # shellcheck disable=SC2086  # extra_args は意図的に単語分割する
-  # </dev/null: claude -p が while ループの stdin (tasks.tsv) を読んでしまうのを防ぐ
-  json=$(claude -p "$prompt" --output-format json ${model:+--model "$model"} $extra_args 2>/dev/null </dev/null || echo "{}")
+  # </dev/null: claude -p / codex exec が while ループの stdin (tasks.tsv) を読んでしまうのを防ぐ
+  # codex exec --json は JSONL なので、最後の agent_message と turn.completed の usage を claude -p と同じ形に揃える
+  if [ "$tool" = "codex" ]; then
+    json=$(codex exec --json --skip-git-repo-check ${model:+--model "$model"} $extra_args "$prompt" 2>/dev/null </dev/null \
+      | jq -s '{
+          is_error: (map(select(.type == "turn.failed")) | length > 0),
+          result: ((map(select(.type == "item.completed" and .item.type == "agent_message")) | last | .item.text) // ""),
+          usage: ((map(select(.type == "turn.completed")) | last | .usage) // {}
+            | {input_tokens: ((.input_tokens // 0) - (.cached_input_tokens // 0) - (.cache_write_input_tokens // 0)),
+               cache_creation_input_tokens: (.cache_write_input_tokens // 0),
+               cache_read_input_tokens: (.cached_input_tokens // 0),
+               output_tokens: (.output_tokens // 0)}),
+          total_cost_usd: 0, duration_ms: 0
+        }' 2>/dev/null || echo "{}")
+  else
+    json=$(claude -p "$prompt" --output-format json ${model:+--model "$model"} $extra_args 2>/dev/null </dev/null || echo "{}")
+  fi
   result=$(echo "$json" | jq -r '.result // ""')
 
   pass=0

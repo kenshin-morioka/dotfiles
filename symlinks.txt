@@ -20,7 +20,8 @@
 .claude/checklists:agents/checklists
 .claude/settings.json:agents/claude/settings.json
 .claude/agents:agents/claude/agents
-.claude/hooks:agents/claude/hooks
+.claude/hooks:agents/hooks
+.codex/hooks:agents/hooks
 .claude/statusline-command.sh:agents/claude/statusline-command.sh
 .codex/dotfiles.config.toml:agents/codex/dotfiles.config.toml
 .claude/skills/*:agents/skills/*
