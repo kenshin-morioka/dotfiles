@@ -193,11 +193,14 @@ fi
 status_filter='"\(.name // .token) (\(if .disabled then "disabled" else "deprecated" end): \(.disable_reason // .deprecation_reason // "理由不明"))"'
 formulae=$(brew bundle list --formula --file="$brewfile")
 casks=$(brew bundle list --cask --file="$brewfile")
+# パイプラインやコマンド置換の中では brew info の失敗で止まらず、チェックが素通りするため個別に代入する
+formula_info='{"formulae":[],"casks":[]}'
+cask_info='{"formulae":[],"casks":[]}'
 # shellcheck disable=SC2086  # 改行区切りのパッケージ名を引数に展開する
-deprecated=$(
-  { [ -z "$formulae" ] || brew info --json=v2 --formula $formulae; [ -z "$casks" ] || brew info --json=v2 --cask $casks; } \
-    | jq -r "(.formulae + .casks)[] | select(.deprecated or .disabled) | $status_filter"
-)
+[ -z "$formulae" ] || formula_info=$(brew info --json=v2 --formula $formulae)
+# shellcheck disable=SC2086
+[ -z "$casks" ] || cask_info=$(brew info --json=v2 --cask $casks)
+deprecated=$(printf '%s\n' "$formula_info" "$cask_info" | jq -r "(.formulae + .casks)[] | select(.deprecated or .disabled) | $status_filter")
 if [ -n "$deprecated" ]; then
   echo "❌ Brewfile に配布終了 (予定) のパッケージがあります。代替へ移行してください:"
   echo "$deprecated" | sed 's/^/   /'
@@ -206,10 +209,10 @@ fi
 
 # Brewfile 外の残留物は、このマシンでだけ動いて新規マシンで再現しない状態の原因になる
 extra_taps=$(comm -23 <(brew tap | grep -v '^homebrew/' | sort) <(echo "$taps" | sort))
-extra_formulae=$(comm -23 <(brew leaves --installed-on-request | sort) <(echo "$formulae" | sort))
+extra_formulae=$(comm -23 <(brew list --formula --full-name --installed-on-request | sort) <(echo "$formulae" | sort))
 extra_casks=$(comm -23 <(brew list --cask | sort) <(echo "$casks" | sort))
 if [ -n "$extra_taps$extra_formulae$extra_casks" ]; then
-  echo "⚠️  Brewfile にないパッケージがインストールされています (不要なら brew bundle cleanup --force で削除、必要なら mise run brew-sync で追記):"
+  echo "⚠️  Brewfile にないパッケージがインストールされています (不要なら brew bundle cleanup --force --file=$brewfile で削除、必要なら mise run brew-sync で追記):"
   [ -z "$extra_taps" ] || echo "$extra_taps" | sed 's/^/   tap  /'
   [ -z "$extra_formulae" ] || echo "$extra_formulae" | sed 's/^/   brew /'
   [ -z "$extra_casks" ] || echo "$extra_casks" | sed 's/^/   cask /'
@@ -271,7 +274,7 @@ set -euo pipefail
 brewfile="$MISE_PROJECT_ROOT/homebrew/Brewfile"
 # brew bundle dump はコメント・グループ分けを消し、非公式 tap も書き込むため使わず追記だけ行う
 # 非公式 tap のパッケージは新規マシンで trust 必須で失敗するため対象外にする
-new_formulae=$(comm -23 <(brew leaves --installed-on-request | grep -v / | sort) <(brew bundle list --formula --file="$brewfile" | sort))
+new_formulae=$(comm -23 <(brew list --formula --full-name --installed-on-request | grep -v / | sort) <(brew bundle list --formula --file="$brewfile" | sort))
 new_casks=$(comm -23 \
   <(brew info --installed --json=v2 | jq -r '.casks[] | select(.tap == "homebrew/cask") | .token' | sort) \
   <(brew bundle list --cask --file="$brewfile" | sort))
