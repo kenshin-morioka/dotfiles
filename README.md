@@ -128,7 +128,8 @@ mise run setup
 | ステップ | 内容 |
 | -------- | ---- |
 | `mise run brew` | Brewfile の全パッケージをインストール |
-| `mise run agents-update` | `agents`（非公開リポジトリ `agents`）を取得し、最新の main に更新（以降も pull で変更を取り込んだときに自動更新） |
+| `git submodule update --init` | `agents`（非公開リポジトリ `agents`）を取得 |
+| `git config submodule.recurse true` | pull 時に submodule も更新する（このリポジトリのみ） |
 | `mise run link` | シンボリックリンクを作成（スキルは `~/.claude/skills/` と `~/.agents/skills/` にスキル単位でリンク） |
 | `mise run macos-defaults` | macOS defaults を適用 |
 | `mise run macos-app` | Finder ダブルクリックで Neovim を開くランチャー `~/Applications/OpenInNeovim.app` を生成 |
