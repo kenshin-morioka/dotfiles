@@ -46,6 +46,8 @@ mise trust "$MISE_PROJECT_ROOT/mise/config.toml" || true
 # tflint は Homebrew ではなく mise (mise/config.toml) で管理している。task.run_auto_install = false のため明示的にインストールする
 echo "🔧 tflint をインストール中..."
 mise install tflint
+# 警告が他の出力に埋もれないよう最後に実行する
+mise run brew-check
 echo "✅ セットアップが完了しました！"
 '''
 
@@ -164,6 +166,63 @@ run = '''
 set -euo pipefail
 echo "🍺 パッケージをインストール中..."
 brew bundle --file="$MISE_PROJECT_ROOT/homebrew/Brewfile"
+'''
+
+# インストール済みマシンでは brew bundle がスキップされるため、新規マシンで初めて
+# 失敗する問題 (非公式 tap・配布終了パッケージ) と、Brewfile 外の残留物をここで検出する
+[tasks.brew-check]
+description = "Brewfile の配布終了パッケージ・非公式 tap と、Brewfile 外の残留物を検出"
+shell = "bash -c"
+quiet = true
+run = '''
+set -euo pipefail
+brewfile="$MISE_PROJECT_ROOT/homebrew/Brewfile"
+echo "🔍 Brewfile をチェック中..."
+errors=0
+
+# 非公式 tap は Homebrew 7 以降 trust が必要になり、新規マシンの brew bundle が失敗する
+taps=$(brew bundle list --tap --file="$brewfile")
+if [ -n "$taps" ]; then
+  echo "❌ Brewfile に非公式 tap があります (新規マシンでは trust 必須で失敗します。mise 管理等へ移行してください):"
+  echo "$taps" | sed 's/^/   /'
+  errors=1
+fi
+
+# deprecated / disabled なパッケージは配布終了 (予定) で、新規インストールが失敗しうる
+status_filter='"\(.name // .token) (\(if .disabled then "disabled" else "deprecated" end): \(.disable_reason // .deprecation_reason // "理由不明"))"'
+formulae=$(brew bundle list --formula --file="$brewfile")
+casks=$(brew bundle list --cask --file="$brewfile")
+# shellcheck disable=SC2086  # 改行区切りのパッケージ名を引数に展開する
+deprecated=$(
+  { [ -z "$formulae" ] || brew info --json=v2 --formula $formulae; [ -z "$casks" ] || brew info --json=v2 --cask $casks; } \
+    | jq -r "(.formulae + .casks)[] | select(.deprecated or .disabled) | $status_filter"
+)
+if [ -n "$deprecated" ]; then
+  echo "❌ Brewfile に配布終了 (予定) のパッケージがあります。代替へ移行してください:"
+  echo "$deprecated" | sed 's/^/   /'
+  errors=1
+fi
+
+# Brewfile 外の残留物は、このマシンでだけ動いて新規マシンで再現しない状態の原因になる
+extra_taps=$(comm -23 <(brew tap | grep -v '^homebrew/' | sort) <(echo "$taps" | sort))
+extra_formulae=$(comm -23 <(brew leaves --installed-on-request | sort) <(echo "$formulae" | sort))
+extra_casks=$(comm -23 <(brew list --cask | sort) <(echo "$casks" | sort))
+if [ -n "$extra_taps$extra_formulae$extra_casks" ]; then
+  echo "⚠️  Brewfile にないパッケージがインストールされています (不要なら brew bundle cleanup --force で削除、必要なら Brewfile に追加):"
+  [ -z "$extra_taps" ] || echo "$extra_taps" | sed 's/^/   tap  /'
+  [ -z "$extra_formulae" ] || echo "$extra_formulae" | sed 's/^/   brew /'
+  [ -z "$extra_casks" ] || echo "$extra_casks" | sed 's/^/   cask /'
+fi
+installed_deprecated=$(brew info --installed --json=v2 | jq -r "(.formulae + .casks)[] | select(.deprecated or .disabled) | $status_filter")
+if [ -n "$installed_deprecated" ]; then
+  echo "⚠️  配布終了 (予定) のパッケージがインストールされています:"
+  echo "$installed_deprecated" | sed 's/^/   /'
+fi
+
+if [ "$errors" -ne 0 ]; then
+  exit 1
+fi
+echo "✅ Brewfile に問題はありません"
 '''
 
 [tasks.brew-add]
