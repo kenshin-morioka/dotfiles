@@ -46,6 +46,7 @@ AI エージェントの設定はすべて `agents/` に置く。`agents/` は�
 - **trailing-whitespace / end-of-file-fixer**: 空白・改行修正
 - **check-yaml**: YAML バリデーション
 - **check-added-large-files**: 大きなファイルの混入防止
+- **relink**: pull (post-merge)・ブランチ切り替え (post-checkout) 後に `mise run link` を実行し、新規スキル等のリンクを反映する。worktree では実行しない
 
 ## .gitignore で管理対象外のファイル
 

@@ -1,3 +1,7 @@
+# post-merge / post-checkout は relink 用。それ以外のフックは従来どおり pre-commit でのみ実行する
+default_install_hook_types: [pre-commit, post-merge, post-checkout]
+default_stages: [pre-commit]
+
 repos:
   - repo: local
     hooks:
@@ -43,6 +47,15 @@ repos:
         language: script
         pass_filenames: false
         always_run: true
+
+      # pull・ブランチ切り替え後にシンボリックリンクを張り直す (新規スキル等の反映)
+      - id: relink
+        name: relink (mise run link)
+        entry: scripts/relink.sh
+        language: script
+        pass_filenames: false
+        always_run: true
+        stages: [post-merge, post-checkout]
 
   # Secret detection
   - repo: https://github.com/gitleaks/gitleaks
