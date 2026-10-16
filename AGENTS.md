@@ -26,7 +26,7 @@ AI エージェントの設定はすべて `agents/` に置く。`agents/` は�
 
 - `agents/AGENTS.md` — 全プロジェクト共通ルール（`~/.codex/AGENTS.md` と `~/.claude/CLAUDE.md` の両方に直接リンク）
 - `agents/skills/` — スキル。`~/.claude/skills/<name>` と `~/.agents/skills/<name>` にスキル単位でリンクされる
-- `agents/` 配下を変更したら、submodule 側でコミット・push してから、このリポジトリで参照コミットを更新してコミットする
+- `agents/` 配下を変更したら、submodule 側でコミット・push して PR をマージする。このリポジトリの参照コミットは Dependabot の更新 PR が毎日作られ自動マージされるため、手動更新は不要
 - クローン直後は `git submodule update --init` が必要（`mise run setup` に含まれる）
 - `agents/checklists/` — セルフレビューチェックリスト（`~/.claude/checklists`）
 - `agents/hooks/` — Claude Code / Codex 共有の hook スクリプト（`~/.claude/hooks` と `~/.codex/hooks` の両方にディレクトリ単位でリンク）。両ツールとも hook の入力 JSON（`tool_name` / `tool_input.command` / `cwd`）と exit 2 によるブロックが同じ形式なので、スクリプトを共有する。登録は各ツールの設定（`agents/claude/settings.json`、`~/.codex/hooks.json`）で行う
