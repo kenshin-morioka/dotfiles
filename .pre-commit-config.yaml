@@ -46,8 +46,8 @@ repos:
       # pull 後に agents を最新の main に更新する (relink より先に実行して新規スキルのリンクも反映させる)
       - id: update-agents
         name: update-agents (agents を最新の main に更新)
-        entry: scripts/update-agents.sh
-        language: script
+        entry: git submodule update --remote agents
+        language: system
         pass_filenames: false
         always_run: true
         stages: [post-merge]

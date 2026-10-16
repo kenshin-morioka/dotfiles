@@ -1,5 +1,4 @@
 [submodule "agents"]
 	path = agents
 	url = git@github.com:kenshin-morioka/agents.git
-	# 参照コミットは更新せず scripts/update-agents.sh で最新の main に追従するため、差分を表示しない
-	ignore = all
+	branch = main
