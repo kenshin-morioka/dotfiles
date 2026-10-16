@@ -26,6 +26,9 @@ mise run brew
 # agents/private (非公開 submodule) を取得。取得済みなら no-op
 echo "📥 submodule を取得中..."
 git -C "$MISE_PROJECT_ROOT" submodule update --init
+# 雛形から生成する git 追跡外ファイルは、link より先に作っておく (無いと link で skip される)
+mise run claude-init
+mise run codex-init
 mise run link
 mise run macos-defaults
 # fzf キーバインド: install スクリプトは ~/.fzf.zsh を同内容で再生成するだけなので再実行しても安全（冪等）。
@@ -33,7 +36,6 @@ mise run macos-defaults
 echo "🔑 fzf キーバインドをセットアップ中..."
 "$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc --no-bash --no-fish
 mise run tmux-init
-mise run claude-init
 # pre-commit フックを設定（既に設定済みでも同じフックを上書きするだけで冪等）
 echo "🪝 pre-commit フックを設定中..."
 cd "$MISE_PROJECT_ROOT" && pre-commit install
@@ -332,5 +334,22 @@ else
   mkdir -p "$checklist_dir"
   echo "<!-- セルフレビューチェックリストを作成してください -->" > "$checklist_dir/SELF_REVIEW_CHECKLIST.md"
   echo "✅ $checklist_dir を作成しました"
+fi
+'''
+
+[tasks.codex-init]
+# setup の内部ステップ (単体で使う場面がないため一覧から隠す)
+hide = true
+description = "Codex の dotfiles プロファイル設定を雛形から生成"
+shell = "bash -c"
+quiet = true
+run = '''
+set -euo pipefail
+cfg="$MISE_PROJECT_ROOT/agents/codex/dotfiles.config.toml"
+if [ -f "$cfg" ]; then
+  echo "⚠️  $cfg は既に存在します"
+else
+  cp "$cfg.example" "$cfg"
+  echo "✅ $cfg を雛形から作成しました"
 fi
 '''
