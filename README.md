@@ -57,13 +57,7 @@ Each step can also be run individually (see Tasks below).
 
 ## Package Management
 
-| Tool         | Purpose                                           | Examples                       |
-| ------------ | ------------------------------------------------- | ------------------------------ |
-| **Homebrew** | System tools, GUI apps (cask)                     | git, neovim, mise, claude-code |
-| **mise**     | Language runtimes, dev tools (version management) | node, ruby, go, pnpm           |
-
-- Use **mise** instead of rbenv, nodenv, tfenv for unified version management
-- Use Homebrew for tools that don't need per-project versioning
+See [docs/TOOLCHAIN.md](docs/TOOLCHAIN.md) (Japanese) for which tool (Homebrew / mise / project) owns what.
 
 ## Machine-local Settings
 
@@ -172,13 +166,7 @@ mise tasks  # 利用可能なタスク一覧を表示
 
 ## パッケージ管理の使い分け
 
-| ツール       | 用途                                                     | 例                             |
-| ------------ | -------------------------------------------------------- | ------------------------------ |
-| **Homebrew** | システム基盤ツール、GUIアプリ（cask）                    | git, neovim, mise, claude-code |
-| **mise**     | 言語ランタイム、開発ツール（バージョン管理が必要なもの） | node, ruby, go, pnpm           |
-
-- rbenv, nodenv, tfenv などの個別バージョンマネージャーは **mise** で統一
-- Homebrewは主にシステム全体で1つのバージョンで良いツールに使用
+Homebrew / mise / プロジェクトのどれで管理するかは [docs/TOOLCHAIN.md](docs/TOOLCHAIN.md) を参照。
 
 ## マシンローカル設定
 
