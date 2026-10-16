@@ -14,25 +14,24 @@
 
 ### ホーム配下のリンク一覧
 
-対応表の正本は `symlinks.txt`（`<リンク先>:<元ファイル>`）。グローバルルール（`agents/private/AGENTS.md`）には一覧を書かず、`symlinks.txt` とここを参照する。
+対応表の正本は `symlinks.txt`（`<リンク先>:<元ファイル>`）。グローバルルール（`agents/AGENTS.md`）には一覧を書かず、`symlinks.txt` とここを参照する。
 
-- `~/.claude/skills/<name>` と `~/.agents/skills/<name>` は `agents/skills/` と `agents/private/skills/` のスキルをスキル単位でリンク。`~/.claude/skills/synced/` だけは Claude Code 管理の実ディレクトリでリンク対象外
-- `~/.claude/CLAUDE.md` と `~/.codex/AGENTS.md` は両方 `agents/private/AGENTS.md` を指す
+- `~/.claude/skills/<name>` と `~/.agents/skills/<name>` は `agents/skills/` のスキルをスキル単位でリンク。`~/.claude/skills/synced/` だけは Claude Code 管理の実ディレクトリでリンク対象外
+- `~/.claude/CLAUDE.md` と `~/.codex/AGENTS.md` は両方 `agents/AGENTS.md` を指す
 - `~/.claude.json`（`claude.json`）と `agents/claude/settings.json` は .gitignore 対象。リンクは張られるが内容は各マシンで管理する
 
 ## AI エージェント設定（agents/）
 
-AI エージェントの設定はすべて `agents/` に置く。Claude Code と Codex で共有するものは直下、ツール固有のものは `agents/claude/` / `agents/codex/` に置く。
+AI エージェントの設定はすべて `agents/` に置く。`agents/` は非公開リポジトリ `kenshin-morioka/agents` の git submodule。Claude Code と Codex で共有するものは直下、ツール固有のものは `agents/claude/` / `agents/codex/` に置く。
 
-- `agents/skills/` — 公開スキル。`~/.claude/skills/<name>` と `~/.agents/skills/<name>` にスキル単位でリンクされる
-- `agents/private/` — 非公開リポジトリ `kenshin-morioka/agents-private` の git submodule。会社固有スキル（`skills/`）と全プロジェクト共通ルール（`AGENTS.md` → `~/.codex/AGENTS.md` と `~/.claude/CLAUDE.md` の両方に直接リンク）の正本
-- **会社固有の内容を含むスキル・ルールは必ず `agents/private/` 配下に置く**。このリポジトリは public なので `agents/skills/` には入れない
-- `agents/private/` 配下を変更したら、submodule 側でコミット・push してから、このリポジトリで参照コミットを更新してコミットする
+- `agents/AGENTS.md` — 全プロジェクト共通ルール（`~/.codex/AGENTS.md` と `~/.claude/CLAUDE.md` の両方に直接リンク）
+- `agents/skills/` — スキル。`~/.claude/skills/<name>` と `~/.agents/skills/<name>` にスキル単位でリンクされる
+- `agents/` 配下を変更したら、submodule 側でコミット・push してから、このリポジトリで参照コミットを更新してコミットする
 - クローン直後は `git submodule update --init` が必要（`mise run setup` に含まれる）
-- `agents/checklists/` — セルフレビューチェックリスト（`~/.claude/checklists`。共通ルールから参照されるため共有扱い）
-- `agents/hooks/` — Claude Code / Codex 共有の hook スクリプト（`~/.claude/hooks` と `~/.codex/hooks` の両方にディレクトリ単位でリンク）。両ツールとも hook の入力 JSON（`tool_name` / `tool_input.command` / `cwd`）と exit 2 によるブロックが同じ形式なので、スクリプトを共有する。登録は各ツールの設定（`agents/claude/settings.json`、`~/.codex/hooks.json`。どちらも git 追跡外）で行う
+- `agents/checklists/` — セルフレビューチェックリスト（`~/.claude/checklists`）
+- `agents/hooks/` — Claude Code / Codex 共有の hook スクリプト（`~/.claude/hooks` と `~/.codex/hooks` の両方にディレクトリ単位でリンク）。両ツールとも hook の入力 JSON（`tool_name` / `tool_input.command` / `cwd`）と exit 2 によるブロックが同じ形式なので、スクリプトを共有する。登録は各ツールの設定（`agents/claude/settings.json`、`~/.codex/hooks.json`）で行う
 - `agents/claude/` — Claude Code 固有（`settings.json`, subagent, statusline）。`~/.claude/` 配下にリンクされる
-- `agents/codex/` — Codex 固有。`dotfiles.config.toml`（`~/.codex/dotfiles.config.toml`、`codex --profile dotfiles` が読む）は Codex が hook の trust 状態を書き込むため git 追跡外で、雛形 `dotfiles.config.toml.example` から `mise run codex-init` で生成する。雛形に入れたい設定変更は `.example` 側に書く
+- `agents/codex/` — Codex 固有。`dotfiles.config.toml`（`~/.codex/dotfiles.config.toml`、`codex --profile dotfiles` が読む）は Codex が hook の trust 状態を書き込むため追跡外で、雛形 `dotfiles.config.toml.example` から `mise run codex-init` で生成する。雛形に入れたい設定変更は `.example` 側に書く
 
 ## pre-commit フック
 
@@ -52,11 +51,7 @@ AI エージェントの設定はすべて `agents/` に置く。Claude Code と
 
 以下のファイルは意図的にgit追跡対象外にしている。**絶対に .gitignore から除外しないこと。**
 
-- `agents/claude/CLAUDE.md` — Claude Code 専用ルールが必要になった場合の置き場（現在は未使用。`~/.claude/CLAUDE.md` は `agents/private/AGENTS.md` に直接リンク）
-- `agents/checklists/` — セルフレビューチェックリスト
-- `agents/claude/settings.json` — Claude Code のグローバル設定（hooks, statusLine 等。ローカル絶対パスを含むため git 追跡外）
-- `agents/hooks/*.disabled` — hook の手動無効化フラグ
-- `agents/codex/dotfiles.config.toml` — Codex の dotfiles プロファイル（Codex が `hooks.state` を書き込む。雛形は `dotfiles.config.toml.example`）
+- `agents/` 配下のローカル専用ファイル（`claude/settings.json`、`codex/dotfiles.config.toml`、`hooks/*.disabled` 等）— submodule 側の `.gitignore` で除外
 - `git/.gitconfig.local` — Git認証情報等のローカル設定
 
 ## 変更時に連動して更新が必要なもの

@@ -13,10 +13,10 @@
 .config/atuin:atuin
 .config/sheldon:sheldon
 .config/act:act
-# AI エージェント設定 (agents/)。共通ルール・スキル・チェックリストは両ツールで共有し、ツール固有のものは agents/claude, agents/codex に置く
+# AI エージェント設定 (agents/。非公開リポジトリ kenshin-morioka/agents の submodule)。共通ルール・スキル・チェックリストは両ツールで共有し、ツール固有のものは agents/claude, agents/codex に置く
 # スキルはスキル単位でリンクし、各ツールが生成するローカル専用スキルと同居できるようにする
-.codex/AGENTS.md:agents/private/AGENTS.md
-.claude/CLAUDE.md:agents/private/AGENTS.md
+.codex/AGENTS.md:agents/AGENTS.md
+.claude/CLAUDE.md:agents/AGENTS.md
 .claude/checklists:agents/checklists
 .claude/settings.json:agents/claude/settings.json
 .claude/agents:agents/claude/agents
@@ -25,9 +25,7 @@
 .claude/statusline-command.sh:agents/claude/statusline-command.sh
 .codex/dotfiles.config.toml:agents/codex/dotfiles.config.toml
 .claude/skills/*:agents/skills/*
-.claude/skills/*:agents/private/skills/*
 .agents/skills/*:agents/skills/*
-.agents/skills/*:agents/private/skills/*
 .config/flipper:flipper
 .config/github-copilot:github-copilot
 .cowsay:cowsay

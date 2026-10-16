@@ -23,11 +23,10 @@ if ! command -v brew >/dev/null 2>&1; then
   exit 1
 fi
 mise run brew
-# agents/private (非公開 submodule) を取得。取得済みなら no-op
+# agents (非公開 submodule) を取得。取得済みなら no-op
 echo "📥 submodule を取得中..."
 git -C "$MISE_PROJECT_ROOT" submodule update --init
 # 雛形から生成する git 追跡外ファイルは、link より先に作っておく (無いと link で skip される)
-mise run claude-init
 mise run codex-init
 mise run link
 mise run macos-defaults
@@ -315,27 +314,6 @@ echo "   Finder で対象ファイルを右クリック → 情報を見る → 
 description = "macOS の defaults を適用 (WezTerm の PressAndHold 無効化等)"
 quiet = true
 run = 'bash "$MISE_PROJECT_ROOT/macos/defaults.sh"'
-
-# --------------------------------------
-# Claude Code
-#
-[tasks.claude-init]
-# setup の内部ステップ (単体で使う場面がないため一覧から隠す)
-hide = true
-description = "セルフレビューチェックリストディレクトリを生成"
-shell = "bash -c"
-quiet = true
-run = '''
-set -euo pipefail
-checklist_dir="$MISE_PROJECT_ROOT/agents/checklists"
-if [ -d "$checklist_dir" ]; then
-  echo "⚠️  $checklist_dir は既に存在します"
-else
-  mkdir -p "$checklist_dir"
-  echo "<!-- セルフレビューチェックリストを作成してください -->" > "$checklist_dir/SELF_REVIEW_CHECKLIST.md"
-  echo "✅ $checklist_dir を作成しました"
-fi
-'''
 
 [tasks.codex-init]
 # setup の内部ステップ (単体で使う場面がないため一覧から隠す)

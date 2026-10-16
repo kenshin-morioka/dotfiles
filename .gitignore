@@ -5,19 +5,11 @@
 zsh-abbr
 configstore
 .android/cache
-agents/checklists/
 git/.gitconfig.local
 git/.gitconfig.work
 zsh/.zshrc.local
 .claude/worktrees
-agents/claude/CLAUDE.md
-agents/claude/settings.json
-agents/claude/settings.broken-symlink-backup-*.json
-agents/claude/settings.json.bak
-# Codex の dotfiles プロファイル。Codex が hook の trust 状態 (hooks.state) を書き込むためローカル管理。雛形は *.example
-agents/codex/dotfiles.config.toml
 claude.json
-agents/hooks/*.disabled
 
 # harness-eval の結果 (scripts/harness-eval.sh)
 scripts/harness-eval/
