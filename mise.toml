@@ -31,6 +31,7 @@ git -C "$MISE_PROJECT_ROOT" config submodule.recurse true
 mise run codex-init
 mise run link
 mise run macos-defaults
+mise run macos-app
 # fzf キーバインド: install スクリプトは ~/.fzf.zsh を同内容で再生成するだけなので再実行しても安全（冪等）。
 # --no-update-rc により rc ファイルへの追記を抑止する（.zshrc はリポジトリへのシンボリックリンクのため、書き換えられると差分が発生する）。
 echo "🔑 fzf キーバインドをセットアップ中..."

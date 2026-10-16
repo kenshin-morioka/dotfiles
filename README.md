@@ -38,9 +38,10 @@ Basically a single `mise run setup` does everything (idempotent — safe to re-r
 1. Clone: `ghq get git@github.com:kenshin-morioka/dotfiles.git` (the `agents` submodule is fetched by `mise run setup`; it requires access to the private `agents` repo)
 2. Install Homebrew: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 3. Install mise and trust this repo: `brew install mise && mise trust --all`
-4. Run `mise run setup` — this runs `mise run brew` (packages), `mise run link` (symlinks), `mise run macos-defaults`, fzf keybindings install, `mise run codex-init` (Codex profile from template), `mise run tmux-init` (TPM), `pre-commit install`, `mise trust`, `mise run brew-sync`, and `mise run brew-check` all at once
-5. Post-install manual steps: launch tmux and press `Ctrl-b I` to fetch plugins
-6. (Optional) Build the Finder-double-click → Neovim launcher .app: `mise run macos-app` — creates `~/Applications/OpenInNeovim.app`. Assign it as the default opener via Finder → `Cmd+I` → "Open with" → "Change All...". If TCC prompts get annoying across folders (Desktop / Documents / etc.), add `OpenInNeovim.app` to System Settings → Privacy & Security → Full Disk Access.
+4. Run `mise run setup` — this runs `mise run brew` (packages), `mise run link` (symlinks), `mise run macos-defaults`, `mise run macos-app` (Finder-double-click → Neovim launcher .app), fzf keybindings install, `mise run codex-init` (Codex profile from template), `mise run tmux-init` (TPM), `pre-commit install`, `mise trust`, `mise run brew-sync`, and `mise run brew-check` all at once
+5. Post-install manual steps:
+   - Launch tmux and press `Ctrl-b I` to fetch plugins
+   - Assign `~/Applications/OpenInNeovim.app` as the default opener via Finder → `Cmd+I` → "Open with" → "Change All...". If TCC prompts get annoying across folders (Desktop / Documents / etc.), add `OpenInNeovim.app` to System Settings → Privacy & Security → Full Disk Access.
 
 Each step can also be run individually (see Tasks below).
 
@@ -131,6 +132,7 @@ mise run setup
 | `git config submodule.recurse true` | pull 時に submodule も更新する（このリポジトリのみ） |
 | `mise run link` | シンボリックリンクを作成（スキルは `~/.claude/skills/` と `~/.agents/skills/` にスキル単位でリンク） |
 | `mise run macos-defaults` | macOS defaults を適用 |
+| `mise run macos-app` | Finder ダブルクリックで Neovim を開くランチャー `~/Applications/OpenInNeovim.app` を生成 |
 | fzf キーバインド | `$(brew --prefix)/opt/fzf/install` を rc 非改変オプション付きで実行 |
 | `mise run tmux-init` | TPM (Tmux Plugin Manager) をインストール |
 | `mise run codex-init` | Codex の dotfiles プロファイル設定を雛形 (`agents/codex/dotfiles.config.toml.example`) から生成 |
@@ -142,20 +144,11 @@ mise run setup
 セットアップ後の手動作業:
 
 - tmux を起動し `Ctrl-b I` (Shift+i) でプラグイン (resurrect / continuum / vim-tmux-navigator 等) を取得
+- Finder で対象ファイルを選択 → `Cmd+I` → 「このアプリケーションで開く」を `OpenInNeovim` に変更 → 「すべてを変更...」で拡張子ごとに固定。複数フォルダ (デスクトップ / 書類 等) で毎回 TCC プロンプトが出るのが煩わしい場合は、システム設定 → プライバシーとセキュリティ → フルディスクアクセスに `OpenInNeovim.app` を追加
 
 各ステップは `mise run brew` / `mise run link` のように個別にも実行できます（詳細は後述の「タスク一覧」参照）。
 
 なお、`git/.gitconfig` は `merge.conflictstyle = zdiff3` を使用するため Git 2.35.0 以降を前提としています（Homebrew の git を使っていれば問題ありません）。
-
-### 4. (任意) Finder ダブルクリックで Neovim を起動するランチャー .app を生成
-
-```bash
-mise run macos-app
-```
-
-`~/Applications/OpenInNeovim.app` が生成されます。Finder で対象ファイルを選択 → `Cmd+I` → 「このアプリケーションで開く」を `OpenInNeovim` に変更 → 「すべてを変更...」で拡張子ごとに固定できます。
-
-複数フォルダ (デスクトップ / 書類 等) で毎回 TCC プロンプトが出るのが煩わしい場合は、システム設定 → プライバシーとセキュリティ → フルディスクアクセスに `OpenInNeovim.app` を追加してください。
 
 ## タスク一覧
 
