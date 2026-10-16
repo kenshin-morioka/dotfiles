@@ -38,7 +38,7 @@ Basically a single `mise run setup` does everything (idempotent — safe to re-r
 1. Clone: `ghq get git@github.com:kenshin-morioka/dotfiles.git` (the `agents/private` submodule is fetched by `mise run setup`; it requires access to the private `agents-private` repo)
 2. Install Homebrew: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 3. Install mise and trust this repo: `brew install mise && mise trust --all`
-4. Run `mise run setup` — this runs `mise run brew` (packages), `mise run link` (symlinks), `mise run macos-defaults`, fzf keybindings install, `mise run tmux-init` (TPM), `mise run claude-init` (checklist template), `pre-commit install`, and `mise trust` all at once
+4. Run `mise run setup` — this runs `mise run brew` (packages), `mise run link` (symlinks), `mise run macos-defaults`, fzf keybindings install, `mise run claude-init` (checklist template), `mise run codex-init` (Codex profile from template), `mise run tmux-init` (TPM), `pre-commit install`, and `mise trust` all at once
 5. Post-install manual steps: launch tmux and press `Ctrl-b I` to fetch plugins; customize the generated self-review checklist yourself
 6. (Optional) Build the Finder-double-click → Neovim launcher .app: `mise run macos-app` — creates `~/Applications/OpenInNeovim.app`. Assign it as the default opener via Finder → `Cmd+I` → "Open with" → "Change All...". If TCC prompts get annoying across folders (Desktop / Documents / etc.), add `OpenInNeovim.app` to System Settings → Privacy & Security → Full Disk Access.
 
@@ -132,6 +132,7 @@ mise run setup
 | fzf キーバインド | `$(brew --prefix)/opt/fzf/install` を rc 非改変オプション付きで実行 |
 | `mise run tmux-init` | TPM (Tmux Plugin Manager) をインストール |
 | `mise run claude-init` | セルフレビューチェックリストの雛形を生成 |
+| `mise run codex-init` | Codex の dotfiles プロファイル設定を雛形 (`agents/codex/dotfiles.config.toml.example`) から生成 |
 | `pre-commit install` | pre-commit フックをリポジトリに設定 |
 | `mise trust` | `mise/config.toml` を信頼 |
 

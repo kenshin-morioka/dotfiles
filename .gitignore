@@ -14,6 +14,8 @@ agents/claude/CLAUDE.md
 agents/claude/settings.json
 agents/claude/settings.broken-symlink-backup-*.json
 agents/claude/settings.json.bak
+# Codex の dotfiles プロファイル。Codex が hook の trust 状態 (hooks.state) を書き込むためローカル管理。雛形は *.example
+agents/codex/dotfiles.config.toml
 claude.json
 agents/hooks/*.disabled
 

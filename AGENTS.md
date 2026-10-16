@@ -32,7 +32,7 @@ AI エージェントの設定はすべて `agents/` に置く。Claude Code と
 - `agents/checklists/` — セルフレビューチェックリスト（`~/.claude/checklists`。共通ルールから参照されるため共有扱い）
 - `agents/hooks/` — Claude Code / Codex 共有の hook スクリプト（`~/.claude/hooks` と `~/.codex/hooks` の両方にディレクトリ単位でリンク）。両ツールとも hook の入力 JSON（`tool_name` / `tool_input.command` / `cwd`）と exit 2 によるブロックが同じ形式なので、スクリプトを共有する。登録は各ツールの設定（`agents/claude/settings.json`、`~/.codex/hooks.json`。どちらも git 追跡外）で行う
 - `agents/claude/` — Claude Code 固有（`settings.json`, subagent, statusline）。`~/.claude/` 配下にリンクされる
-- `agents/codex/` — Codex 固有（`dotfiles.config.toml` → `~/.codex/dotfiles.config.toml`）
+- `agents/codex/` — Codex 固有。`dotfiles.config.toml`（`~/.codex/dotfiles.config.toml`、`codex --profile dotfiles` が読む）は Codex が hook の trust 状態を書き込むため git 追跡外で、雛形 `dotfiles.config.toml.example` から `mise run codex-init` で生成する。雛形に入れたい設定変更は `.example` 側に書く
 
 ## pre-commit フック
 
@@ -56,6 +56,7 @@ AI エージェントの設定はすべて `agents/` に置く。Claude Code と
 - `agents/checklists/` — セルフレビューチェックリスト
 - `agents/claude/settings.json` — Claude Code のグローバル設定（hooks, statusLine 等。ローカル絶対パスを含むため git 追跡外）
 - `agents/hooks/*.disabled` — hook の手動無効化フラグ
+- `agents/codex/dotfiles.config.toml` — Codex の dotfiles プロファイル（Codex が `hooks.state` を書き込む。雛形は `dotfiles.config.toml.example`）
 - `git/.gitconfig.local` — Git認証情報等のローカル設定
 
 ## 変更時に連動して更新が必要なもの

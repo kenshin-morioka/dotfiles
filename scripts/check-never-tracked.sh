@@ -8,6 +8,7 @@ NEVER_TRACK=(
   claude.json
   agents/claude/CLAUDE.md
   agents/claude/settings.json
+  agents/codex/dotfiles.config.toml
   agents/checklists/
   git/.gitconfig.local
 )
