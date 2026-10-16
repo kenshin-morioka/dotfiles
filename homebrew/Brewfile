@@ -30,6 +30,7 @@ brew "tmux"
 # Search
 brew "ripgrep"
 brew "fd"
+brew "peco"
 
 # Linters
 brew "selene"
@@ -58,15 +59,19 @@ brew "zstd"
 # Build Tools
 brew "go-task"
 brew "act"
+brew "pinact"
 brew "rustup"
 
 # Utilities
+brew "ffmpeg"
 brew "imagemagick"
+brew "poppler"
 brew "sops"
 brew "terminal-notifier"
 brew "tree-sitter-cli" # nvim-treesitter (main) のパーサービルドに必要
 
 # Casks
 cask "claude-code"
+cask "codex"
 cask "session-manager-plugin" # 要sudo権限での手動インストール
 cask "wezterm@nightly"
