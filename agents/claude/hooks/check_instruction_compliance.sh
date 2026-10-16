@@ -83,7 +83,7 @@ fi
 
 # 明示的に FAIL と判定された場合のみブロックする
 # (返答本文中に FAIL が引用されただけで誤ブロックしないよう行頭アンカーで判定する)
-if echo "$result" | grep -qE '^[[:space:]]*FAIL'; then
+if echo "$result" | grep -qE '^[[:space:]]*FAIL:'; then
   echo "[指示外検出フック (別コンテキスト判定)]" >&2
   echo "$result" >&2
   echo "" >&2
