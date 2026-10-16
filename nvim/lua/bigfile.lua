@@ -3,7 +3,7 @@
 local M = {}
 
 -- このサイズまたは行数を超えたら「巨大ファイル」とみなす
-M.size_limit = 256 * 1024 -- 256KB
+M.size_limit = 256 * 1024
 M.line_limit = 3000
 -- 1行がこれを超えたら minified ファイルとみなす
 -- 超長行は treesitter のキャプチャ処理が1行に集中し描画がフリーズする
@@ -71,7 +71,6 @@ end
 
 local group = vim.api.nvim_create_augroup('bigfile_detect', {})
 
--- 保存後はキャッシュを破棄し、次回の is_big() で再判定させる
 vim.api.nvim_create_autocmd('BufWritePost', {
   group = group,
   callback = function(ev)
@@ -79,7 +78,6 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   end,
 })
 
--- 読み込み (:e! 等の再読込を含む) 完了時に判定し直してキャッシュし、巨大ファイルなら通知する
 vim.api.nvim_create_autocmd('BufReadPost', {
   group = group,
   callback = function(ev)

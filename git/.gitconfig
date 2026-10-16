@@ -4,7 +4,6 @@
 	root = ~/src
 [core]
 	quotepath = false
-	# diff / log / show を delta で表示（シンタックスハイライト付き）
 	pager = delta
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
@@ -32,10 +31,8 @@
 	# 一度解決したコンフリクトを記憶して自動再適用
 	enabled = true
 [branch]
-	# branch 一覧を最終コミット日時の新しい順に表示
 	sort = -committerdate
 [init]
-	# 新規リポジトリのデフォルトブランチを main に
 	defaultBranch = main
 [interactive]
 	# add -p などの対話的 diff も delta で色付け
@@ -43,6 +40,5 @@
 [delta]
 	# n / N でファイル間をジャンプ
 	navigate = true
-	# 行番号を表示
 	line-numbers = true
 # 仕事用の GitHub アカウントへの切り替え (URL 書き換え・user) は公開しないため .gitconfig.local に書く

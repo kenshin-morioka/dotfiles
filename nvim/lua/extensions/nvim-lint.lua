@@ -1,6 +1,5 @@
 local lint = require('lint')
 
--- markdownlint の設定ファイルを指定
 -- ~/.config/nvim は dotfiles/nvim へのシンボリックリンクなので、realpath で実体に解決してから
 -- 親ディレクトリ (dotfiles ルート) の .markdownlint.json を参照する
 local config_dir = vim.uv.fs_realpath(vim.fn.stdpath('config')) or vim.fn.stdpath('config')
@@ -10,7 +9,6 @@ lint.linters.markdownlint.args = {
   '--stdin',
 }
 
--- リンターの設定
 lint.linters_by_ft = {
   lua = { 'selene' },
   sh = { 'shellcheck' },
@@ -22,7 +20,6 @@ lint.linters_by_ft = {
   ['*'] = { 'typos' },
 }
 
--- 自動実行の設定
 vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufReadPost', 'InsertLeave' }, {
   callback = function(ev)
     -- 巨大ファイルでは InsertLeave のたびに全文を linter に流すと重いためスキップ
@@ -34,7 +31,6 @@ vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufReadPost', 'InsertLeave' }, {
   end,
 })
 
--- 手動実行用のキーマップ
 vim.keymap.set('n', '<leader>ll', function()
   lint.try_lint()
 end, { desc = 'Lint current file' })

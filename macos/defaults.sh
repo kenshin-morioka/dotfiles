@@ -26,15 +26,11 @@ defaults write com.github.wez.wezterm ApplePressAndHoldEnabled -bool false
 # --------------------------------------
 # Finder
 #
-# すべてのファイルの拡張子を表示
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-# パスバーを表示
 defaults write com.apple.finder ShowPathbar -bool true
-# ステータスバーを表示
 defaults write com.apple.finder ShowStatusBar -bool true
 # 検索のデフォルト対象を Mac 全体ではなくカレントフォルダにする
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
-# 拡張子変更時の警告を無効化
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
 # --------------------------------------
@@ -43,32 +39,25 @@ defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 # 保存先を ~/Screenshots に変更 (デスクトップが散らからないように)
 mkdir -p "${HOME}/Screenshots"
 defaults write com.apple.screencapture location -string "${HOME}/Screenshots"
-# ウィンドウ撮影時の影を無効化
 defaults write com.apple.screencapture disable-shadow -bool true
-# 保存形式を png に固定
 defaults write com.apple.screencapture type -string "png"
 
 # --------------------------------------
 # .DS_Store
 #
-# ネットワークドライブ / USB ドライブに .DS_Store を作らない
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 
 # --------------------------------------
 # Dock
 #
-# 自動的に隠す
 defaults write com.apple.dock autohide -bool true
-# 表示までの待ち時間をなくす
 defaults write com.apple.dock autohide-delay -float 0
-# 表示アニメーションを高速化
 defaults write com.apple.dock autohide-time-modifier -float 0.4
 
 # --------------------------------------
 # 反映
 #
-# defaults の変更を反映するため対象プロセスを再起動する
 for app in Finder Dock SystemUIServer; do
   killall "${app}" >/dev/null 2>&1 || true
 done

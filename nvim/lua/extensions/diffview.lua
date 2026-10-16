@@ -36,7 +36,6 @@ require('diffview').setup {
   },
 }
 
--- diffview.nvim の仮想バッファに対してスワップファイルを無効化
 -- diffview:// プロトコルのバッファはファイルシステム上に実体がないため、
 -- スワップファイルは不要であり、E325エラーの原因となる
 vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {

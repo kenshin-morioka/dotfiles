@@ -26,31 +26,31 @@ vim.keymap.set("n", "<S-Tab>", ":bprev<CR>")
 vim.keymap.set("n", "<leader>q", ":bp|bd #<CR>")
 
 -- cursor movement (Option + Arrow)
-vim.keymap.set("i", "<M-Left>", "<C-o>b") -- 前の単語へ
-vim.keymap.set("i", "<M-Right>", "<C-o>w") -- 次の単語へ
-vim.keymap.set("i", "<M-BS>", "<C-w>") -- 前の単語を削除
-vim.keymap.set("n", "<M-Left>", "b") -- 前の単語へ
-vim.keymap.set("n", "<M-Right>", "w") -- 次の単語へ
-vim.keymap.set("n", "<M-Up>", "<C-u>") -- 半ページ上へ
-vim.keymap.set("n", "<M-Down>", "<C-d>") -- 半ページ下へ
-vim.keymap.set("i", "<M-Up>", "<C-o><C-u>") -- 半ページ上へ
-vim.keymap.set("i", "<M-Down>", "<C-o><C-d>") -- 半ページ下へ
+vim.keymap.set("i", "<M-Left>", "<C-o>b")
+vim.keymap.set("i", "<M-Right>", "<C-o>w")
+vim.keymap.set("i", "<M-BS>", "<C-w>")
+vim.keymap.set("n", "<M-Left>", "b")
+vim.keymap.set("n", "<M-Right>", "w")
+vim.keymap.set("n", "<M-Up>", "<C-u>")
+vim.keymap.set("n", "<M-Down>", "<C-d>")
+vim.keymap.set("i", "<M-Up>", "<C-o><C-u>")
+vim.keymap.set("i", "<M-Down>", "<C-o><C-d>")
 
 -- 単語単位で選択 (Shift + Option + Arrow)
-vim.keymap.set("i", "<S-M-Left>", "<C-o>vb") -- インサート：選択開始して前の単語へ
-vim.keymap.set("i", "<S-M-Right>", "<C-o>vw") -- インサート：選択開始して次の単語へ
-vim.keymap.set("n", "<S-M-Left>", "vb") -- ノーマル：選択開始して前の単語へ
-vim.keymap.set("n", "<S-M-Right>", "vw") -- ノーマル：選択開始して次の単語へ
-vim.keymap.set({ "v", "s" }, "<S-M-Left>", "b") -- 選択範囲を前の単語へ拡張
-vim.keymap.set({ "v", "s" }, "<S-M-Right>", "w") -- 選択範囲を次の単語へ拡張
+vim.keymap.set("i", "<S-M-Left>", "<C-o>vb")
+vim.keymap.set("i", "<S-M-Right>", "<C-o>vw")
+vim.keymap.set("n", "<S-M-Left>", "vb")
+vim.keymap.set("n", "<S-M-Right>", "vw")
+vim.keymap.set({ "v", "s" }, "<S-M-Left>", "b")
+vim.keymap.set({ "v", "s" }, "<S-M-Right>", "w")
 
 -- Comment (Select mode)
-vim.keymap.set("s", "gc", "<C-g>gc", { remap = true }) -- セレクトモードでコメントトグル
-vim.keymap.set("s", "gb", "<C-g>gb", { remap = true }) -- セレクトモードでブロックコメントトグル
+vim.keymap.set("s", "gc", "<C-g>gc", { remap = true })
+vim.keymap.set("s", "gb", "<C-g>gb", { remap = true })
 
 -- Jumplist（Ctrl+o は Raycast 等の macOS ショートカットと干渉、<C-i> は Tab の :bnext に潰されるため leader で代替）
-vim.keymap.set("n", "<leader>o", "<C-o>") -- ジャンプ前の位置に戻る
-vim.keymap.set("n", "<leader>i", "<C-i>") -- 戻った後に再び進む
+vim.keymap.set("n", "<leader>o", "<C-o>")
+vim.keymap.set("n", "<leader>i", "<C-i>")
 
 -- Nvim 0.11+ 標準の LSP マッピング (grr/grn/gri/gra/grt) を削除する。
 -- lspconfig.lua で gr (参照一覧) をバッファローカルに定義しており、
@@ -62,8 +62,8 @@ for _, lhs in ipairs({ "grr", "grn", "gri", "gra", "grt" }) do
 end
 
 -- Diagnostics
-vim.keymap.set("n", "<leader>dd", vim.diagnostic.open_float) -- diagnosticsをフロート表示
-vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist) -- diagnosticsをリスト表示
+vim.keymap.set("n", "<leader>dd", vim.diagnostic.open_float)
+vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist)
 
 -- Clear search highlight
 vim.keymap.set("n", "<Esc><Esc>", ":nohlsearch<CR>", { silent = true })

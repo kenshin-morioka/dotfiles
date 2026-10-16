@@ -1,4 +1,3 @@
-# promptのカラーを設定しています、$変数は後述で設定している変数が差し込まれます
 format = """
 $directory\
 [](fg:#88C0D0 bg:#394260)\
@@ -16,7 +15,6 @@ $os\
 [](fg:#88C0D0)\
 \n$character"""
 
-# コマンドラインに1行分のスペースを入れない
 add_newline = false
 
 [os]

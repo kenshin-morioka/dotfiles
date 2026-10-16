@@ -81,14 +81,12 @@ for _, streak in ipairs({ 1, 2, 3 }) do
 	end
 end
 
--- keybindの設定
 local keybind = require("keybinds")
 config.disable_default_key_bindings = true
 config.keys = keybind.keys
 config.key_tables = keybind.key_tables
 config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 2000 }
 
--- background
 local background = require("background")
 config.background = background.default
 
@@ -111,7 +109,6 @@ end)
 
 require("status")
 
--- status
 config.status_update_interval = 1000
 
 return config

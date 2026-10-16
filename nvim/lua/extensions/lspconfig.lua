@@ -1,4 +1,3 @@
--- Diagnostic settings
 -- NOTE: vim.diagnostic.config はここ 1 箇所に統合する。
 -- 他所（appearance.lua 等）で呼ぶと signs キーごと上書きされアイコンが消える。
 vim.diagnostic.config({
@@ -28,10 +27,8 @@ vim.diagnostic.config({
   },
 })
 
--- LSP capabilities for nvim-cmp
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- Keymaps on LSP attach
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
@@ -57,7 +54,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
--- LSP server configurations
 -- capabilities は全サーバー共通で付与するため、ここには個別設定のみ書く
 local servers = {
   lua_ls = {
@@ -93,5 +89,4 @@ for name, config in pairs(servers) do
   vim.lsp.config(name, vim.tbl_extend('force', { capabilities = capabilities }, config))
 end
 
--- Enable LSP servers
 vim.lsp.enable(vim.tbl_keys(servers))
