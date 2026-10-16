@@ -54,7 +54,7 @@ echo "✅ セットアップが完了しました！"
 #
 [tasks.agents-update]
 description = "agents submodule を最新の main に更新（未取得なら取得）"
-run = "scripts/update-agents.sh"
+run = "git submodule update --init --remote agents"
 
 # --------------------------------------
 # シンボリックリンク (定義は symlinks.txt)
