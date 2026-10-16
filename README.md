@@ -24,7 +24,7 @@ Personal dotfiles configuration for macOS.
 | `agents/`                 | AI agent config: shared skills, private submodule, Claude Code / Codex config  |
 | `git/`                    | Git config (`.gitconfig`; identity lives in untracked `.gitconfig.local`)      |
 | `act/`                    | GitHub Actions local runner config                                             |
-| `github-copilot/`         | GitHub Copilot CLI config                                                      |
+| `github-copilot/`         | GitHub Copilot for IntelliJ version metadata                                   |
 | `flipper/`                | Flipper (mobile app debugger) settings                                         |
 | `cowsay/`                 | Custom cowsay cow files                                                        |
 | `macos/`                  | AppleScript source for macOS launcher .app                                     |
@@ -87,7 +87,7 @@ Machine-specific settings live outside git: `~/.zshrc.local` (sourced at the end
 | `agents/`                 | AI エージェント設定（共通スキル、非公開 submodule、ツール固有設定）        |
 | `git/`                    | Git 設定（`.gitconfig`。ユーザー情報は git 追跡外の `.gitconfig.local`）   |
 | `act/`                    | GitHub Actions ローカル実行設定                                            |
-| `github-copilot/`         | GitHub Copilot CLI 設定                                                    |
+| `github-copilot/`         | GitHub Copilot for IntelliJ のバージョン情報                               |
 | `flipper/`                | Flipper（モバイルアプリデバッガ）設定                                      |
 | `cowsay/`                 | cowsay のカスタム cow ファイル                                             |
 | `macos/`                  | macOS 用ランチャー .app の AppleScript ソース                              |
