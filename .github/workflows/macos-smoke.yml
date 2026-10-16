@@ -44,7 +44,7 @@ jobs:
 
       - name: Verify symlinks
         # git 追跡対象のリンク元のみ検証する
-        # (agents/claude/CLAUDE.md や git/.gitconfig.local 等の gitignore 対象は CI 上に存在せず skip される)
+        # (git/.gitconfig.local 等の gitignore 対象や、非公開 submodule の agents/ 配下は CI 上に存在せず skip される)
         run: |
           set -euo pipefail
           targets=(
@@ -56,8 +56,6 @@ jobs:
             "$HOME/.config/tmux/tmux.conf"
             "$HOME/.config/mise"
             "$HOME/.config/act"
-            "$HOME/.claude/agents"
-            "$HOME/.claude/statusline-command.sh"
             "$HOME/.cowsay"
             "$HOME/.gitconfig"
           )

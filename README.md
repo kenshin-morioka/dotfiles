@@ -21,7 +21,7 @@ Personal dotfiles configuration for macOS.
 | `atuin/`                  | atuin shell history config                                                     |
 | `starship.toml`           | Starship prompt config                                                         |
 | `CLAUDE.md` / `AGENTS.md` | Repository instructions for Claude Code and Codex                              |
-| `agents/`                 | AI agent config: shared skills, private submodule, Claude Code / Codex config  |
+| `agents/`                 | AI agent config (private submodule): skills, checklists, Claude Code / Codex   |
 | `git/`                    | Git config (`.gitconfig`; identity lives in untracked `.gitconfig.local`)      |
 | `act/`                    | GitHub Actions local runner config                                             |
 | `github-copilot/`         | GitHub Copilot for IntelliJ version metadata                                   |
@@ -35,11 +35,11 @@ Personal dotfiles configuration for macOS.
 
 Basically a single `mise run setup` does everything (idempotent — safe to re-run).
 
-1. Clone: `ghq get git@github.com:kenshin-morioka/dotfiles.git` (the `agents/private` submodule is fetched by `mise run setup`; it requires access to the private `agents-private` repo)
+1. Clone: `ghq get git@github.com:kenshin-morioka/dotfiles.git` (the `agents` submodule is fetched by `mise run setup`; it requires access to the private `agents` repo)
 2. Install Homebrew: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 3. Install mise and trust this repo: `brew install mise && mise trust --all`
-4. Run `mise run setup` — this runs `mise run brew` (packages), `mise run link` (symlinks), `mise run macos-defaults`, fzf keybindings install, `mise run claude-init` (checklist template), `mise run codex-init` (Codex profile from template), `mise run tmux-init` (TPM), `pre-commit install`, and `mise trust` all at once
-5. Post-install manual steps: launch tmux and press `Ctrl-b I` to fetch plugins; customize the generated self-review checklist yourself
+4. Run `mise run setup` — this runs `mise run brew` (packages), `mise run link` (symlinks), `mise run macos-defaults`, fzf keybindings install, `mise run codex-init` (Codex profile from template), `mise run tmux-init` (TPM), `pre-commit install`, and `mise trust` all at once
+5. Post-install manual steps: launch tmux and press `Ctrl-b I` to fetch plugins
 6. (Optional) Build the Finder-double-click → Neovim launcher .app: `mise run macos-app` — creates `~/Applications/OpenInNeovim.app`. Assign it as the default opener via Finder → `Cmd+I` → "Open with" → "Change All...". If TCC prompts get annoying across folders (Desktop / Documents / etc.), add `OpenInNeovim.app` to System Settings → Privacy & Security → Full Disk Access.
 
 Each step can also be run individually (see Tasks below).
@@ -84,7 +84,7 @@ Machine-specific settings live outside git: `~/.zshrc.local` (sourced at the end
 | `atuin/`                  | atuinシェル履歴設定                                                        |
 | `starship.toml`           | Starshipプロンプト設定                                                     |
 | `CLAUDE.md` / `AGENTS.md` | Claude Code / Codex 共通のリポジトリルール                                 |
-| `agents/`                 | AI エージェント設定（共通スキル、非公開 submodule、ツール固有設定）        |
+| `agents/`                 | AI エージェント設定（非公開 submodule。スキル・ツール固有設定）            |
 | `git/`                    | Git 設定（`.gitconfig`。ユーザー情報は git 追跡外の `.gitconfig.local`）   |
 | `act/`                    | GitHub Actions ローカル実行設定                                            |
 | `github-copilot/`         | GitHub Copilot for IntelliJ のバージョン情報                               |
@@ -126,12 +126,11 @@ mise run setup
 | ステップ | 内容 |
 | -------- | ---- |
 | `mise run brew` | Brewfile の全パッケージをインストール |
-| `git submodule update --init` | `agents/private`（非公開リポジトリ `agents-private`）を取得 |
+| `git submodule update --init` | `agents`（非公開リポジトリ `agents`）を取得 |
 | `mise run link` | シンボリックリンクを作成（スキルは `~/.claude/skills/` と `~/.agents/skills/` にスキル単位でリンク） |
 | `mise run macos-defaults` | macOS defaults を適用 |
 | fzf キーバインド | `$(brew --prefix)/opt/fzf/install` を rc 非改変オプション付きで実行 |
 | `mise run tmux-init` | TPM (Tmux Plugin Manager) をインストール |
-| `mise run claude-init` | セルフレビューチェックリストの雛形を生成 |
 | `mise run codex-init` | Codex の dotfiles プロファイル設定を雛形 (`agents/codex/dotfiles.config.toml.example`) から生成 |
 | `pre-commit install` | pre-commit フックをリポジトリに設定 |
 | `mise trust` | `mise/config.toml` を信頼 |
@@ -139,7 +138,6 @@ mise run setup
 セットアップ後の手動作業:
 
 - tmux を起動し `Ctrl-b I` (Shift+i) でプラグイン (resurrect / continuum / vim-tmux-navigator 等) を取得
-- `mise run claude-init` で生成されたチェックリストの中身を自分でカスタマイズ
 
 各ステップは `mise run brew` / `mise run link` のように個別にも実行できます（詳細は後述の「タスク一覧」参照）。
 
