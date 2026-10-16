@@ -93,8 +93,8 @@ local background = require("background")
 config.background = background.default
 
 -- 背景透過トグル（LEADER + b で opacity 0.85 ⇄ 1.0 を切り替え）
--- automatically_reload_config による再評価で状態がリセットされないよう、未設定のときだけ初期化する
-if wezterm.GLOBAL.opacity == nil then
+-- automatically_reload_config による再評価で状態がリセットされないよう、未設定 (または旧基準値 0.70 が残っている) ときだけ初期化する
+if wezterm.GLOBAL.opacity == nil or wezterm.GLOBAL.opacity == 0.70 then
 	wezterm.GLOBAL.opacity = background.default_opacity
 end
 
