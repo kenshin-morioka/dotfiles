@@ -30,6 +30,8 @@
 .config/flipper:flipper
 .config/github-copilot:github-copilot
 .cowsay:cowsay
+# Claude Code のユーザー設定 (MCP サーバー・OAuth 等)。機密を含むため .gitignore 対象。各マシンで ~/.claude.json を claude.json に移してから link する
+.claude.json:claude.json
 .gitconfig:git/.gitconfig
 .gitconfig.local:git/.gitconfig.local
 .ssh/config:ssh/config
