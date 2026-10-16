@@ -53,7 +53,7 @@ AI エージェントの設定はすべて `agents/` に置く。Claude Code と
 以下の対応を忘れないこと。関連する変更を行った場合は、必ずセットで更新すること。
 
 - **キーバインド追加・変更時** → `docs/CHEATSHEET.md` を必ず同時に更新する
-- **新しいツール導入時** → `homebrew/Brewfile` にパッケージを追加する（`mise run brew-add` 使用）
+- **新しいツール導入時** → 管理元は `docs/TOOLCHAIN.md` に従う。Homebrew 管理なら `homebrew/Brewfile` に追加（`mise run brew-add` 使用）、言語製のグローバル CLI なら `mise/config.toml` に `npm:` 等のバックエンドで追加する
 - **言語ランタイムのバージョン変更時** → `mise/config.toml` を更新する
 - **シンボリックリンク対象の追加・変更時** → `symlinks.txt` を更新する
 - **zsh エイリアス・abbreviation 追加時** → `docs/CHEATSHEET.md` への記載を検討する

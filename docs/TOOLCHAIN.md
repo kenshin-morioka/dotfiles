@@ -18,9 +18,19 @@
 ## やらないこと
 
 - **Homebrew で言語ランタイムを入れない**: `brew upgrade` で勝手に上がり、プロジェクトごとに切り替えられないため
-  - 例外: `jsonlint` / `markdownlint-cli` / `prettier` の依存として入る Homebrew の node は残る。PATH では mise が優先される
+  - 例外: `jsonlint` / `markdownlint-cli` / `prettier` の依存として入る Homebrew の node は残る。PATH では mise が優先される（[シェルへの反映](#シェルへの反映)）
 - **`pnpm add -g` / `npm i -g` を使わない**: dotfiles に宣言が残らず、別マシンで再現できないため。mise の `npm:` バックエンドで入れる
 - **Vite+ をグローバルに入れない**: node / pnpm 等の shim を PATH の先頭に置き、mise とランタイム管理が重複するため
+
+## シェルへの反映
+
+どの起動方法でも mise 管理のツールが Homebrew より優先されるよう、3 箇所で PATH を通している。
+
+| ファイル | 対象 | 内容 |
+| ---- | ---- | ---- |
+| `zsh/.zshenv` | 全シェル（非対話・PATH を継承しない起動を含む） | mise の shims を PATH に追加 |
+| `zsh/.zprofile` | ログインシェル（`zsh -lc` 等） | `/etc/zprofile` の path_helper が `/opt/homebrew/bin` を先頭に移すため、その後に shims を再度先頭に置く |
+| `zsh/.zshrc` | 対話シェル | `mise activate` でディレクトリごとのバージョン切り替えを有効化 |
 
 ## 背景
 

@@ -4,6 +4,7 @@
 .zshrc:zsh/.zshrc
 .zshrc.local:zsh/.zshrc.local
 .zshenv:zsh/.zshenv
+.zprofile:zsh/.zprofile
 .config/nvim:nvim
 .config/starship.toml:starship.toml
 .config/wezterm:wezterm
