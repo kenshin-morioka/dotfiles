@@ -16,3 +16,6 @@ agents/claude/settings.broken-symlink-backup-*.json
 agents/claude/settings.json.bak
 claude.json
 agents/claude/hooks/*.disabled
+
+# harness-eval の結果 (scripts/harness-eval.sh)
+scripts/harness-eval/

@@ -12,6 +12,14 @@
 - ディレクトリ単位でリンクされているもの（nvim, wezterm, mise, atuin, sheldon, act, flipper, github-copilot, cowsay, agents/checklists, agents/claude/agents, agents/claude/hooks）は、配下にファイルを追加するだけで自動的にリンク先に反映される
 - `symlinks.txt` で元ファイル末尾が `*` の行（スキル）は配下のエントリを個別にリンクする。スキルを追加した場合は `mise run link` の再実行が必要
 
+### ホーム配下のリンク一覧
+
+対応表の正本は `symlinks.txt`（`<リンク先>:<元ファイル>`）。グローバルルール（`agents/private/AGENTS.md`）には一覧を書かず、`symlinks.txt` とここを参照する。
+
+- `~/.claude/skills/<name>` と `~/.agents/skills/<name>` は `agents/skills/` と `agents/private/skills/` のスキルをスキル単位でリンク。`~/.claude/skills/synced/` だけは Claude Code 管理の実ディレクトリでリンク対象外
+- `~/.claude/CLAUDE.md` と `~/.codex/AGENTS.md` は両方 `agents/private/AGENTS.md` を指す
+- `~/.claude.json`（`claude.json`）と `agents/claude/settings.json` は .gitignore 対象。リンクは張られるが内容は各マシンで管理する
+
 ## AI エージェント設定（agents/）
 
 AI エージェントの設定はすべて `agents/` に置く。Claude Code と Codex で共有するものは直下、ツール固有のものは `agents/claude/` / `agents/codex/` に置く。
@@ -53,6 +61,7 @@ AI エージェントの設定はすべて `agents/` に置く。Claude Code と
 以下の対応を忘れないこと。関連する変更を行った場合は、必ずセットで更新すること。
 
 - **キーバインド追加・変更時** → `docs/CHEATSHEET.md` を必ず同時に更新する
+- **全プロジェクト共通ルールを hook / permissions に移したとき** → `agents/claude/hooks/` にスクリプトを置き、`agents/claude/settings.json`（git 追跡外）への登録手順を PR 本文に書く
 - **新しいツール導入時** → 管理元は `docs/TOOLCHAIN.md` に従う。Homebrew 管理なら `homebrew/Brewfile` に追加（`mise run brew-add` 使用）、言語製のグローバル CLI なら `mise/config.toml` に `npm:` 等のバックエンドで追加する
 - **言語ランタイムのバージョン変更時** → `mise/config.toml` を更新する
 - **シンボリックリンク対象の追加・変更時** → `symlinks.txt` を更新する

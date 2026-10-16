@@ -1,0 +1,2 @@
+# id	prompt	expect (regex on result)
+hello	Reply with exactly: ok	^ok$
