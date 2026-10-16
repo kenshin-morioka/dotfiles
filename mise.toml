@@ -26,6 +26,8 @@ mise run brew
 # agents (非公開 submodule) を取得。取得済みなら no-op
 echo "📥 submodule を取得中..."
 git -C "$MISE_PROJECT_ROOT" submodule update --init
+# pull 時に submodule も更新し、post-merge フックの link で新規スキル等を反映させる (.git/config に書くためリポジトリ追跡外)
+git -C "$MISE_PROJECT_ROOT" config submodule.recurse true
 # 雛形から生成する git 追跡外ファイルは、link より先に作っておく (無いと link で skip される)
 mise run codex-init
 mise run link
