@@ -35,6 +35,11 @@ pass_n=0
 total_n=0
 while IFS=$'\t' read -r id prompt expect; do
   [[ -z "$id" || "$id" == \#* ]] && continue
+  # expect が空だと grep -E "" が常にマッチして全タスク合格になるため、不備のある行は止める
+  if [[ -z "$prompt" || -z "$expect" ]]; then
+    echo "error: タスク '$id' に prompt または expect がありません" >&2
+    exit 1
+  fi
   total_n=$((total_n + 1))
 
   # shellcheck disable=SC2086  # extra_args は意図的に単語分割する
