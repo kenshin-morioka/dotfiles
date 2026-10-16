@@ -46,7 +46,8 @@ mise trust "$MISE_PROJECT_ROOT/mise/config.toml" || true
 # tflint は Homebrew ではなく mise (mise/config.toml) で管理している。task.run_auto_install = false のため明示的にインストールする
 echo "🔧 tflint をインストール中..."
 mise install tflint
-# 警告が他の出力に埋もれないよう最後に実行する
+# 警告や確認が他の出力に埋もれないよう最後に実行する
+mise run brew-sync
 mise run brew-check
 echo "✅ セットアップが完了しました！"
 '''
@@ -208,7 +209,7 @@ extra_taps=$(comm -23 <(brew tap | grep -v '^homebrew/' | sort) <(echo "$taps" |
 extra_formulae=$(comm -23 <(brew leaves --installed-on-request | sort) <(echo "$formulae" | sort))
 extra_casks=$(comm -23 <(brew list --cask | sort) <(echo "$casks" | sort))
 if [ -n "$extra_taps$extra_formulae$extra_casks" ]; then
-  echo "⚠️  Brewfile にないパッケージがインストールされています (不要なら brew bundle cleanup --force で削除、必要なら Brewfile に追加):"
+  echo "⚠️  Brewfile にないパッケージがインストールされています (不要なら brew bundle cleanup --force で削除、必要なら mise run brew-sync で追記):"
   [ -z "$extra_taps" ] || echo "$extra_taps" | sed 's/^/   tap  /'
   [ -z "$extra_formulae" ] || echo "$extra_formulae" | sed 's/^/   brew /'
   [ -z "$extra_casks" ] || echo "$extra_casks" | sed 's/^/   cask /'
@@ -262,14 +263,36 @@ fi
 '''
 
 [tasks.brew-sync]
-description = "現在のパッケージをBrewfileに同期"
+description = "Brewfile にないインストール済みパッケージを確認のうえ Brewfile に追記"
 shell = "bash -c"
 quiet = true
 run = '''
 set -euo pipefail
-echo "🔄 インストール済みパッケージをBrewfileに同期中..."
-brew bundle dump --force --file="$MISE_PROJECT_ROOT/homebrew/Brewfile"
-echo "✅ Brewfileを更新しました"
+brewfile="$MISE_PROJECT_ROOT/homebrew/Brewfile"
+# brew bundle dump はコメント・グループ分けを消し、非公式 tap も書き込むため使わず追記だけ行う
+# 非公式 tap のパッケージは新規マシンで trust 必須で失敗するため対象外にする
+new_formulae=$(comm -23 <(brew leaves --installed-on-request | grep -v / | sort) <(brew bundle list --formula --file="$brewfile" | sort))
+new_casks=$(comm -23 \
+  <(brew info --installed --json=v2 | jq -r '.casks[] | select(.tap == "homebrew/cask") | .token' | sort) \
+  <(brew bundle list --cask --file="$brewfile" | sort))
+if [ -z "$new_formulae$new_casks" ]; then
+  echo "✅ Brewfile とインストール済みパッケージに差分はありません"
+  exit 0
+fi
+# 言語ランタイム等、Homebrew の責務外のものが紛れ込まないよう確認を挟む (docs/TOOLCHAIN.md)
+echo "🔄 Brewfile にないパッケージがインストールされています:"
+[ -z "$new_formulae" ] || echo "$new_formulae" | sed 's/^/   brew /'
+[ -z "$new_casks" ] || echo "$new_casks" | sed 's/^/   cask /'
+answer=""
+# 非対話実行では入力を待てないため追記しない
+[ -t 0 ] && { read -r -p "Brewfile に追記しますか? [y/N] " answer || true; }
+if [[ ! "$answer" =~ ^[yY]$ ]]; then
+  echo "⏭️  追記をスキップしました"
+  exit 0
+fi
+[ -z "$new_formulae" ] || echo "$new_formulae" | sed 's/.*/brew "&"/' >> "$brewfile"
+[ -z "$new_casks" ] || echo "$new_casks" | sed 's/.*/cask "&"/' >> "$brewfile"
+echo "✅ Brewfile に追記しました。必要ならグループ分けを整えてコミットしてください"
 '''
 
 # --------------------------------------

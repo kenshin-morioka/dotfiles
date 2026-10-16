@@ -38,7 +38,7 @@ Basically a single `mise run setup` does everything (idempotent — safe to re-r
 1. Clone: `ghq get git@github.com:kenshin-morioka/dotfiles.git` (the `agents` submodule is fetched by `mise run setup`; it requires access to the private `agents` repo)
 2. Install Homebrew: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 3. Install mise and trust this repo: `brew install mise && mise trust --all`
-4. Run `mise run setup` — this runs `mise run brew` (packages), `mise run link` (symlinks), `mise run macos-defaults`, fzf keybindings install, `mise run codex-init` (Codex profile from template), `mise run tmux-init` (TPM), `pre-commit install`, `mise trust`, and `mise run brew-check` all at once
+4. Run `mise run setup` — this runs `mise run brew` (packages), `mise run link` (symlinks), `mise run macos-defaults`, fzf keybindings install, `mise run codex-init` (Codex profile from template), `mise run tmux-init` (TPM), `pre-commit install`, `mise trust`, `mise run brew-sync`, and `mise run brew-check` all at once
 5. Post-install manual steps: launch tmux and press `Ctrl-b I` to fetch plugins
 6. (Optional) Build the Finder-double-click → Neovim launcher .app: `mise run macos-app` — creates `~/Applications/OpenInNeovim.app`. Assign it as the default opener via Finder → `Cmd+I` → "Open with" → "Change All...". If TCC prompts get annoying across folders (Desktop / Documents / etc.), add `OpenInNeovim.app` to System Settings → Privacy & Security → Full Disk Access.
 
@@ -54,7 +54,7 @@ Each step can also be run individually (see Tasks below).
 | `mise run brew` | Install all packages from Brewfile |
 | `mise run brew-add xxx` | Add and install a package |
 | `mise run brew-add-cask xxx` | Add and install a cask |
-| `mise run brew-sync` | Sync installed packages to Brewfile |
+| `mise run brew-sync` | Append installed packages missing from Brewfile (after y/N confirmation; third-party tap packages are excluded) |
 | `mise run brew-check` | Detect deprecated packages / third-party taps in Brewfile and leftovers not in Brewfile |
 | `mise run nvim-update` | Run `:Lazy sync` headlessly and commit & push `lazy-lock.json` |
 | `mise run lazy-commit` | Commit & push `lazy-lock.json` only (after updating in nvim) |
@@ -136,6 +136,7 @@ mise run setup
 | `mise run codex-init` | Codex の dotfiles プロファイル設定を雛形 (`agents/codex/dotfiles.config.toml.example`) から生成 |
 | `pre-commit install` | pre-commit フックをリポジトリに設定 |
 | `mise trust` | `mise/config.toml` を信頼 |
+| `mise run brew-sync` | Brewfile にないインストール済みパッケージを y/N 確認のうえ追記 |
 | `mise run brew-check` | Brewfile の配布終了パッケージ・非公式 tap を検出して失敗させ、Brewfile 外の残留物を警告 |
 
 セットアップ後の手動作業:
@@ -170,7 +171,7 @@ mise tasks  # 利用可能なタスク一覧を表示
 | `mise run brew` | Brewfileの全パッケージをインストール |
 | `mise run brew-add xxx` | パッケージを追加・インストール |
 | `mise run brew-add-cask xxx` | Caskを追加・インストール |
-| `mise run brew-sync` | インストール済みパッケージをBrewfileに同期 |
+| `mise run brew-sync` | Brewfile にないインストール済みパッケージを y/N 確認のうえ追記（非公式 tap のパッケージは対象外） |
 | `mise run brew-check` | Brewfile の配布終了パッケージ・非公式 tap と、Brewfile 外の残留物を検出 |
 | `mise run nvim-update` | ヘッドレスで `:Lazy sync` を実行し `lazy-lock.json` をコミット & push |
 | `mise run lazy-commit` | nvim で更新後、`lazy-lock.json` のみをコミット & push |
