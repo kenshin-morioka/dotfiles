@@ -23,10 +23,9 @@ if ! command -v brew >/dev/null 2>&1; then
   exit 1
 fi
 mise run brew
-echo "📥 submodule を取得中..."
-git -C "$MISE_PROJECT_ROOT" submodule update --init
-# pull 時に submodule も更新し、post-merge フックの link で新規スキル等を反映させる (.git/config に書くためリポジトリ追跡外)
-git -C "$MISE_PROJECT_ROOT" config submodule.recurse true
+mise run agents-update
+# 以前の setup で設定していたもの。有効だと pull 時に agents が記録された古いコミットに戻る
+git -C "$MISE_PROJECT_ROOT" config --unset submodule.recurse || true
 # 雛形から生成する git 追跡外ファイルは、link より先に作っておく (無いと link で skip される)
 mise run codex-init
 mise run link
@@ -49,6 +48,13 @@ mise run brew-sync
 mise run brew-check
 echo "✅ セットアップが完了しました！"
 '''
+
+# --------------------------------------
+# agents submodule
+#
+[tasks.agents-update]
+description = "agents submodule を最新の main に更新（未取得なら取得）"
+run = "scripts/update-agents.sh"
 
 # --------------------------------------
 # シンボリックリンク (定義は symlinks.txt)

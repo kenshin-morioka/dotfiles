@@ -1,7 +1,6 @@
 # Dependabot / Devin が作成した PR に Devin Review を実行する
 # これらの bot の PR は CodeRabbit がレビューしない (bot 用シートが有料) ため、その代替。
 # 人間が作成した PR は CodeRabbit がレビューするので対象外 (Devin のコスト削減)
-# agents submodule の参照更新 PR も対象外 (中身は agents 側の PR でレビュー済みで、自動マージされるため)
 #
 # 必要な設定:
 # - DEVIN_API_KEY: UseReviewManual 権限を持つ Devin のサービスユーザー API キー (cog_...)
@@ -19,8 +18,7 @@ jobs:
   review:
     if: >-
       !github.event.pull_request.draft &&
-      contains(fromJSON('["dependabot[bot]", "devin-ai-integration[bot]"]'), github.event.pull_request.user.login) &&
-      !startsWith(github.head_ref, 'dependabot/submodules/')
+      contains(fromJSON('["dependabot[bot]", "devin-ai-integration[bot]"]'), github.event.pull_request.user.login)
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Devin Review

@@ -21,23 +21,3 @@ updates:
       pre-commit:
         patterns:
           - "*"
-
-  # agents (非公開 submodule) の main を追従し、参照更新の手作業をなくす。
-  # 更新 PR は .github/workflows/dependabot-auto-merge.yml で自動マージする
-  # 定期実行のほか、このファイルを変更して main にマージしたときにも実行される
-  - package-ecosystem: gitsubmodule
-    directory: /
-    registries:
-      - github-agents
-    schedule:
-      interval: daily
-    commit-message:
-      prefix: chore
-
-registries:
-  # 非公開の agents リポジトリを読むためのトークン (agents の Contents: Read のみの fine-grained PAT)
-  github-agents:
-    type: git
-    url: https://github.com
-    username: x-access-token
-    password: ${{secrets.AGENTS_READ_TOKEN}}

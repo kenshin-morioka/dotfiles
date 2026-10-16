@@ -26,8 +26,8 @@ AI エージェントの設定はすべて `agents/` に置く。`agents/` は�
 
 - `agents/AGENTS.md` — 全プロジェクト共通ルール（`~/.codex/AGENTS.md` と `~/.claude/CLAUDE.md` の両方に直接リンク）
 - `agents/skills/` — スキル。`~/.claude/skills/<name>` と `~/.agents/skills/<name>` にスキル単位でリンクされる
-- `agents/` 配下を変更したら、submodule 側でコミット・push して PR をマージする。このリポジトリの参照コミットは Dependabot の更新 PR が毎日作られ自動マージされるため、手動更新は不要
-- クローン直後は `git submodule update --init` が必要（`mise run setup` に含まれる）
+- `agents/` 配下を変更したら、submodule 側でコミット・push して PR をマージする。手元の agents は dotfiles の pull で変更を取り込んだとき（post-merge フック）に最新の main へ自動更新される。すぐ反映したいときは `mise run agents-update`
+- dotfiles が記録する agents の参照コミットは更新しない（`.gitmodules` の `ignore = all` で差分も出ない）。`git submodule update` は古い参照コミットに戻すので使わない
 - `agents/checklists/` — セルフレビューチェックリスト（`~/.claude/checklists`）
 - `agents/hooks/` — Claude Code / Codex 共有の hook スクリプト（`~/.claude/hooks` と `~/.codex/hooks` の両方にディレクトリ単位でリンク）。両ツールとも hook の入力 JSON（`tool_name` / `tool_input.command` / `cwd`）と exit 2 によるブロックが同じ形式なので、スクリプトを共有する。登録は各ツールの設定（`agents/claude/settings.json`、`~/.codex/hooks.json`）で行う
 - `agents/claude/` — Claude Code 固有（`settings.json`, subagent, statusline）。`~/.claude/` 配下にリンクされる
@@ -46,6 +46,7 @@ AI エージェントの設定はすべて `agents/` に置く。`agents/` は�
 - **trailing-whitespace / end-of-file-fixer**: 空白・改行修正
 - **check-yaml**: YAML バリデーション
 - **check-added-large-files**: 大きなファイルの混入防止
+- **update-agents**: pull で変更を取り込んだ後 (post-merge) に agents を最新の main に更新する。agents が main 以外のブランチなら skip
 - **relink**: pull (post-merge)・ブランチ切り替え (post-checkout) 後に `mise run link` を実行し、新規スキル等のリンクを反映する。worktree では実行しない
 
 ## .gitignore で管理対象外のファイル
