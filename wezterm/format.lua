@@ -130,7 +130,6 @@ function M.tab_label(pane)
 		return repo
 	end
 
-	-- $HOME を ~ に省略して表示
 	local home = wezterm.home_dir
 	if path == home then
 		return "~"

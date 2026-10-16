@@ -30,7 +30,6 @@ require('vscode').setup({
     -- エディター本体だけダークグレー（neo-tree などサイドバーは透過のまま）
     Normal = { bg = '#1e1e1e' },
 
-    -- visual/select モードの選択範囲を薄い黄色に
     Visual = { bg = '#3a3520' },
 
     -- neo-tree のカーソル行からインデントマーカーへの背景色漏れを防止

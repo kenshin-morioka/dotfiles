@@ -40,7 +40,6 @@ bindkey '^[OF' end-of-line
 # プラグイン定義は ~/.config/sheldon/plugins.toml (sheldon/plugins.toml)
 eval "$(sheldon source)"
 
-# 補完初期化
 # oh-my-zsh 廃止に伴い自前で実行する。zsh-completions の fpath 追加より後に置くこと
 autoload -Uz compinit && compinit
 
@@ -97,7 +96,6 @@ fi
 # ====================
 # Functions
 # ====================
-# Claude Code または Codex を fzf で選択して起動する
 function select-ai-cli() {
   local -a choices
   local selected
@@ -170,7 +168,6 @@ function claude-worktree-resume-all() {
 # ====================
 # cargo
 # ====================
-# カレントディレクトリから上に辿って Cargo.toml のあるディレクトリを出力
 function _cargo-project-root() {
   local proj="$PWD"
   while [ "$proj" != "/" ] && [ ! -f "$proj/Cargo.toml" ]; do
@@ -183,7 +180,6 @@ function _cargo-project-root() {
   echo "$proj"
 }
 
-# bin ターゲットを fzf で選んで cargo run --bin を実行
 # cargo metadata から列挙するので src/bin/foo/main.rs 形式や [[bin]] 定義も拾える
 function crb() {
   local proj
@@ -204,7 +200,6 @@ function crb() {
   fi
 }
 
-# cargo のサブコマンドを fzf で選んでプロジェクトルートで実行
 function cg() {
   local proj
   proj=$(_cargo-project-root) || return 1
@@ -219,7 +214,6 @@ function cg() {
 # ====================
 # tmux
 # ====================
-# 既存セッションがあれば fzf で選択して attach、なければ新規作成
 function tm() {
   if ! command -v tmux &>/dev/null; then
     echo "tmux is not installed"
@@ -239,7 +233,6 @@ function tm() {
   [ -n "$session" ] && tmux a -t "$session"
 }
 
-# 全 tmux セッションを WezTerm の新しいタブで一気に開く
 # 各タブはそのセッションのアクティブペイン cwd で起動するため、
 # WezTerm のタブ名 (format.tab_label) がリポジトリ名等を解決できる
 function tma() {

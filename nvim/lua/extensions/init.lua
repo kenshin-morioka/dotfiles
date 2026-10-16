@@ -74,7 +74,6 @@ local plugins = {
     },
     config = function() require 'extensions.neo-tree' end,
   },
-  -- Snippets
   {
     'L3MON4D3/LuaSnip',
     version = 'v2.*',
@@ -84,21 +83,18 @@ local plugins = {
     },
     config = function() require 'extensions.luasnip' end,
   },
-  -- Autopairs
   {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
     opts = {},
   },
-  -- Comment
   {
     'numToStr/Comment.nvim',
     event = { 'BufNewFile', 'BufReadPre' },
     opts = {
-      ignore = '^$',  -- 空行を無視
+      ignore = '^$',
     },
   },
-  -- Search and Replace
   -- nvim-spectre は結果を同期描画するため大量マッチ時に固まる。
   -- grug-far は結果をストリーミング描画するので大量マッチでもブロックしない。
   {
@@ -117,7 +113,6 @@ local plugins = {
       },
     },
   },
-  -- Color highlighter
   {
     'uga-rosa/ccc.nvim',
     event = { 'BufNewFile', 'BufReadPre' },
@@ -127,7 +122,6 @@ local plugins = {
       },
     },
   },
-  -- Mason (LSP installer)
   {
     'williamboman/mason.nvim',
     lazy = false,
@@ -136,7 +130,6 @@ local plugins = {
       'williamboman/mason-lspconfig.nvim',
     },
   },
-  -- LSP
   {
     'neovim/nvim-lspconfig',
     event = { 'BufReadPre', 'BufNewFile' },
@@ -147,7 +140,6 @@ local plugins = {
     },
     config = function() require 'extensions.lspconfig' end,
   },
-  -- Completion
   {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
@@ -161,13 +153,11 @@ local plugins = {
     },
     config = function() require 'extensions.nvim-cmp' end,
   },
-  -- Linter
   {
     'mfussenegger/nvim-lint',
     event = { 'BufReadPre', 'BufNewFile' },
     config = function() require 'extensions.nvim-lint' end,
   },
-  -- Formatter
   {
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },
@@ -177,7 +167,6 @@ local plugins = {
     },
     config = function() require 'extensions.conform' end,
   },
-  -- Git Diff Viewer
   {
     'sindrets/diffview.nvim',
     cmd = { 'DiffviewOpen', 'DiffviewFileHistory' },
@@ -189,14 +178,12 @@ local plugins = {
     },
     config = function() require 'extensions.diffview' end,
   },
-  -- Git Conflict resolver
   {
     'akinsho/git-conflict.nvim',
     version = '*',
     event = { 'BufReadPre' },
     config = function() require 'extensions.git-conflict' end,
   },
-  -- GitHub link generator
   {
     'linrongbin16/gitlinker.nvim',
     cmd = 'GitLink',
@@ -205,7 +192,6 @@ local plugins = {
     },
     opts = {},
   },
-  -- Markdown Preview
   {
     'iamcco/markdown-preview.nvim',
     cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
@@ -216,53 +202,45 @@ local plugins = {
     },
     init = function() require 'extensions.markdown-preview' end,
   },
-  -- Indent guide and chunk highlight
   {
     'shellRaining/hlchunk.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     config = function() require 'extensions.hlchunk' end,
   },
-  -- Treesitter context (sticky header)
   {
     'nvim-treesitter/nvim-treesitter-context',
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function() require 'extensions.treesitter-context' end,
   },
-  -- Breadcrumb navigation
   {
     'Bekaboo/dropbar.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = { 'nvim-telescope/telescope-fzf-native.nvim' },
     config = function() require 'extensions.dropbar' end,
   },
-  -- Accelerated j/k movement
   {
     'rainbowhxch/accelerated-jk.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     config = function() require 'extensions.accelerated-jk' end,
   },
-  -- Better folding
   {
     'kevinhwang91/nvim-ufo',
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = { 'kevinhwang91/promise-async' },
     config = function() require 'extensions.nvim-ufo' end,
   },
-  -- Symbol navigation
   {
     'bassamsdata/namu.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     config = function() require 'extensions.namu' end,
   },
-  -- Documentation generator
   {
     'kkoomen/vim-doge',
     build = ':call doge#install()',
     event = { 'BufReadPre', 'BufNewFile' },
     init = function() require 'extensions.vim-doge' end,
   },
-  -- tmux navigator (C-h/j/k/l で Neovim split と tmux ペインをシームレス移動)
   {
     'christoomey/vim-tmux-navigator',
     lazy = false,
@@ -315,7 +293,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     "clone",
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
+    "--branch=stable",
     lazypath,
   })
 end

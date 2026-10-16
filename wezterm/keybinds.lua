@@ -13,7 +13,6 @@ end
 
 return {
 	keys = {
-		-- ActivateTabRelative
 		{ key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
 		{ key = "Tab", mods = "SHIFT|CTRL", action = act.ActivateTabRelative(-1) },
 		{ key = "LeftArrow", mods = "ALT|SUPER", action = act.MoveTabRelative(-1) },

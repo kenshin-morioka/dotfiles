@@ -103,7 +103,6 @@ vim.api.nvim_create_autocmd("QuitPre", {
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
   pattern = "*",
   callback = function()
-    -- 現在のタブで neo-tree ウィンドウが表示されているかチェック
     local neo_tree_open = false
     for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
       local buf = vim.api.nvim_win_get_buf(win)
@@ -114,7 +113,6 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
       end
     end
 
-    -- neo-treeが開いている場合のみrefresh
     if neo_tree_open then
       local state = require("neo-tree.sources.manager").get_state("filesystem")
       if state then

@@ -10,14 +10,14 @@ require('mason').setup {
 
 require('mason-lspconfig').setup {
   ensure_installed = {
-    'lua_ls',           -- Lua
-    'ruby_lsp',         -- Ruby/Rails
-    'ts_ls',            -- TypeScript/JavaScript
-    'html',             -- HTML
-    'cssls',            -- CSS
-    'jsonls',           -- JSON
-    'yamlls',           -- YAML
-    'bashls',           -- Bash
-    'rust_analyzer',    -- Rust
+    'lua_ls',
+    'ruby_lsp',
+    'ts_ls',
+    'html',
+    'cssls',
+    'jsonls',
+    'yamlls',
+    'bashls',
+    'rust_analyzer',
   },
 }

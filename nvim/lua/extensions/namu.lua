@@ -13,7 +13,6 @@ require('namu').setup {
   colorscheme = { enable = false },
 }
 
--- LSPがある場合のみシンボル表示
 vim.keymap.set('n', '<leader>ss', function()
   local clients = vim.lsp.get_clients({ bufnr = 0 })
   if #clients > 0 then

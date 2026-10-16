@@ -23,7 +23,6 @@ if ! command -v brew >/dev/null 2>&1; then
   exit 1
 fi
 mise run brew
-# agents (非公開 submodule) を取得。取得済みなら no-op
 echo "📥 submodule を取得中..."
 git -C "$MISE_PROJECT_ROOT" submodule update --init
 # pull 時に submodule も更新し、post-merge フックの link で新規スキル等を反映させる (.git/config に書くためリポジトリ追跡外)
@@ -37,10 +36,8 @@ mise run macos-defaults
 echo "🔑 fzf キーバインドをセットアップ中..."
 "$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc --no-bash --no-fish
 mise run tmux-init
-# pre-commit フックを設定（既に設定済みでも同じフックを上書きするだけで冪等）
 echo "🪝 pre-commit フックを設定中..."
 cd "$MISE_PROJECT_ROOT" && pre-commit install
-# mise の設定ファイルを信頼（trust 済みでも成功する。mise 未セットアップ等での失敗は || true で無視）
 echo "🤝 mise 設定を信頼中..."
 mise trust "$MISE_PROJECT_ROOT/mise/config.toml" || true
 # tflint は Homebrew ではなく mise (mise/config.toml) で管理している。task.run_auto_install = false のため明示的にインストールする

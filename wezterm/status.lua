@@ -112,7 +112,6 @@ local function RightUpdate(window, pane)
 	window:set_right_status(wezterm.format(elems))
 end
 
--- update-status
 wezterm.on("update-status", function(window, pane)
 	LeftUpdate(window, pane)
 	RightUpdate(window, pane)
