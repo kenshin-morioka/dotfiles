@@ -12,12 +12,14 @@ cwd=$(echo "$input" | jq -r '.cwd // empty')
 if [ -z "$cwd" ]; then
   cwd=$(echo "$input" | jq -r '.workspace.current_dir // empty')
 fi
-short_dir=$(echo "$cwd" | sed "s|$HOME|~|")
+# 先頭アンカー + パス境界付きで置換する (無いとパス途中の $HOME や /home/alice2 のような前方一致も置換される)
+short_dir=$(echo "$cwd" | sed -E "s#^$HOME(/|$)#~\1#")
 
 # --- git branch & status ---
+# cwd が空だと git -C "" がカレントディレクトリを参照して無関係な branch を表示するためスキップ
 git_branch=""
 git_status_str=""
-if [ -d "$cwd/.git" ] || git -C "$cwd" rev-parse --git-dir >/dev/null 2>&1; then
+if [ -n "$cwd" ] && { [ -d "$cwd/.git" ] || git -C "$cwd" rev-parse --git-dir >/dev/null 2>&1; }; then
   git_branch=$(git -C "$cwd" --no-optional-locks symbolic-ref --short HEAD 2>/dev/null)
   ahead=$(git -C "$cwd" --no-optional-locks rev-list --count '@{u}..HEAD' 2>/dev/null || echo "")
   behind=$(git -C "$cwd" --no-optional-locks rev-list --count 'HEAD..@{u}' 2>/dev/null || echo "")
