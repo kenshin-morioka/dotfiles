@@ -15,9 +15,6 @@ brew "jq"
 
 # Version Manager
 brew "mise"
-brew "fnm"
-brew "nodenv"
-brew "rbenv"
 
 # Editor
 brew "neovim"
@@ -77,11 +74,6 @@ brew "fdupes"
 brew "graphviz"
 brew "inframap"
 brew "ollama"
-
-# Runtimes & Libraries
-brew "python@3.14"
-brew "gmp"
-brew "tree-sitter"
 
 # Casks
 cask "claude-code"
