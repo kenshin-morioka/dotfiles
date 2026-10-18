@@ -23,6 +23,7 @@ if ! command -v brew >/dev/null 2>&1; then
   exit 1
 fi
 mise run brew
+mise run agents-migrate
 echo "📥 submodule を取得中..."
 git -C "$MISE_PROJECT_ROOT" submodule update --init
 # pull 時に submodule も更新し、post-merge フックの link で新規スキル等を反映させる (.git/config に書くためリポジトリ追跡外)
@@ -48,6 +49,41 @@ mise install tflint
 mise run brew-sync
 mise run brew-check
 echo "✅ セットアップが完了しました！"
+'''
+
+# agents/ が通常ディレクトリ (agents/private だけ submodule) だった頃の clone を pull すると、
+# 旧 submodule の gitdir .git/modules/agents/private が残り、.git/modules/agents が gitdir と誤認されて
+# submodule update --init が "could not get a repository handle" で失敗する。
+# 旧 gitdir と agents/ の残骸を退避し、git 追跡外のローカルファイル (settings.json 等) は取得後に戻す。
+[tasks.agents-migrate]
+# setup の内部ステップ (単体で使う場面がないため一覧から隠す)
+hide = true
+description = "旧構成 (agents/private submodule) の残骸を退避 (submodule 取得の前に自動実行)"
+shell = "bash -c"
+quiet = true
+run = '''
+set -euo pipefail
+cd "$MISE_PROJECT_ROOT"
+modules_dir="$(git rev-parse --path-format=absolute --git-common-dir)/modules/agents"
+if [ ! -d "$modules_dir" ] || [ -f "$modules_dir/HEAD" ]; then
+  exit 0
+fi
+backup="$(git rev-parse --path-format=absolute --git-common-dir)/agents-legacy.$(date +%Y%m%d%H%M%S)"
+mkdir -p "$backup"
+mv "$modules_dir" "$backup/modules"
+[ ! -e agents ] || mv agents "$backup/worktree"
+git config --remove-section submodule.agents/private 2>/dev/null || true
+git submodule update --init agents
+if [ -d "$backup/worktree" ]; then
+  # 旧 agents/private は新構成に存在しないため戻さない (退避先に残す)
+  (cd "$backup/worktree" && find . -type f ! -name .git ! -path './private/*') | while read -r f; do
+    [ -e "agents/$f" ] && continue
+    mkdir -p "agents/$(dirname "$f")"
+    cp -p "$backup/worktree/$f" "agents/$f"
+    echo "  復元: agents/${f#./}"
+  done
+fi
+echo "📦 旧構成の agents を $backup に退避しました (問題なければ削除してください)"
 '''
 
 # --------------------------------------
