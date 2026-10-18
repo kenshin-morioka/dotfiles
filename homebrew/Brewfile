@@ -15,6 +15,9 @@ brew "jq"
 
 # Version Manager
 brew "mise"
+brew "fnm"
+brew "nodenv"
+brew "rbenv"
 
 # Editor
 brew "neovim"
@@ -69,6 +72,16 @@ brew "poppler"
 brew "sops"
 brew "terminal-notifier"
 brew "tree-sitter-cli" # nvim-treesitter (main) のパーサービルドに必要
+brew "exiftool"
+brew "fdupes"
+brew "graphviz"
+brew "inframap"
+brew "ollama"
+
+# Runtimes & Libraries
+brew "python@3.14"
+brew "gmp"
+brew "tree-sitter"
 
 # Casks
 cask "claude-code"
