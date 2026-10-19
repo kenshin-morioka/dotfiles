@@ -242,20 +242,14 @@ local plugins = {
     init = function() require 'extensions.vim-doge' end,
   },
   {
-    'christoomey/vim-tmux-navigator',
+    -- tmux / WezTerm / nvim のペイン移動を Ctrl+hjkl で統一する (WezTerm 側は wezterm/keybinds.lua)
+    'mrjones2014/smart-splits.nvim',
     lazy = false,
-    cmd = {
-      'TmuxNavigateLeft',
-      'TmuxNavigateDown',
-      'TmuxNavigateUp',
-      'TmuxNavigateRight',
-      'TmuxNavigatePrevious',
-    },
     keys = {
-      { '<C-h>', '<cmd>TmuxNavigateLeft<cr>', desc = 'Navigate Left (tmux/vim)' },
-      { '<C-j>', '<cmd>TmuxNavigateDown<cr>', desc = 'Navigate Down (tmux/vim)' },
-      { '<C-k>', '<cmd>TmuxNavigateUp<cr>', desc = 'Navigate Up (tmux/vim)' },
-      { '<C-l>', '<cmd>TmuxNavigateRight<cr>', desc = 'Navigate Right (tmux/vim)' },
+      { '<C-h>', function() require('smart-splits').move_cursor_left() end, desc = 'Navigate Left (nvim/tmux/WezTerm)' },
+      { '<C-j>', function() require('smart-splits').move_cursor_down() end, desc = 'Navigate Down (nvim/tmux/WezTerm)' },
+      { '<C-k>', function() require('smart-splits').move_cursor_up() end, desc = 'Navigate Up (nvim/tmux/WezTerm)' },
+      { '<C-l>', function() require('smart-splits').move_cursor_right() end, desc = 'Navigate Right (nvim/tmux/WezTerm)' },
     },
   },
 }
