@@ -80,3 +80,4 @@ cask "claude-code"
 cask "codex"
 cask "session-manager-plugin" # 要sudo権限での手動インストール
 cask "wezterm@nightly"
+brew "vite-plus"
