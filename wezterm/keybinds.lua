@@ -11,8 +11,26 @@ local function adjust_pane_size(direction)
 	end)
 end
 
+-- Ctrl+hjkl でペイン移動する。nvim (smart-splits が IS_NVIM を立てる) と tmux 内ではキーをそのまま渡し、
+-- それ以外は WezTerm のペインを移動する
+local function navigate_pane(key, direction)
+	return wezterm.action_callback(function(window, pane)
+		local process = (pane:get_foreground_process_name() or ""):match("[^/]+$")
+		if pane:get_user_vars().IS_NVIM == "true" or process == "tmux" then
+			window:perform_action(act.SendKey({ key = key, mods = "CTRL" }), pane)
+		else
+			window:perform_action(act.ActivatePaneDirection(direction), pane)
+		end
+	end)
+end
+
 return {
 	keys = {
+		{ key = "h", mods = "CTRL", action = navigate_pane("h", "Left") },
+		{ key = "j", mods = "CTRL", action = navigate_pane("j", "Down") },
+		{ key = "k", mods = "CTRL", action = navigate_pane("k", "Up") },
+		{ key = "l", mods = "CTRL", action = navigate_pane("l", "Right") },
+
 		{ key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
 		{ key = "Tab", mods = "SHIFT|CTRL", action = act.ActivateTabRelative(-1) },
 		{ key = "LeftArrow", mods = "ALT|SUPER", action = act.MoveTabRelative(-1) },

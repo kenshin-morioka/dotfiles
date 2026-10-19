@@ -52,6 +52,7 @@
 | `Ctrl+w k` | 上のウィンドウへ |
 | `Ctrl+w l` | 右のウィンドウへ |
 | `Ctrl+w w` | 次のウィンドウへ循環 |
+| `Ctrl+h/j/k/l` | nvim / tmux / WezTerm のペインを区別なく移動（smart-splits.nvim） |
 
 ### ウィンドウサイズ調整（neo-tree 等の幅調整）
 
@@ -485,6 +486,7 @@ nvim .
 | キー | 説明 |
 | ---- | ---- |
 | `Shift+Ctrl+←/→/↑/↓` | ペイン間の移動 |
+| `Ctrl+h/j/k/l` | ペイン間の移動（nvim / tmux 内ではそちらへキーを渡す） |
 | `Shift+Alt+Ctrl+←/→` | ペインサイズ調整（横方向 5%単位） |
 | `Shift+Alt+Ctrl+↑/↓` | ペインサイズ調整（縦方向 5%単位） |
 | `Ctrl+Shift+z` | ペインズーム（トグル） |

@@ -35,7 +35,7 @@ require("neo-tree").setup({
       ["P"] = { "toggle_preview", config = { use_float = false, use_image_nvim = false } },
       ["<C-g>"] = "open_lazygit",
       ["<C-t>"] = "open_in_wezterm",
-      -- <C-h> は vim-tmux-navigator (左ペイン移動) と衝突するため neo-tree 既定の H を使う
+      -- <C-h> は smart-splits (左ペイン移動) と衝突するため neo-tree 既定の H を使う
       ["H"] = "toggle_hidden",
       -- <bs>(Mac の delete キー)で上の階層へルートが移動するのを無効化
       ["<bs>"] = "none",
