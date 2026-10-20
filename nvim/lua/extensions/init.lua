@@ -245,6 +245,13 @@ local plugins = {
     -- tmux / WezTerm / nvim のペイン移動を Ctrl+hjkl で統一する (WezTerm 側は wezterm/keybinds.lua)
     'mrjones2014/smart-splits.nvim',
     lazy = false,
+    -- WezTerm 側の端では移動を止める (nvim 内で反対側へ回り込ませない)
+    opts = function()
+      return {
+        mux = { backend = require 'extensions.smart-splits-wezterm' },
+        move = { at_edge = 'stop' },
+      }
+    end,
     keys = {
       { '<C-h>', function() require('smart-splits').move_cursor_left() end, desc = 'Navigate Left (nvim/tmux/WezTerm)' },
       { '<C-j>', function() require('smart-splits').move_cursor_down() end, desc = 'Navigate Down (nvim/tmux/WezTerm)' },
