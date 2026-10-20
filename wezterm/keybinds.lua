@@ -11,12 +11,12 @@ local function adjust_pane_size(direction)
 	end)
 end
 
--- Ctrl+hjkl でペイン移動する。nvim (smart-splits が IS_NVIM を立てる) と tmux 内ではキーをそのまま渡し、
--- それ以外は WezTerm のペインを移動する
+-- Ctrl+hjkl でペイン移動する。nvim と tmux 内ではキーをそのまま渡し、それ以外は WezTerm のペインを移動する。
+-- smart-splits は IS_NVIM を立てないため、前面プロセス名でも nvim を判定する
 local function navigate_pane(key, direction)
 	return wezterm.action_callback(function(window, pane)
 		local process = (pane:get_foreground_process_name() or ""):match("[^/]+$")
-		if pane:get_user_vars().IS_NVIM == "true" or process == "tmux" then
+		if pane:get_user_vars().IS_NVIM == "true" or process == "nvim" or process == "tmux" then
 			window:perform_action(act.SendKey({ key = key, mods = "CTRL" }), pane)
 		else
 			window:perform_action(act.ActivatePaneDirection(direction), pane)
