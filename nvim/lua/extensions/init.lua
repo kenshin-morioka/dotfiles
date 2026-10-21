@@ -37,6 +37,8 @@ local plugins = {
   },
   {
     'petertriho/nvim-scrollbar',
+    -- 2026-11-16 に main が v2 (setup オプション・handlers 削除) に置き換わるため v1 に固定
+    branch = 'v1',
     event = { 'BufNewFile', 'BufReadPre' },
     config = function() require 'extensions.nvim-scrollbar' end,
   },
