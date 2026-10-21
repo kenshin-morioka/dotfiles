@@ -57,6 +57,21 @@ wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, _hover, max
 	}
 end)
 
+-- マウス選択の完了時にシステムクリップボードへコピーする。
+-- 新しい WezTerm では PrimarySelection 宛てのコピーが macOS で無効なことがあるため Clipboard を明示する。
+-- 選択なしのクリック時はリンクを開く
+local act = wezterm.action
+config.mouse_bindings = {}
+for _, streak in ipairs({ 1, 2, 3 }) do
+	for _, mods in ipairs({ "NONE", "SHIFT", "ALT", "SHIFT|ALT" }) do
+		table.insert(config.mouse_bindings, {
+			event = { Up = { streak = streak, button = "Left" } },
+			mods = mods,
+			action = act.CompleteSelectionOrOpenLinkAtMouseCursor("ClipboardAndPrimarySelection"),
+		})
+	end
+end
+
 local keybind = require("keybinds")
 config.disable_default_key_bindings = true
 config.keys = keybind.keys
