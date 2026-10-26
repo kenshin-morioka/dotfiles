@@ -416,32 +416,3 @@ else
   echo "✅ $cfg を雛形から作成しました"
 fi
 '''
-
-# --------------------------------------
-# Lean (elan)
-#
-# mise の ubi バックエンドで入れた elan は単体バイナリのみで、lean / lake 等のプロキシが作られない。
-# elan は argv[0] でプロキシとして動くため、同じディレクトリ (mise が PATH に通す) に elan へのシンボリックリンクを置く。
-# elan のバージョン更新後に消えるため、プロジェクトで mise install した後に実行する (冪等)
-[tasks.elan-link]
-description = "mise 管理の elan に lean / lake 等のプロキシ (シンボリックリンク) を作成"
-shell = "bash -c"
-quiet = true
-run = '''
-set -euo pipefail
-base="${MISE_DATA_DIR:-$HOME/.local/share/mise}/installs/ubi-leanprover-elan"
-found=0
-for elan in "$base"/*/elan; do
-  [ -x "$elan" ] || continue
-  found=1
-  dir="$(dirname "$elan")"
-  for t in lean lake leanc leanchecker leanmake; do
-    ln -sf elan "$dir/$t"
-  done
-  echo "✅ $dir にプロキシを作成しました"
-done
-if [ "$found" -eq 0 ]; then
-  echo "❌ mise 管理の elan が見つかりません。プロジェクトで mise install を実行してください"
-  exit 1
-fi
-'''
