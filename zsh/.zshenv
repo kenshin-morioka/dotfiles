@@ -6,6 +6,8 @@ export GOPATH="${HOME}/go"
 export PATH="${HOME}/.local/bin:/usr/local/sbin:${GOPATH}/bin:${PATH}"
 export PATH="/Applications/WezTerm.app/Contents/MacOS:${PATH}"
 export PATH="${HOME}/.cargo/bin:${PATH}"
+# Lean (elan 公式インストーラが lean / lake のプロキシを置く)
+export PATH="${HOME}/.elan/bin:${PATH}"
 # 非対話シェルでは .zshrc の mise activate が走らないため shims で mise 管理ツールを通す
 export PATH="${HOME}/.local/share/mise/shims:${PATH}"
 
