@@ -1,0 +1,12 @@
+{
+  "variable": {
+    "prefix": "var",
+    "body": [
+      "variable \"$1\" {",
+      "  description = \"$2\"",
+      "  type        = $0",
+      "}"
+    ],
+    "description": "variable ブロック"
+  }
+}
