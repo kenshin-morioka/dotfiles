@@ -17,8 +17,13 @@ lint.linters_by_ft = {
   zsh = { 'zsh' },
   json = { 'jsonlint' },
   markdown = { 'markdownlint' },
-  ['*'] = { 'typos' },
 }
+
+-- linters_by_ft['*'] は nvim-lint が解釈しないため、全ファイル共通の typos は明示的に実行する
+local function try_lint()
+  lint.try_lint()
+  lint.try_lint('typos')
+end
 
 vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufReadPost', 'InsertLeave' }, {
   callback = function(ev)
@@ -27,10 +32,8 @@ vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufReadPost', 'InsertLeave' }, {
     if require('bigfile').is_big(ev.buf) then
       return
     end
-    lint.try_lint()
+    try_lint()
   end,
 })
 
-vim.keymap.set('n', '<leader>ll', function()
-  lint.try_lint()
-end, { desc = 'Lint current file' })
+vim.keymap.set('n', '<leader>ll', try_lint, { desc = 'Lint current file' })
