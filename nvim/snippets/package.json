@@ -23,6 +23,12 @@
           "rust"
         ],
         "path": "rust.json"
+      },
+      {
+        "language": [
+          "terraform"
+        ],
+        "path": "terraform.json"
       }
     ]
   }
