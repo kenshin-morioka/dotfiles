@@ -1,19 +1,27 @@
 -- terraform / tofu は mise でプロジェクトごとに切り替わる (グローバル未設定で shim は常に存在する)。
 -- そのため実行ファイルの有無では選べず、そのディレクトリで有効な方を mise which で判定する。
--- mise which が固まっても保存を止めないよう待機に上限を設け、超過時は整形しない
+-- mise which が固まっても保存を止めないよう待機に上限を設け、超過時は整形しない。
+-- 戻り値は (実行ファイルのパス | nil, タイムアウトしたか)
+local TIMEOUT_CODE = 124
+
 local function mise_which(name, dir)
   local res = vim.system({ 'mise', 'which', name }, { cwd = dir, text = true }):wait(500)
   if res.code ~= 0 then
-    return nil
+    return nil, res.code == TIMEOUT_CODE
   end
-  return vim.trim(res.stdout)
+  return vim.trim(res.stdout), false
 end
 
 local function terraform_formatter(bufnr)
   local dir = vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr))
   for _, name in ipairs({ 'terraform', 'tofu' }) do
-    if mise_which(name, dir) then
+    local path, timed_out = mise_which(name, dir)
+    if path then
       return { name .. '_fmt' }
+    end
+    -- 優先する terraform が判定できないまま tofu に切り替えない
+    if timed_out then
+      return {}
     end
   end
   return {}
