@@ -23,6 +23,10 @@ vim.opt.listchars = { eol = '↵', tab = '▸ ' }
 
 -- filetype detection
 vim.filetype.add({
+  -- 空の .tf は TinyFugue (ft=tf) と判定され terraform のインデントが効かないため固定する
+  extension = {
+    tf = 'terraform',
+  },
   pattern = {
     ['.*git%-hooks/.*'] = 'sh',
     ['.*%.git/hooks/.*'] = 'sh',
@@ -39,3 +43,5 @@ vim.opt.tabstop = 2
 vim.opt.expandtab = true
 -- オートインデントをtabstopの値に
 vim.opt.shiftwidth = 0
+-- indentexpr のない filetype でも { の後の改行でインデントする (indentexpr があればそちらが優先される)
+vim.opt.smartindent = true

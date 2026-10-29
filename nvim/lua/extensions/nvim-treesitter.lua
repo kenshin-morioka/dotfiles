@@ -29,7 +29,8 @@ local function attach(bufnr, lang)
   end
 
   -- treesitter indent は改行のたびにクエリが走り、巨大ファイルで入力が重くなる
-  if not require('bigfile').is_big(bufnr) then
+  -- indents クエリのない言語 (prisma 等) は全行インデント 0 になるため、ftplugin の indentexpr / smartindent に任せる
+  if not require('bigfile').is_big(bufnr) and vim.treesitter.query.get(lang, 'indents') then
     vim.bo[bufnr].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
   end
 end
