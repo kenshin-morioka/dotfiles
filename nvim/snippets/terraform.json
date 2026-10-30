@@ -1,4 +1,32 @@
 {
+  "resource": {
+    "prefix": ["resource", "res"],
+    "body": [
+      "resource \"${1:resource_type}\" \"${2:resource_name}\" {",
+      "  ${3:field} = \"${4:value}\"",
+      "}"
+    ],
+    "description": "resource ブロック"
+  },
+  "data": {
+    "prefix": "data",
+    "body": [
+      "data \"${1:data_source_type}\" \"${2:data_source_name}\" {",
+      "  ${3:field} = \"${4:value}\"",
+      "}"
+    ],
+    "description": "data ブロック"
+  },
+  "output": {
+    "prefix": "output",
+    "body": [
+      "output \"${1:output_name}\" {",
+      "  value       = ${2:resource_name_attribute}",
+      "  description = \"${3:description}\"",
+      "}"
+    ],
+    "description": "output ブロック"
+  },
   "variable": {
     "prefix": "var",
     "body": [
