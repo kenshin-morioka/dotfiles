@@ -61,24 +61,32 @@ function Git.get_target(plugin)
   end
 
   -- 条件を満たす更新先がなければ今のコミットに留める
-  -- 新規 clone 直後は留める先がないので元の更新先を使う
-  local fallback = cloned and target or { branch = target.branch, commit = info.commit }
+  -- 新規 clone 直後は clone 時点の最新コミットが展開済みで留める先がないため、エラーにして知らせる
+  local function keep_current()
+    if cloned then
+      error(("公開から %d 日たったコミット・タグがありません"):format(MIN_AGE / 86400))
+    end
+    return { branch = target.branch, commit = info.commit }
+  end
   local cutoff = os.time() - MIN_AGE
 
   if target.version then
     local version = aged_version(plugin, cutoff)
     if not version then
-      return fallback
+      return keep_current()
     end
     local commit = Git.ref(plugin.dir, "tags/" .. version.tag)
-    -- 今のコミットより古いタグへは戻さない
-    if not cloned and git(plugin.dir, { "merge-base", "--is-ancestor", commit, "HEAD" }) then
-      return fallback
+    if not cloned then
+      -- 今より古いタグへは戻さない。タグが別ブランチにあると祖先判定では防げないため Semver でも比べる
+      local current = Git.info(plugin.dir, true).version
+      if (current and not (current < version)) or git(plugin.dir, { "merge-base", "--is-ancestor", commit, "HEAD" }) then
+        return keep_current()
+      end
     end
     return { branch = target.branch, version = version, tag = version.tag, commit = commit }
   end
 
   -- HEAD.. で絞り、今のコミットより古いコミットへは戻さない
   local commit = aged_commit(plugin.dir, cloned and target.commit or "HEAD.." .. target.commit, cutoff)
-  return commit and { branch = target.branch, commit = commit } or fallback
+  return commit and { branch = target.branch, commit = commit } or keep_current()
 end
