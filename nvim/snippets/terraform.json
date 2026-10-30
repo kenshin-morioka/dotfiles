@@ -21,8 +21,8 @@
     "prefix": "output",
     "body": [
       "output \"${1:output_name}\" {",
-      "  value       = ${2:resource_name_attribute}",
-      "  description = \"${3:description}\"",
+      "  description = \"${2:description}\"",
+      "  value       = ${3:resource_name_attribute}",
       "}"
     ],
     "description": "output ブロック"
