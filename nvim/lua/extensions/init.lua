@@ -302,4 +302,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- 起動時の不足プラグインのインストールにも効くよう setup より前に読み込む
+require("extensions.lazy-min-age")
 require("lazy").setup(plugins, opts)
