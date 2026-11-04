@@ -17,7 +17,12 @@ vim.opt.mouse = ''
 vim.opt.number = true
 vim.opt.cursorline = true
 vim.opt.signcolumn = 'yes:1'
-vim.opt.wrap = false
+-- 長い行は画面幅で見かけ上折り返す（VSCode の word wrap 相当）
+vim.opt.wrap = true
+-- 単語の途中ではなく区切り文字で折り返す
+vim.opt.linebreak = true
+-- 折り返した行も元の行のインデントに揃える
+vim.opt.breakindent = true
 vim.opt.list = true
 vim.opt.listchars = { eol = '↵', tab = '▸ ' }
 
