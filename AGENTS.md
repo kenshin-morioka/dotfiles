@@ -18,7 +18,8 @@
 
 - `~/.claude/skills/<name>` と `~/.agents/skills/<name>` は `agents/skills/` のスキルをスキル単位でリンク。`~/.claude/skills/synced/` だけは Claude Code 管理の実ディレクトリでリンク対象外
 - `~/.claude/CLAUDE.md` と `~/.codex/AGENTS.md` は両方 `agents/AGENTS.md` を指す
-- `~/.claude.json`（`claude.json`）と `agents/claude/settings.json` は .gitignore 対象。リンクは張られるが内容は各マシンで管理する
+- `~/.claude.json`（`claude.json`）は .gitignore 対象。リンクは張られるが内容は各マシンで管理する
+- `agents/claude/settings.json` は agents 側で追跡する（他のマシンで clone したときに hook 等の設定をすぐ使えるようにするため）
 
 ## AI エージェント設定（agents/）
 
@@ -52,7 +53,7 @@ AI エージェントの設定はすべて `agents/` に置く。`agents/` は�
 
 以下のファイルは意図的にgit追跡対象外にしている。**絶対に .gitignore から除外しないこと。**
 
-- `agents/` 配下のローカル専用ファイル（`claude/settings.json`、`codex/dotfiles.config.toml`、`hooks/*.disabled` 等）— submodule 側の `.gitignore` で除外
+- `agents/` 配下のローカル専用ファイル（`codex/dotfiles.config.toml`、`hooks/*.disabled` 等）— submodule 側の `.gitignore` で除外
 - `git/.gitconfig.local` — Git認証情報等のローカル設定
 
 ## 変更時に連動して更新が必要なもの
@@ -60,7 +61,7 @@ AI エージェントの設定はすべて `agents/` に置く。`agents/` は�
 以下の対応を忘れないこと。関連する変更を行った場合は、必ずセットで更新すること。
 
 - **キーバインド追加・変更時** → `docs/CHEATSHEET.md` を必ず同時に更新する
-- **全プロジェクト共通ルールを hook / permissions に移したとき** → `agents/hooks/` にスクリプトを置き、`agents/claude/settings.json` と `~/.codex/hooks.json`（どちらも git 追跡外）への登録手順を PR 本文に書く。Codex 側は登録後に `/hooks` で trust が必要
+- **全プロジェクト共通ルールを hook / permissions に移したとき** → `agents/hooks/` にスクリプトを置き、`agents/claude/settings.json` に登録する。`~/.codex/hooks.json`（git 追跡外）への登録手順は PR 本文に書く。Codex 側は登録後に `/hooks` で trust が必要
 - **新しいツール導入時** → 管理元は `docs/TOOLCHAIN.md` に従う。Homebrew 管理なら `homebrew/Brewfile` に追加（`mise run brew-add` 使用）、言語製のグローバル CLI なら `mise/config.toml` に `npm:` 等のバックエンドで追加する
 - **言語ランタイムのバージョン変更時** → `mise/config.toml` を更新する
 - **シンボリックリンク対象の追加・変更時** → `symlinks.txt` を更新する
