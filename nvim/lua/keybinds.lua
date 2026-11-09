@@ -72,6 +72,25 @@ vim.keymap.set("n", "<Esc><Esc>", ":nohlsearch<CR>", { silent = true })
 vim.keymap.set("n", "<leader>cp", ':let @+ = expand("%:.")<CR>', { silent = true, desc = "Copy relative path" })
 vim.keymap.set("n", "<leader>cP", ':let @+ = expand("%:p")<CR>', { silent = true, desc = "Copy absolute path" })
 
+-- Markdown preview: WezTerm の右ペインに leaf をウォッチモードで開き、フォーカスは nvim に戻す
+vim.keymap.set("n", "<leader>mp", function()
+	local leaf = vim.fn.exepath("leaf")
+	if vim.env.WEZTERM_PANE == nil or leaf == "" then
+		vim.notify("leaf のプレビューには WezTerm と leaf が必要です", vim.log.levels.ERROR)
+		return
+	end
+	-- WezTerm から起動されるプロセスは PATH に Homebrew が無いことがあるため絶対パスで渡す
+	local result = vim.system({
+		"wezterm", "cli", "split-pane", "--right", "--pane-id", vim.env.WEZTERM_PANE,
+		"--", leaf, "--watch", vim.fn.expand("%:p"),
+	}, { text = true }):wait()
+	if result.code ~= 0 then
+		vim.notify("leaf を開けませんでした: " .. result.stderr, vim.log.levels.ERROR)
+		return
+	end
+	vim.system({ "wezterm", "cli", "activate-pane", "--pane-id", vim.env.WEZTERM_PANE }):wait()
+end, { silent = true, desc = "Markdown preview (leaf)" })
+
 -- Visual mode: Tab/Shift-Tabでインデント（選択維持）
 vim.keymap.set("v", "<Tab>", ">gv")
 vim.keymap.set("v", "<S-Tab>", "<gv")

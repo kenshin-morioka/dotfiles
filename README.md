@@ -271,6 +271,7 @@ prefix 不要のキー (vim-tmux-navigator):
 - **bat** - シンタックスハイライト付き `cat` 代替
 - **fd** - 高速な `find` 代替
 - **jq** - JSON プロセッサ
+- **leaf** - ターミナルで動く Markdown プレビューア
 
 ### リンター / フォーマッター
 
