@@ -82,3 +82,4 @@ cask "session-manager-plugin" # 要sudo権限での手動インストール
 cask "wezterm@nightly"
 brew "vite-plus"
 cask "1password-cli"
+brew "leaf-markdown-viewer"
