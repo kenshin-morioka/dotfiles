@@ -44,6 +44,9 @@ mise trust "$MISE_PROJECT_ROOT/mise/config.toml" || true
 # tflint は Homebrew ではなく mise (mise/config.toml) で管理している。task.run_auto_install = false のため明示的にインストールする
 echo "🔧 tflint をインストール中..."
 mise install tflint
+# aws-mcp が shim (~/.local/share/mise/shims/mcp-proxy-for-aws) を参照するため、同様に明示的にインストールする
+echo "🔧 mcp-proxy-for-aws をインストール中..."
+mise install "pypi:mcp-proxy-for-aws"
 # 警告や確認が他の出力に埋もれないよう最後に実行する
 mise run brew-sync
 mise run brew-check
