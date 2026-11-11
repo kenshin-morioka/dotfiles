@@ -5,6 +5,8 @@ ruby = "3.4.8"
 pnpm = "10.27.0"
 bun = "1.3.12"
 "npm:@earendil-works/pi-coding-agent" = "1.3.0"
+# 認証のバグを避けるため 1.5.0 に固定
+"pypi:mcp-proxy-for-aws" = "1.5.0"
 tflint = "0.64.0"
 
 [settings]
