@@ -17,7 +17,7 @@
 対応表の正本は `symlinks.txt`（`<リンク先>:<元ファイル>`）。グローバルルール（`agents/AGENTS.md`）には一覧を書かず、`symlinks.txt` とここを参照する。
 
 - `~/.claude/skills/<name>` と `~/.agents/skills/<name>` は `agents/skills/` のスキルをスキル単位でリンク。`~/.claude/skills/synced/` だけは Claude Code 管理の実ディレクトリでリンク対象外
-- `~/.claude/CLAUDE.md` と `~/.codex/AGENTS.md` は両方 `agents/AGENTS.md` を指す
+- `~/.claude/CLAUDE.md`・`~/.codex/AGENTS.md`・`~/.pi/agent/AGENTS.md` はすべて `agents/AGENTS.md` を指す
 - `~/.claude.json`（`claude.json`）は .gitignore 対象。リンクは張られるが内容は各マシンで管理する
 - `agents/claude/settings.json` は agents 側で追跡する（他のマシンで clone したときに hook 等の設定をすぐ使えるようにするため）
 
@@ -25,7 +25,7 @@
 
 AI エージェントの設定はすべて `agents/` に置く。`agents/` は非公開リポジトリ `kenshin-morioka/agents` の git submodule。Claude Code と Codex で共有するものは直下、ツール固有のものは `agents/claude/` / `agents/codex/` に置く。
 
-- `agents/AGENTS.md` — 全プロジェクト共通ルール（`~/.codex/AGENTS.md` と `~/.claude/CLAUDE.md` の両方に直接リンク）
+- `agents/AGENTS.md` — 全プロジェクト共通ルール（`~/.codex/AGENTS.md`・`~/.claude/CLAUDE.md`・`~/.pi/agent/AGENTS.md` に直接リンク）
 - `agents/skills/` — スキル。`~/.claude/skills/<name>` と `~/.agents/skills/<name>` にスキル単位でリンクされる
 - `agents/` 配下を変更したら、submodule 側でコミット・push して PR をマージする。その後このリポジトリでブランチを作り、`git submodule update --remote agents` で参照コミットを最新の main に更新してコミットし、PR を出す
 - クローン直後は `git submodule update --init` が必要（`mise run setup` に含まれる）

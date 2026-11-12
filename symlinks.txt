@@ -17,6 +17,7 @@
 # スキルはスキル単位でリンクし、各ツールが生成するローカル専用スキルと同居できるようにする
 .codex/AGENTS.md:agents/AGENTS.md
 .claude/CLAUDE.md:agents/AGENTS.md
+.pi/agent/AGENTS.md:agents/AGENTS.md
 .claude/checklists:agents/checklists
 .claude/settings.json:agents/claude/settings.json
 .claude/agents:agents/claude/agents
