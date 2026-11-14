@@ -13,7 +13,7 @@
   "dropbar.nvim": { "branch": "master", "commit": "f7c6fa21e2a7c32576e7a1791774a3736987f467" },
   "friendly-snippets": { "branch": "main", "commit": "7a1c9f7897a4eb078b157a04c7af81e5869215b1" },
   "git-conflict.nvim": { "branch": "main", "commit": "4bbfdd92d547d2862a75b4e80afaf30e73f7bbb4" },
-  "gitlinker.nvim": { "branch": "master", "commit": "42df3944a572ee42ec656d93ee48075a384b2f88" },
+  "gitlinker.nvim": { "branch": "master", "commit": "430cddefe14c075492e8fc4b1770e151cfe7aa90" },
   "gitsigns.nvim": { "branch": "main", "commit": "ef707fb93301a9b856f36eae4c8f56f5b988a794" },
   "grug-far.nvim": { "branch": "main", "commit": "91b7e58b6ffc6ddad5acb7a7c1df21257724449e" },
   "hlchunk.nvim": { "branch": "main", "commit": "4ddc056e4ca45f1c7dc6aa21935df710b263b1aa" },
