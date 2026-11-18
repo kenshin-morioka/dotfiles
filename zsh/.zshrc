@@ -73,6 +73,7 @@ fi
   abbr -S gst='git status'
   abbr -S gsw='git switch'
   abbr -S gbr='git branch'
+  abbr -S gb='gh browse'
   abbr -S gfe='git fetch'
   abbr -S gpl='git pull'
   abbr -S gad='git add'
