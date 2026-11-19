@@ -20,6 +20,7 @@
 .pi/agent/AGENTS.md:agents/AGENTS.md
 .pi/agent/settings.json:agents/pi/settings.json
 .pi/agent/extensions:agents/pi/extensions
+.pi/agent/themes:agents/pi/themes
 .claude/checklists:agents/checklists
 .claude/settings.json:agents/claude/settings.json
 .claude/agents:agents/claude/agents
