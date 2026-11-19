@@ -51,8 +51,10 @@
 
 ## 管理方法
 
-- 設定は `agents/pi/`（`extensions/`、`themes/`、`prompts/`、`keybindings.json`）に置き、`symlinks.txt` にディレクトリごと追加する
-- `~/.pi/agent/settings.json` を git で管理するかは未定。管理すると pi が書き込む `lastChangelogVersion` や Ctrl+S で保存したデフォルトモデルが差分に出る
+- 設定は `agents/pi/`（`settings.json`、`extensions/`、`themes/`、`prompts/`、`keybindings.json`）に置き、`symlinks.txt` に追加する
+- `~/.pi/agent/settings.json` は追跡する。pi が書き込む `lastChangelogVersion` や Ctrl+S で保存したデフォルトモデルが差分に出るので、意図しない差分はコミットしない
+- Claude Code と共有する hook は `~/.claude/hooks` 経由で参照する。pi の agent ディレクトリ直下に `hooks/` を置くと旧形式の移行警告が出るため、`hooks/` はリンクしない
+- スキルは `~/.agents/skills` 配下が全部読み込まれるので、`settings.json` の `skills` で allowlist（`!*` のあとに `+` で足す）にして使うものだけ読ませる
 
 ## 進め方
 

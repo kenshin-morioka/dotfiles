@@ -32,6 +32,7 @@ AI エージェントの設定はすべて `agents/` に置く。`agents/` は�
 - `agents/checklists/` — セルフレビューチェックリスト（`~/.claude/checklists`）
 - `agents/hooks/` — Claude Code / Codex 共有の hook スクリプト（`~/.claude/hooks` と `~/.codex/hooks` の両方にディレクトリ単位でリンク）。両ツールとも hook の入力 JSON（`tool_name` / `tool_input.command` / `cwd`）と exit 2 によるブロックが同じ形式なので、スクリプトを共有する。登録は各ツールの設定（`agents/claude/settings.json`、`~/.codex/hooks.json`）で行う
 - `agents/claude/` — Claude Code 固有（`settings.json`, subagent, statusline）。`~/.claude/` 配下にリンクされる
+- `agents/pi/` — pi 固有（`settings.json` と `extensions/` を `~/.pi/agent/` にリンク。方針は `docs/PI_AGENT.md`）。共有 hook は `~/.claude/hooks` 経由で参照する（`~/.pi/agent/hooks/` を作ると旧形式の移行警告が出る）
 - `agents/codex/` — Codex 固有。`dotfiles.config.toml`（`~/.codex/dotfiles.config.toml`、`codex --profile dotfiles` が読む）は Codex が hook の trust 状態を書き込むため追跡外で、雛形 `dotfiles.config.toml.example` から `mise run codex-init` で生成する。雛形に入れたい設定変更は `.example` 側に書く
 
 ## pre-commit フック
