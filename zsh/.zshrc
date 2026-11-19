@@ -105,10 +105,14 @@ function select-ai-cli() {
   choices=()
   command -v claude &>/dev/null && choices+=(claude)
   whence -p codex &>/dev/null && choices+=(codex)
+  whence -p pi &>/dev/null && choices+=(midna)
   (( ${#choices} > 0 )) || return
   selected=$(print -rl -- "${choices[@]}" | fzf --height=40% --reverse --prompt='AI> ') || return
   if [[ "$selected" = codex ]]; then
     codex "$@"
+  elif [[ "$selected" = midna ]]; then
+    # midna は pi の alias で command では解決できないため pi を直接呼ぶ
+    pi "$@"
   else
     command "$selected" "$@"
   fi
