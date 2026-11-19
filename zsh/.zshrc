@@ -88,6 +88,7 @@ fi
   abbr -S cl='clear'
   abbr -S cwr='claude-worktree-resume'
   abbr -S cwra='claude-worktree-resume-all'
+  abbr -S mdn='pi'
   abbr -S t='tmux'
   abbr -S tk='tmux kill-session'
   abbr -S tka='tmux kill-server'
