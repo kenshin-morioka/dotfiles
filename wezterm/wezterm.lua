@@ -5,8 +5,6 @@ local config = wezterm.config_builder()
 config.max_fps = 120
 config.automatically_reload_config = true
 config.font_size = 15.0
--- Nerd Font の記号はマスより幅が広く、並べると隣に被るため、マスの幅に収める (pi の入力欄のハートなど)
-config.allow_square_glyphs_to_overflow_width = "Never"
 -- use_ime = true は macOS の PressAndHold と競合しキー長押し後に文字入力不能になる
 -- (macOS 26.5 以降)。`make macos-defaults` で PressAndHold の無効化が必要
 config.use_ime = true
