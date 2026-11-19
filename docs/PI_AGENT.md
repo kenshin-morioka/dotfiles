@@ -39,11 +39,12 @@
 
 | 対象 | 内容 | 参考 |
 | ---- | ---- | ---- |
-| フッター | 今の statusline（ディレクトリ・ブランチ・時刻・モデル・ctx%）を移植。5h% の代わりにセッションのコストとキャッシュヒット率 | `custom-footer.ts` |
+| フッター | 今の statusline（ディレクトリ・ブランチ・時刻・モデル）を移植。5h% の代わりにキャッシュヒット率。ctx% とセッションのコストは入力欄の枠に出す | `custom-footer.ts` |
 | テーマ | 自作の `grimoire`。深緑を軸に、補色のローズと琥珀を差し色にした落ち着いたダークファンタジー調 | pi 同梱の `docs/themes.md` |
 | 起動画面 | 組み込みの一覧を隠し（`quietStartup: "header"`）、使い魔（ミドナのドット絵）・モデル・作業ディレクトリ・スキルとコマンドを枠に収める。起動時はパラパラと現れ、背景に黄金色のルーン文字の雨を流す | `custom-header.ts` |
 | ツールの表示 | bash・edit を短く表示し、diff を色分け。モデルに渡す内容は変わらない | `built-in-tool-renderer.ts` |
-| エディタ周り | 枠にステータス、上部にサブエージェントの進み具合や git の状態 | `border-status-editor.ts`、`widget-placement.ts` |
+| 入力欄 | トワイライトプリンセスの会話ウィンドウ風の枠。名札、ハート（ctx の残り）、ルピー（コスト。金額で色が変わる）、入力待ちの ▼。枠の線に影の世界の模様を入れ、エージェントが動いている間は光を流す | `border-status-editor.ts` |
+| エディタ周り | 上部にサブエージェントの進み具合や git の状態 | `widget-placement.ts` |
 | 作業中の表示 | スピナー、タイトルバー | `working-indicator.ts`、`titlebar-spinner.ts` |
 | 変更ファイル | 一覧から diff・Finder・Quick Look を開く | agent-stuff の `files.ts` |
 | ペイン分割 | 分岐したセッションを WezTerm の右ペインで開く（Ghostty 用を書き換える） | agent-stuff の `split-fork.ts` |
