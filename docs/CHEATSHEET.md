@@ -376,6 +376,8 @@ nvim .
 | `crs` | `claude --resume`（末尾スペース付き、引数指定向け） |
 | `cwr` | worktreeをfzfで選択して `claude --resume` |
 | `cwra` | 全worktreeをWezTermの新しいウィンドウで一括復元 |
+| `m` | `midna`（`pi`） |
+| `mr` | `midna --resume`（過去セッションを選んで再開。`midna -r` と同じ） |
 
 ---
 

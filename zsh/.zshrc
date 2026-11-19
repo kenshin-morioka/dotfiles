@@ -90,6 +90,7 @@ fi
   abbr -S cwr='claude-worktree-resume'
   abbr -S cwra='claude-worktree-resume-all'
   abbr -S m='midna'
+  abbr -S mr='midna --resume'
   abbr -S t='tmux'
   abbr -S tk='tmux kill-session'
   abbr -S tka='tmux kill-server'
