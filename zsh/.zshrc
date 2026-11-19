@@ -49,7 +49,7 @@ autoload -Uz compinit && compinit
 alias ls='eza --group-directories-first'
 alias cat='bat --paging=never'
 alias vim='nvim'
-alias mdn='pi'
+alias midna='pi'
 # BSD sed は \s 非対応のため [[:space:]] を使う。fzf は単一選択なので head は不要
 alias -g lb='`git branch | fzf --prompt "GIT BRANCH> " | sed -e "s/^\*[[:space:]]*//"`'
 alias de='docker exec -it $(docker ps | fzf | cut -d " " -f 1) /bin/bash'
@@ -89,6 +89,7 @@ fi
   abbr -S cl='clear'
   abbr -S cwr='claude-worktree-resume'
   abbr -S cwra='claude-worktree-resume-all'
+  abbr -S m='midna'
   abbr -S t='tmux'
   abbr -S tk='tmux kill-session'
   abbr -S tka='tmux kill-server'
