@@ -38,4 +38,7 @@
 .claude.json:claude.json
 .gitconfig:git/.gitconfig
 .gitconfig.local:git/.gitconfig.local
+.config/git/hooks/pre-commit:git/hooks/gate-dispatch.sh
+.config/git/hooks/post-merge:git/hooks/gate-dispatch.sh
+.config/git/hooks/post-checkout:git/hooks/gate-dispatch.sh
 .ssh/config:ssh/config
