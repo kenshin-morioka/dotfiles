@@ -5,6 +5,8 @@
 [core]
 	quotepath = false
 	pager = delta
+	# 全リポジトリ共通の静的解析ゲート (dotfiles の git/hooks/gate-dispatch.sh) を有効化する
+	hooksPath = ~/.config/git/hooks
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
 [push]
