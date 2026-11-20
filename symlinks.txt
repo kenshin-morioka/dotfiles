@@ -22,6 +22,8 @@
 .pi/agent/extensions:agents/pi/extensions
 .pi/agent/themes:agents/pi/themes
 .pi/agent/skills:agents/pi/skills
+.pi/agent/keybindings.json:agents/pi/keybindings.json
+.pi/agent/models.json:agents/pi/models.json
 .claude/checklists:agents/checklists
 .claude/settings.json:agents/claude/settings.json
 .claude/agents:agents/claude/agents
